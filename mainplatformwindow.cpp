@@ -12,6 +12,7 @@
 #include "modflight.h"
 #include<QCheckBox>
 #include<QToolTip>
+#include <QSysInfo>
 extern QSqlDatabase db;
 extern mainplatformwindow *w;
 loginwindow *l;
@@ -35,7 +36,7 @@ QSignalMapper *compmapper;
 QSignalMapper *compmapper_mod;
 const QString osVersion()
 {
-    return "";
+    return QSysInfo::prettyProductName()+" "+QSysInfo::buildAbi()+", with kernel: "+QSysInfo::kernelType()+" "+QSysInfo::kernelVersion();
 }
 
 mainplatformwindow::mainplatformwindow(QWidget *parent) :
@@ -66,11 +67,7 @@ void mainplatformwindow::_init(){
     //QApplication::processEvents();
     ui->label_3->setText(QString(tr("Login system user: "))+query.value(0).toString());
     //QApplication::processEvents();
-    query=QSqlQuery("select @@LANGID ,@@LANGUAGE");
-    //QApplication::processEvents();
-    query.next();
-    //QApplication::processEvents();
-    ui->label_4->setText(QString(tr("Language: "))+query.value(0).toString()+","+query.value(1).toString());
+    ui->label_4->setText(QString(tr("Language: "))+QLocale::system().name());
     //QApplication::processEvents();
     QSqlQueryModel *infomodel = new QSqlQueryModel;
     //QApplication::processEvents();
