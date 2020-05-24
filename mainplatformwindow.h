@@ -33,7 +33,7 @@
 #include <QListWidgetItem>
 #include <QSignalMapper>
 #include <QStandardItemModel>
-
+//huzheng hanhan
 namespace Ui {
 class mainplatformwindow;
 }
