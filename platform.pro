@@ -71,5 +71,22 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    platform_zh_CN.qm \
     style.qss
+
+win32 {
+COPY_DEST = $$replace(OUT_PWD, /, \\)
+SRC_DEST = $$replace(PWD, /, \\)
+system("copy $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\style.qss")
+system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\platform_zh_CN.qm")
+system("copy $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\debug\\style.qss")
+system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\debug\\platform_zh_CN.qm")
+system("copy $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\release\\style.qss")
+system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\release\\platform_zh_CN.qm")
+}
+
+mac {
+system("cp  $$PWD/style.qss $$OUT_PWD/$$compiled/style.qss")
+system("cp $$PWD/platform_zh_CN.qm $$OUT_PWD/$$compiled/platform_zh_CN.qm")
+}
 

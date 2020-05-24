@@ -16,6 +16,7 @@
 extern QSqlDatabase db;
 extern mainplatformwindow *w;
 loginwindow *l;
+extern QTranslator translator;
 
 stopover *stop_over;
 adduser *a;
@@ -637,4 +638,29 @@ void mainplatformwindow::on_tableView_5_clicked(const QModelIndex &index)
         else
             QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
     }
+}
+
+void mainplatformwindow::on_comboBox_activated(int index)
+{
+    switch (index){
+    case 0:{
+        qApp->removeTranslator(&translator);
+        ui->retranslateUi(this);
+        break;
+    }
+    case 1:{
+        QString langdir=QApplication::applicationDirPath()+"/platform_zh_CN.qm";
+        translator.load(langdir);
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
+        break;
+    }
+    default :{
+        QString langdir=QApplication::applicationDirPath()+"/platform_"+QLocale::system().name()+".qm";
+        translator.load(langdir);
+        qApp->installTranslator(&translator);
+        ui->retranslateUi(this);
+    }
+    }
+
 }
