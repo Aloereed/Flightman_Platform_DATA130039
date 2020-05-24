@@ -43,7 +43,7 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui(new Ui::mainplatformwindow)
 {
     ui->setupUi(this);
-    QFile styleFile("./style.qss");//使用qss文件
+    QFile styleFile(QApplication::applicationDirPath()+"/style.qss");//使用qss文件
     styleFile.open(QIODevice::ReadOnly);//只读
     QString setStyleSheet(styleFile.readAll());//读取所有的
     ui->tabWidget->setStyleSheet(setStyleSheet);//设置样式

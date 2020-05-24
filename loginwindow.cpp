@@ -19,7 +19,8 @@ loginwindow::loginwindow(QWidget *parent)
     , ui(new Ui::loginwindow)
 {
     ui->setupUi(this);
-    translator.load("./platform_"+QLocale::system().name()+".qm");
+    QString langdir=QApplication::applicationDirPath()+"/platform_"+QLocale::system().name()+".qm";
+    translator.load(langdir);
     qApp->installTranslator(&translator);
     ui->retranslateUi(this);
 }
