@@ -20,9 +20,7 @@ loginwindow::loginwindow(QWidget *parent)
 {
     ui->setupUi(this);
     translator.load("./platform_"+QLocale::system().name()+".qm");
-
     qApp->installTranslator(&translator);
-
     ui->retranslateUi(this);
 }
 
