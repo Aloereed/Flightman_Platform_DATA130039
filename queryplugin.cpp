@@ -16,6 +16,8 @@ queryplugin::queryplugin(QStringList indexlist,QWidget *parent) :
     ui->setupUi(this);
     QStringList list =indexlist;
     ui->comboBox_2->addItems(list);
+    ui->plainTextEdit->setMaximumSize(QSize(16777215,ui->comboBox->height()));
+
 }
 
 queryplugin::~queryplugin()
