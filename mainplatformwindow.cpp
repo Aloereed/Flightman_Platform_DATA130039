@@ -673,5 +673,5 @@ void mainplatformwindow::on_comboBox_activated(int index)
         ui->retranslateUi(this);
     }
     }
-
+    _init();
 }
