@@ -95,7 +95,7 @@ system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\release\\pla
 }
 
 mac {
-system("cp  $$PWD/style.qss $$OUT_PWD/$$compiled/style.qss")
-system("cp $$PWD/platform_zh_CN.qm $$OUT_PWD/$$compiled/platform_zh_CN.qm")
+system("cp  $$PWD/style.qss $$OUT_PWD/$$compiled/platform.app/Contents/MacOS/style.qss")
+system("cp $$PWD/platform_zh_CN.qm $$OUT_PWD/$$compiled/platform.app/Contents/MacOS/platform_zh_CN.qm")
 }
 
