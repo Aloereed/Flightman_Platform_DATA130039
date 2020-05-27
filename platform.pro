@@ -32,6 +32,7 @@ SOURCES += \
     moduser.cpp \
     querydialog.cpp \
     queryplugin.cpp \
+    search_result.cpp \
     stopover.cpp
 
 HEADERS += \
@@ -49,6 +50,7 @@ HEADERS += \
     moduser.h \
     querydialog.h \
     queryplugin.h \
+    search_result.h \
     stopover.h
 
 FORMS += \
@@ -66,6 +68,7 @@ FORMS += \
     moduser.ui \
     querydialog.ui \
     queryplugin.ui \
+    search_result.ui \
     stopover.ui
 
 TRANSLATIONS += \

@@ -13,6 +13,11 @@ class queryplugin : public QWidget
 
 public:
     explicit queryplugin(QWidget *parent = nullptr);
+    explicit queryplugin(QStringList indexlist, QWidget *parent = nullptr);
+    QString sign_1();
+    QString sign_2();
+    int index();
+    QString text();
     ~queryplugin();
 
 private:

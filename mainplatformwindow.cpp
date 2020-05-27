@@ -447,7 +447,10 @@ void mainplatformwindow::on_listWidget_5_itemClicked(QListWidgetItem *item)
     }else if(item->text()==tr("Refresh")){
         ui->horizontalSlider->setValue(1);
     }else if(item->text()==tr("Search")){
-        q=new QueryDialog;
+        QStringList sqllist = {"company_id","company_name","company_account"};
+        QStringList indexlist = {"Code","Name","Account"};
+        QString table="company";
+        q=new QueryDialog(table,sqllist,indexlist);
         q->show();
     }
 }

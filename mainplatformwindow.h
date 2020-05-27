@@ -108,6 +108,8 @@ private slots:
 
     void on_comboBox_activated(int index);
 
+
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)

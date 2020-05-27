@@ -122,7 +122,6 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
     }
     else if(ui->buttonBox->button(QDialogButtonBox::Cancel) == button)
     {
-        this->close();
         QProgressDialog dialog(tr("Returning to the mainwindow"),tr("cancel"), 0, 3000, this);
         dialog.setWindowTitle(tr("process"));
         dialog.setWindowModality(Qt::WindowModal);
@@ -137,5 +136,6 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
             }
         }
         dialog.setValue(3000);
+        this->close();
        }
 }
