@@ -627,6 +627,12 @@ void mainplatformwindow::on_listWidget_6_itemClicked(QListWidgetItem *item)
         add_airport->show();
     }else if(item->text()==tr("Refresh")){
         ui->horizontalSlider->setValue(1);
+    }else if(item->text()==tr("Search")){
+        QStringList sqllist = {"airport_id","airport_name","city"};
+        QStringList indexlist = {"ID","Name","City"};
+        QString table="airport";
+        q=new QueryDialog(table,sqllist,indexlist);
+        q->show();
     }
 }
 

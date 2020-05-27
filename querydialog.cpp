@@ -58,6 +58,9 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
                 QString sign_1 = ptr_temp->sign_1();
                 QString index = sqllist[ptr_temp->index()];
                 QString sign_2 = ptr_temp->sign_2();
+                if(sign_2=="=="){
+                    sign_2="=";
+                }
                 QString text = ptr_temp->text();
                 sql += sign_1+QString(" ")+index+sign_2+QString("'")+text+QString("'")+QString(" ");
             }
