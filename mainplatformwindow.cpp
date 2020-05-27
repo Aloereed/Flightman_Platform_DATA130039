@@ -10,11 +10,13 @@
 #include "modairport.h"
 #include "stopover.h"
 #include "modflight.h"
+#include "querydialog.h"
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
 extern QSqlDatabase db;
 extern mainplatformwindow *w;
+QueryDialog *q;
 loginwindow *l;
 extern QTranslator translator;
 
@@ -319,6 +321,9 @@ void mainplatformwindow::on_listWidget_user_itemClicked(QListWidgetItem *item)
         a->show();
     }else if(item->text()==tr("Refresh")){
         userRefresh();
+    }else if(item->text()==tr("Search")){
+        q=new QueryDialog;
+        q->show();
     }
 }
 
@@ -373,6 +378,9 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item)
         add_flight->show();
     }else if(item->text()==tr("Refresh")){
         flightRefresh();
+    }else if(item->text()==tr("Search")){
+        q=new QueryDialog;
+        q->show();
     }
 }
 
@@ -438,6 +446,9 @@ void mainplatformwindow::on_listWidget_5_itemClicked(QListWidgetItem *item)
         add_comp->show();
     }else if(item->text()==tr("Refresh")){
         ui->horizontalSlider->setValue(1);
+    }else if(item->text()==tr("Search")){
+        q=new QueryDialog;
+        q->show();
     }
 }
 

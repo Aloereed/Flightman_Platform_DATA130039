@@ -30,6 +30,8 @@ SOURCES += \
     modcom.cpp \
     modflight.cpp \
     moduser.cpp \
+    querydialog.cpp \
+    queryplugin.cpp \
     stopover.cpp
 
 HEADERS += \
@@ -45,6 +47,8 @@ HEADERS += \
     modcom.h \
     modflight.h \
     moduser.h \
+    querydialog.h \
+    queryplugin.h \
     stopover.h
 
 FORMS += \
@@ -60,6 +64,8 @@ FORMS += \
     modcom.ui \
     modflight.ui \
     moduser.ui \
+    querydialog.ui \
+    queryplugin.ui \
     stopover.ui
 
 TRANSLATIONS += \
