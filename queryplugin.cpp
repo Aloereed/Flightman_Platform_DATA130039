@@ -6,6 +6,7 @@ queryplugin::queryplugin(QWidget *parent) :
     ui(new Ui::queryplugin)
 {
     ui->setupUi(this);
+    ui->plainTextEdit->setMaximumSize(QSize(16777215,ui->comboBox->height()));
 }
 
 queryplugin::~queryplugin()
