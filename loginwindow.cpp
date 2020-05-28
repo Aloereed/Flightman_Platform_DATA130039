@@ -14,6 +14,7 @@
 QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 QTranslator translator;
 mainplatformwindow *w;
+my_admin tranadmin;
 loginwindow::loginwindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::loginwindow)
@@ -84,15 +85,26 @@ void loginwindow::on_commandLinkButton_clicked()
                                             .arg(password));*/
       if (db.open())
       {
-          for(int p=50;p<50;p++)
-              ui->progressBar->setValue(98);
-          ui->progressBar->setValue(98);
+          QByteArray bytePwd = ui->lineEdit_2->text().toLatin1();
+          QByteArray bytePwdMd5 = QCryptographicHash::hash(bytePwd, QCryptographicHash::Md5);
+          QString strPwdMd5 = bytePwdMd5.toHex();
+          tranadmin.ID = ui->lineEdit->text();
+          tranadmin.passwordmd5=strPwdMd5;
+          QSqlQuery login;
+          login.exec("select adminpwd,adminName from admin where adminID=\'"+tranadmin.ID+"\'");
+          login.next();
+          if(tranadmin.passwordmd5==login.value(0).toString()){
+          tranadmin.name=login.value(1).toString();
           QApplication::processEvents();
           w = new mainplatformwindow();
           QApplication::processEvents();
           w->show();
           QApplication::processEvents();
           this->hide();
+          }else      {
+              QMessageBox::critical(this,"ID or Password Wrong.","Your ID or Password is Wrong.");
+              return;
+          }
       }
       else
       {

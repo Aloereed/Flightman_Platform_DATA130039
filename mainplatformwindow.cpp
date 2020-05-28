@@ -19,6 +19,7 @@ extern mainplatformwindow *w;
 QueryDialog *q;
 loginwindow *l;
 extern QTranslator translator;
+extern my_admin tranadmin;
 
 stopover *stop_over;
 adduser *a;
@@ -109,7 +110,7 @@ void mainplatformwindow::_init(){
 
 
 void mainplatformwindow::updatetime(){
-    ui->statusBar->showMessage(QDateTime::currentDateTime().toString());
+    ui->statusBar->showMessage(tr("Welcome, ")+tranadmin.name+"! "+QDateTime::currentDateTime().toString());
 }
 
 

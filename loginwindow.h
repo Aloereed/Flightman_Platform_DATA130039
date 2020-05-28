@@ -2,6 +2,7 @@
 #define LOGINWINDOW_H
 
 #include <QMainWindow>
+#include <QCryptographicHash>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class loginwindow; }
@@ -21,4 +22,10 @@ private slots:
 private:
     Ui::loginwindow *ui;
 };
+typedef struct AdminInfo
+{
+    QString ID;
+    QString name;
+    QString passwordmd5;
+}my_admin;
 #endif // LOGINWINDOW_H

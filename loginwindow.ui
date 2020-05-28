@@ -63,116 +63,176 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="connGroupBox">
-      <property name="title">
-       <string>Connection settings</string>
+     <widget class="QToolBox" name="toolBox">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <layout class="QGridLayout" name="_2">
-       <property name="leftMargin">
-        <number>8</number>
+      <widget class="QWidget" name="page">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>782</width>
+         <height>403</height>
+        </rect>
        </property>
-       <property name="topMargin">
-        <number>8</number>
+       <attribute name="label">
+        <string>Login</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Administrator ID:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEdit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Administrator Password:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEdit_2"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>782</width>
+         <height>403</height>
+        </rect>
        </property>
-       <property name="rightMargin">
-        <number>8</number>
-       </property>
-       <property name="bottomMargin">
-        <number>8</number>
-       </property>
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <item row="1" column="3">
-        <widget class="QLineEdit" name="editDatabase"/>
-       </item>
-       <item row="5" column="3">
-        <widget class="QSpinBox" name="portSpinBox">
-         <property name="specialValueText">
-          <string>Default</string>
-         </property>
-         <property name="minimum">
-          <number>-1</number>
-         </property>
-         <property name="maximum">
-          <number>65535</number>
-         </property>
-         <property name="value">
-          <number>-1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLineEdit" name="editUsername"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="textLabel5">
-         <property name="text">
-          <string>&amp;Hostname:</string>
-         </property>
-         <property name="buddy">
-          <cstring>editHostname</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="editPassword">
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="textLabel4">
-         <property name="text">
-          <string>&amp;Username:</string>
-         </property>
-         <property name="buddy">
-          <cstring>editUsername</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="textLabel3">
-         <property name="text">
-          <string>Database Name:</string>
-         </property>
-         <property name="buddy">
-          <cstring>editDatabase</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="text">
-          <string>Connect to the default Database</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="textLabel4_2">
-         <property name="text">
-          <string>&amp;Password:</string>
-         </property>
-         <property name="buddy">
-          <cstring>editPassword</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="3">
-        <widget class="QLineEdit" name="editHostname"/>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="textLabel5_2">
-         <property name="text">
-          <string>P&amp;ort:</string>
-         </property>
-         <property name="buddy">
-          <cstring>portSpinBox</cstring>
-         </property>
-        </widget>
-       </item>
-      </layout>
+       <attribute name="label">
+        <string>Server Settings</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QGroupBox" name="connGroupBox">
+          <property name="title">
+           <string>Connection settings</string>
+          </property>
+          <layout class="QGridLayout" name="_2">
+           <property name="leftMargin">
+            <number>8</number>
+           </property>
+           <property name="topMargin">
+            <number>8</number>
+           </property>
+           <property name="rightMargin">
+            <number>8</number>
+           </property>
+           <property name="bottomMargin">
+            <number>8</number>
+           </property>
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <item row="1" column="3">
+            <widget class="QLineEdit" name="editDatabase"/>
+           </item>
+           <item row="5" column="3">
+            <widget class="QSpinBox" name="portSpinBox">
+             <property name="specialValueText">
+              <string>Default</string>
+             </property>
+             <property name="minimum">
+              <number>-1</number>
+             </property>
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+             <property name="value">
+              <number>-1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLineEdit" name="editUsername"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="textLabel5">
+             <property name="text">
+              <string>&amp;Hostname:</string>
+             </property>
+             <property name="buddy">
+              <cstring>editHostname</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="editPassword">
+             <property name="echoMode">
+              <enum>QLineEdit::Password</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="textLabel4">
+             <property name="text">
+              <string>&amp;Username:</string>
+             </property>
+             <property name="buddy">
+              <cstring>editUsername</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="textLabel3">
+             <property name="text">
+              <string>Database Name:</string>
+             </property>
+             <property name="buddy">
+              <cstring>editDatabase</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="checkBox">
+             <property name="text">
+              <string>Connect to the default Database</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="textLabel4_2">
+             <property name="text">
+              <string>&amp;Password:</string>
+             </property>
+             <property name="buddy">
+              <cstring>editPassword</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="editHostname"/>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="textLabel5_2">
+             <property name="text">
+              <string>P&amp;ort:</string>
+             </property>
+             <property name="buddy">
+              <cstring>portSpinBox</cstring>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item>
