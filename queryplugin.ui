@@ -31,6 +31,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QComboBox" name="comboBox">
+        <property name="whatsThis">
+         <string>Select logical relation.</string>
+        </property>
         <item>
          <property name="text">
           <string>AND</string>
@@ -49,10 +52,17 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_2"/>
+       <widget class="QComboBox" name="comboBox_2">
+        <property name="whatsThis">
+         <string>Select your coulmn.</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QComboBox" name="comboBox_3">
+        <property name="whatsThis">
+         <string>Select relation.</string>
+        </property>
         <item>
          <property name="text">
           <string>==</string>
