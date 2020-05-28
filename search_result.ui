@@ -18,16 +18,25 @@
     <widget class="QTableView" name="tableView"/>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="text">
-      <string>OK</string>
-     </property>
+     <widget class="QPushButton" name="submit">
+      <property name="text">
+       <string>SUBMIT</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="retract">
+      <property name="text">
+       <string>RETRACT</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>OK</string>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>

@@ -1,13 +1,12 @@
 #include "search_result.h"
 #include "ui_search_result.h"
 
-search_result::search_result(QString sql,QWidget *parent) :
+search_result::search_result(QSqlTableModel *search_input,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::search_result)
 {
     ui->setupUi(this);
-    QSqlQueryModel* search = new QSqlQueryModel;
-    search->setQuery(sql);
+    search = search_input;
     ui->tableView->setModel(search);
 }
 
@@ -34,4 +33,21 @@ void search_result::on_pushButton_clicked()
     dialog.setValue(3000);
    this->close();
 
+}
+
+void search_result::on_submit_clicked()
+{
+    search->database().transaction();
+    if(search->submitAll()){
+        search->database().commit();
+    }
+    else{
+        search->database().rollback();
+        QMessageBox::warning(this,tr("submission failed"),tr("error:%1").arg(search->lastError().text()));
+    }
+}
+
+void search_result::on_retract_clicked()
+{
+    search->revertAll();
 }

@@ -40,8 +40,16 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(ui->buttonBox->button(QDialogButtonBox::Ok) == button)
     {
-        QString sql;
-        sql = QString("SELECT * FROM %1 WHERE ").arg(table);
+        QString sql1;
+        QString sql2;
+        QSqlTableModel *search;
+        search = new QSqlTableModel(this);
+        search->setTable(table);
+        search->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+
+        sql1 = QString("SELECT * FROM %1 WHERE ").arg(table);
+
         for(int i=0;i<count;i++){
             queryplugin* ptr_temp= ptr[i];
             if(i==0){
@@ -52,7 +60,7 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
                     sign_2="=";
                 }
                 QString text = ptr_temp->text();
-                sql += index+sign_2+QString("'")+text+QString("'")+QString(" ");
+                sql2 = index+sign_2+QString("'")+text+QString("'")+QString(" ");
             }
             else{
                 QString sign_1 = ptr_temp->sign_1();
@@ -62,14 +70,18 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
                     sign_2="=";
                 }
                 QString text = ptr_temp->text();
-                sql += sign_1+QString(" ")+index+sign_2+QString("'")+text+QString("'")+QString(" ");
+                sql2 += sign_1+QString(" ")+index+sign_2+QString("'")+text+QString("'")+QString(" ");
             }
         }
+        sql1 += sql2;
+        search->setFilter(sql2);
+        search->select();
+
         QSqlQuery query;
-        bool ok = query.exec(sql);
+        bool ok = query.exec(sql1);
         if(ok){
-            search_result* search = new search_result(sql);
-            search->show();
+            search_result* search_res = new search_result(search);
+            search_res->show();
         }
         else{
             QMessageBox::information(this,tr("hint:"),tr("failure"));
