@@ -56,21 +56,32 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
                 QString index = sqllist[ptr_temp->index()];
 
                 QString sign_2 = ptr_temp->sign_2();
+                if(sign_2==tr("Contain")){
+                    QString text = ptr_temp->text();
+                    sql2 += QString(" ")+index+QString(" LIKE \'\%")+text+QString("\%\'")+QString(" ");
+                }else{
                 if(sign_2=="=="){
                     sign_2="=";
                 }
                 QString text = ptr_temp->text();
                 sql2 = index+sign_2+QString("'")+text+QString("'")+QString(" ");
+                }
             }
             else{
                 QString sign_1 = ptr_temp->sign_1();
                 QString index = sqllist[ptr_temp->index()];
                 QString sign_2 = ptr_temp->sign_2();
+                if(sign_2==tr("Contain")){
+                    QString text = ptr_temp->text();
+                    sql2 += sign_1+QString(" ")+index+QString(" LIKE \'\%")+text+QString("\%\'")+QString(" ");
+                }
+                else{
                 if(sign_2=="=="){
                     sign_2="=";
                 }
                 QString text = ptr_temp->text();
                 sql2 += sign_1+QString(" ")+index+sign_2+QString("'")+text+QString("'")+QString(" ");
+                }
             }
         }
         sql1 += sql2;
