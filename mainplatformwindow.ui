@@ -26,7 +26,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -446,6 +446,51 @@
             </item>
            </layout>
           </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_6">
+        <attribute name="title">
+         <string>Realtime Flight Info</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QListWidget" name="listWidget_7">
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>Modification</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Search</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Delete</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Refresh</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTableView" name="tableView_7"/>
          </item>
         </layout>
        </widget>
