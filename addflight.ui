@@ -28,7 +28,7 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QSplitter" name="splitter">
@@ -55,7 +55,7 @@
               </size>
              </property>
              <property name="text">
-              <string>flight_id</string>
+              <string>Flight ID</string>
              </property>
             </widget>
             <widget class="QLineEdit" name="flight_id">
@@ -102,7 +102,7 @@
               </size>
              </property>
              <property name="text">
-              <string>schedule</string>
+              <string>Schedule(Week)</string>
              </property>
             </widget>
             <widget class="QLineEdit" name="schedule">
@@ -146,7 +146,7 @@
               </size>
              </property>
              <property name="text">
-              <string>plane_type</string>
+              <string>Plane Type</string>
              </property>
             </widget>
             <widget class="QLineEdit" name="planetype">
@@ -193,7 +193,7 @@
               </size>
              </property>
              <property name="text">
-              <string>company_id</string>
+              <string>Company Code</string>
              </property>
             </widget>
             <widget class="QLineEdit" name="company_id">
@@ -219,7 +219,7 @@
         </widget>
         <widget class="QPushButton" name="seat">
          <property name="text">
-          <string>set up seat</string>
+          <string>Set Up Seat</string>
          </property>
         </widget>
        </widget>
@@ -229,7 +229,7 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>airport passing</string>
+           <string>Airline &amp; Stopover</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

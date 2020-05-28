@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Add Seat Type</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -48,7 +48,7 @@
           </size>
          </property>
          <property name="text">
-          <string>seat type</string>
+          <string>Seat Type</string>
          </property>
         </widget>
         <widget class="QFrame" name="frame_2">
@@ -113,7 +113,7 @@
          </size>
         </property>
         <property name="text">
-         <string>business class No.</string>
+         <string>Business Class Number:</string>
         </property>
        </widget>
       </item>
@@ -142,7 +142,7 @@
          </size>
         </property>
         <property name="text">
-         <string>economy class No.</string>
+         <string>Economy Class Number:</string>
         </property>
        </widget>
       </item>

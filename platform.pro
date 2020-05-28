@@ -86,12 +86,12 @@ DISTFILES += \
 win32 {
 COPY_DEST = $$replace(OUT_PWD, /, \\)
 SRC_DEST = $$replace(PWD, /, \\)
-system("copy $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\style.qss")
-system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\platform_zh_CN.qm")
-system("copy $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\debug\\style.qss")
-system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\debug\\platform_zh_CN.qm")
-system("copy $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\release\\style.qss")
-system("copy $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\release\\platform_zh_CN.qm")
+system("copy /y $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\style.qss")
+system("copy /y $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\platform_zh_CN.qm")
+system("copy /y  $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\debug\\style.qss")
+system("copy /y $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\debug\\platform_zh_CN.qm")
+system("copy /y $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\release\\style.qss")
+system("copy /y $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\release\\platform_zh_CN.qm")
 }
 
 mac {
