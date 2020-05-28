@@ -20,6 +20,7 @@ loginwindow::loginwindow(QWidget *parent)
     , ui(new Ui::loginwindow)
 {
     ui->setupUi(this);
+    ui->lineEdit_2->setEchoMode(QLineEdit::Password);
     QString langdir=QApplication::applicationDirPath()+"/platform_"+QLocale::system().name()+".qm";
     translator.load(langdir);
     qApp->installTranslator(&translator);
