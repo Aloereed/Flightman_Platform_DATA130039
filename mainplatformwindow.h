@@ -110,6 +110,8 @@ private slots:
 
 
 
+    void on_pushButton_5_clicked();
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)

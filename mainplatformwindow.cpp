@@ -20,6 +20,7 @@ QueryDialog *q;
 loginwindow *l;
 extern QTranslator translator;
 extern my_admin tranadmin;
+extern QSettings settings;
 
 stopover *stop_over;
 adduser *a;
@@ -52,56 +53,56 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     styleFile.open(QIODevice::ReadOnly);//只读
     QString setStyleSheet(styleFile.readAll());//读取所有的
     ui->tabWidget->setStyleSheet(setStyleSheet);//设置样式
+    ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt()));
     _init();
 }
 
 void mainplatformwindow::_init(){
-    //QApplication::processEvents();
     ui->label->setText(tr("System Version:")+osVersion());
-    //QApplication::processEvents();
+
     QSqlQuery query = QSqlQuery("select @@VERSION");
-    //QApplication::processEvents();
+
     query.next();
-    //QApplication::processEvents();
+
     ui->label_2->setText(QString(tr("Server Version:\n "))+query.value(0).toString());
-    //QApplication::processEvents();
+
     query=QSqlQuery("select user()");
-    //QApplication::processEvents();
+
     query.next();
-    //QApplication::processEvents();
+
     ui->label_3->setText(QString(tr("Login system user: "))+query.value(0).toString());
-    //QApplication::processEvents();
+
     ui->label_4->setText(QString(tr("Language: "))+QLocale::system().name());
-    //QApplication::processEvents();
+
     QSqlQueryModel *infomodel = new QSqlQueryModel;
-    //QApplication::processEvents();
-    infomodel->setQuery(tr("show status"));
-    //QApplication::processEvents();
+
+    infomodel->setQuery(QString("show status"));
+
     ui->tableView_2->setModel(infomodel);
-    //QApplication::processEvents();
+
     ui->tableView_2->resizeColumnsToContents();
-    //QApplication::processEvents();
-    //QApplication::processEvents();
+
+
     usertable=ui->tableView;
-    //QApplication::processEvents();
+
     flighttable=ui->tableView_3;
-    //QApplication::processEvents();
+
     comptable=ui->tableView_4;
-    //QApplication::processEvents();
+
     userRefresh();
-    //QApplication::processEvents();
+
     flightRefresh();
-    //QApplication::processEvents();
+
     //compRefresh();
-    //QApplication::processEvents();
+
     localtimer = new QTimer(this);
-    //QApplication::processEvents();
+
     connect(localtimer, SIGNAL(timeout()), this, SLOT(updatetime()));
-    //QApplication::processEvents();
+
     localtimer->start();
-    //QApplication::processEvents();
+
     QSqlQueryModel *adminmodel = new QSqlQueryModel;
-    adminmodel->setQuery(tr("select name as Name,language as Language,createdate as [Create Date], updatedate as [Update Date] FROM master.dbo.syslogins where sysadmin=1 and isntname=0"));
+    adminmodel->setQuery(QString("select name as Name,language as Language,createdate as [Create Date], updatedate as [Update Date] FROM master.dbo.syslogins where sysadmin=1 and isntname=0"));
     ui->tableView_6->setModel(adminmodel);
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
@@ -180,7 +181,7 @@ void mainplatformwindow::on_listWidget_user_currentRowChanged(int currentRow)
 void mainplatformwindow::airportRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from airport");
     ui->statusBar->showMessage(tr("Querying..."));
-    //QApplication::processEvents();
+
     query.next();
     ui->horizontalSlider_2->setMaximum(query.value(0).toInt()/20+1);
     int item2 = 20*(page-1);
@@ -221,7 +222,7 @@ void mainplatformwindow::flightRefresh(){
 void mainplatformwindow::compRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from company");
     ui->statusBar->showMessage(tr("Querying..."));
-    //QApplication::processEvents();
+
     query.next();
     ui->horizontalSlider->setMaximum(query.value(0).toInt()/20+1);
     //compmapper= new QSignalMapper;
@@ -398,7 +399,7 @@ bool mainplatformwindow::onTableDelBtnClicked(QString id){
 
 bool mainplatformwindow::onTableModBtnClicked(QString id){
     QSqlQuery query;
-    bool status = query.exec(tr("SELECT * FROM user WHERE ID = \'")+QString(id)+"\'");
+    bool status = query.exec(QString("select * FROM user WHERE ID = \'")+QString(id)+"\'");
     query.next();
     if(status){
         QString ID = query.value(0).toString();
@@ -426,7 +427,7 @@ bool mainplatformwindow::onCompTableDelBtnClicked(QString id){
 }
 bool mainplatformwindow::onCompTableModBtnClicked(QString id){
     QSqlQuery query;
-    bool status = query.exec(tr("SELECT * FROM company WHERE company_ID = \'")+QString(id)+"\'");
+    bool status = query.exec(QString("select * FROM company WHERE company_ID = \'")+QString(id)+"\'");
     query.next();
     if(status){
         QString ID = query.value(0).toString();
@@ -546,11 +547,11 @@ QVariant myflightmodel::data(const QModelIndex &item, int role) const{
     }
     if(role == Qt::ToolTipRole){
         if (item.isValid()&&(item.column()==5||item.column()==3)) {
-            QSqlQuery query = QSqlQuery(tr("select airport_name from airport where airport_id=\'")+item.data().toString()+"\'");
+            QSqlQuery query = QSqlQuery(QString("select airport_name from airport where airport_id=\'")+item.data().toString()+"\'");
             query.next();
             return QVariant::fromValue(query.value(0).toString());
         }else if(item.isValid()&&(item.column()==7)){
-            QSqlQuery query = QSqlQuery(tr("select company_name from company where company_id=\'")+item.data().toString()+"\'");
+            QSqlQuery query = QSqlQuery(QString("select company_name from company where company_id=\'")+item.data().toString()+"\'");
             query.next();
             return QVariant::fromValue(query.value(0).toString());
         }
@@ -666,22 +667,35 @@ void mainplatformwindow::on_comboBox_activated(int index)
     switch (index){
     case 0:{
         qApp->removeTranslator(&translator);
+
         ui->retranslateUi(this);
+        settings.setValue("Langcase",0);
         break;
     }
     case 1:{
+        qApp->removeTranslator(&translator);
         QString langdir=QApplication::applicationDirPath()+"/platform_zh_CN.qm";
         translator.load(langdir);
         qApp->installTranslator(&translator);
+
         ui->retranslateUi(this);
+        settings.setValue("Langcase",1);
         break;
     }
     default :{
+        qApp->removeTranslator(&translator);
         QString langdir=QApplication::applicationDirPath()+"/platform_"+QLocale::system().name()+".qm";
         translator.load(langdir);
         qApp->installTranslator(&translator);
+
         ui->retranslateUi(this);
+        settings.setValue("Langcase",2);
     }
     }
     _init();
+}
+
+void mainplatformwindow::on_pushButton_5_clicked()
+{
+
 }

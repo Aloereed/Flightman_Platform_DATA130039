@@ -15,6 +15,7 @@ QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
 QTranslator translator;
 mainplatformwindow *w;
 my_admin tranadmin;
+QSettings settings("FDU4021","FBMT");
 loginwindow::loginwindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::loginwindow)
@@ -25,6 +26,11 @@ loginwindow::loginwindow(QWidget *parent)
     translator.load(langdir);
     qApp->installTranslator(&translator);
     ui->retranslateUi(this);
+    if(settings.value("AdminisSaved").toBool()){
+        ui->lineEdit->setText(settings.value("AdminID").toString());
+        ui->lineEdit_2->setText(settings.value("AdminPWD").toString());
+        ui->checkBox_2->setChecked(true);
+    }
 }
 
 loginwindow::~loginwindow()
@@ -96,6 +102,11 @@ void loginwindow::on_commandLinkButton_clicked()
           login.next();
           if(tranadmin.passwordmd5==login.value(0).toString()){
           tranadmin.name=login.value(1).toString();
+          if(ui->checkBox_2->isChecked()){
+              settings.setValue("AdminID",tranadmin.ID);
+              settings.setValue("AdminPWD",ui->lineEdit_2->text());
+          }
+          settings.setValue("AdminisSaved",ui->checkBox_2->isChecked());
           QApplication::processEvents();
           w = new mainplatformwindow();
           QApplication::processEvents();
