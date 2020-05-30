@@ -33,6 +33,7 @@
 #include <QListWidgetItem>
 #include <QSignalMapper>
 #include <QStandardItemModel>
+#include <QDateTime>
 
 namespace Ui {
 class mainplatformwindow;
@@ -111,6 +112,8 @@ private slots:
 
 
     void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
 
 private:
     Ui::mainplatformwindow *ui;
