@@ -103,8 +103,11 @@ void GenArran::run(){
                 progress.setValue(i);
                 progress.setLabelText(QObject::tr("Preparing database...%1/%2").arg(i).arg(days));
                 qApp->processEvents();
+                if(progress.wasCanceled())
+                  return;
             }
             progress.setLabelText(QObject::tr("Writing database..."));
+            progress.setCancelButton(NULL);
             if(!QSqlDatabase::database().commit()){
                 qDebug()<<QSqlDatabase::database().lastError();
                 if(!QSqlDatabase::database().rollback()){
@@ -149,11 +152,14 @@ void DropArran::run(){
             progress.setValue(i);
             progress.setLabelText(QObject::tr("Preparing database...%1/%2").arg(i).arg(size));
             qApp->processEvents();
+            if(progress.wasCanceled())
+              return;
         }
         sql2=QString("truncate table flight_arrangment");
         query1.exec(sql2);
         progress.setLabelText(QObject::tr("Writing database..."));
         qApp->processEvents();
+        progress.setCancelButton(NULL);
         if(!QSqlDatabase::database().commit()){
             qDebug()<<QSqlDatabase::database().lastError();
             if(!QSqlDatabase::database().rollback()){
