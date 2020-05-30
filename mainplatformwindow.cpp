@@ -11,6 +11,7 @@
 #include "stopover.h"
 #include "modflight.h"
 #include "querydialog.h"
+#include "genarran.h"
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
@@ -697,126 +698,13 @@ void mainplatformwindow::on_comboBox_activated(int index)
 
 void mainplatformwindow::on_pushButton_5_clicked()
 {
-    bool ok;
-
-
     int week = ui->lineEdit->text().toInt();
-    if(week<=0){
-        QMessageBox::information(this,tr("hint:"),tr("invalid week number"));
-    }
-    else{
-        QDate now = QDate::currentDate();
-        int nowweek = now.dayOfWeek();
-        while( nowweek !=1){
-            now = now.addDays(1);
-            nowweek = now.dayOfWeek();
-        }
-        int days = 7*week;
-        if(QSqlDatabase::database().transaction()){
-            for(int i=1;i<=days;i++,now=now.addDays(1)){
-                QString day = QString::number(i%7,10);
-                QString sql1 = QString("SELECT * FROM flight_airline_seat WHERE "
-                                   "departure_time IS NOT NULL AND schedule like '%%1%'").arg(day);
-                QSqlQuery query1=QSqlQuery(sql1);
-                while(query1.next()){
-                    QString flight_id = query1.value(0).toString();
-                    QString airport_id = query1.value(1).toString();
-                    QString departure_time = query1.value(2).toString();
-                    QString name = QString("seat_")+flight_id+QString("_")+airport_id+QString("_")+now.toString("yyyy-MM-dd");
-                    departure_time = now.toString("yyyy-MM-dd")+QString(" ")+departure_time;
-                    int type = query1.value(4).toInt();
-                    int row_bus = query1.value(5).toInt();
-                    int row_eco = query1.value(6).toInt();
-                    QString status = QString("pla");
-                    int discount = 1;
-                    QString sql2,sql3,sql4;
-                    sql2 = QString("INSERT INTO flight_arrangment (flight_id,departure_datetime,`status`,discount)"
-                            "VALUES('%1','%2','%3',%4)")
-                    .arg(flight_id).arg(departure_time).arg(status).arg(discount);
-                    QSqlQuery query2;
-                    ok=query2.exec(sql2);
-                    sql3=QString("CREATE TABLE `%1` (seat_id char(3) PRIMARY KEY,status int(1) NULL)").arg(name);
-                    ok=query2.exec(sql3);
-                    if(type==1){
-                        int j=0;
-                        for(;j<row_bus;j++){
-                            QString row = QString::number(j+1,10);
-                            QStringList bus={"A","B","C","D","E","F"};
-                            for(int k=0;k<6;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+bus[k]).arg(0);
-                                ok=query2.exec(sql4);
-                            }
-                        }
-                        for(j=0;j<row_eco;j++){
-                            QString row = QString::number(j+1+row_bus,10);
-                            QStringList eco={"A","B","C","D","E","F","G","H","I"};
-                            for(int k=0;k<9;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+eco[k]).arg(0);
-                                ok=query2.exec(sql4);
-                            }
-                        }
-                    }
-                    else if(type==0){
-                        int j=0;
-                        for(;j<row_bus;j++){
-                            QString row = QString::number(j+1,10);
-                            QStringList bus={"A","B","C","D"};
-                            for(int k=0;k<4;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+bus[k]).arg(0);
-                                query2.exec(sql4);
-                            }
-                        }
-                        for(j=0;j<row_eco;j++){
-                            QString row = QString::number(j+1+row_bus,10);
-                            QStringList eco={"A","B","C","D","E","F"};
-                            for(int k=0;k<6;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+eco[k]).arg(0);
-                                query2.exec(sql4);
-                            }
-                        }
-                    }
-                }
-            }
-            if(!QSqlDatabase::database().commit()){
-                qDebug()<<QSqlDatabase::database().lastError();
-                if(!QSqlDatabase::database().rollback()){
-                    QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
-                }
-             }
-            else{
-                QMessageBox::information(this,tr("hint:"),tr("success"));
-            }
-        }
-
-
-    }
+    GenArran gen(week,this);
+    gen.run();
 }
 
 void mainplatformwindow::on_pushButton_6_clicked()
 {
-    if(QSqlDatabase::database().transaction()){
-        QString sql1,sql2;
-        QSqlQuery query1;
-        sql1=QString("Select CONCAT( 'drop table ','`',table_name,'`', ';') FROM information_schema.tables Where table_name LIKE 'seat_%';");
-        QSqlQuery query2=QSqlQuery(sql1);
-        while(query2.next()){
-            sql1=query2.value(0).toString();
-            query1.exec(sql1);
-        }
-        sql2=QString("truncate table flight_arrangment");
-        query1.exec(sql2);
-        if(!QSqlDatabase::database().commit()){
-            qDebug()<<QSqlDatabase::database().lastError();
-            if(!QSqlDatabase::database().rollback()){
-                QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
-            }
-         }
-        else{
-            QMessageBox::information(this,tr("hint:"),tr("success"));
-        }
-    }
+    DropArran drop(this);
+    drop.run();
 }

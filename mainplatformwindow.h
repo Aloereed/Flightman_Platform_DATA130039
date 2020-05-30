@@ -22,8 +22,6 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QSysInfo>
-#include "QSettings"
-#include "QDebug"
 #include <QDesktopWidget>
 #include <QFileInfoList>
 #include <QDir>

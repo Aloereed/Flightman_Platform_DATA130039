@@ -23,6 +23,7 @@ SOURCES += \
     addflight_passingairport.cpp \
     addseat.cpp \
     adduser.cpp \
+    genarran.cpp \
     main.cpp \
     loginwindow.cpp \
     mainplatformwindow.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     addflight_passingairport.h \
     addseat.h \
     adduser.h \
+    genarran.h \
     loginwindow.h \
     mainplatformwindow.h \
     modairport.h \
