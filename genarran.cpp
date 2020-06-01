@@ -1,6 +1,8 @@
 #include "genarran.h"
 #include <QProgressDialog>
 #include <QApplication>
+#include <QSqlDriver>
+extern QSqlDatabase db;
 GenArran::GenArran(int weekno, QWidget *formptr)
 {
     week=weekno;
@@ -28,12 +30,15 @@ void GenArran::run(){
         progress.setMinimum(0);
         progress.setMaximum(days+1);
         qApp->processEvents();
+
         if(QSqlDatabase::database().transaction()){
+            QSqlQuery query1;
+            QSqlQuery query;
             for(int i=1;i<=days;i++,now=now.addDays(1)){
                 QString day = QString::number(i%7,10);
                 QString sql1 = QString("SELECT * FROM flight_airline_seat WHERE "
                                    "departure_time IS NOT NULL AND schedule like '%%1%'").arg(day);
-                QSqlQuery query1=QSqlQuery(sql1);
+                query1.exec(sql1);
                 while(query1.next()){
                     QString flight_id = query1.value(0).toString();
                     QString airport_id = query1.value(1).toString();
@@ -49,10 +54,9 @@ void GenArran::run(){
                     sql2 = QString("INSERT INTO flight_arrangment (flight_id,departure_datetime,`status`,discount)"
                             "VALUES('%1','%2','%3',%4)")
                     .arg(flight_id).arg(departure_time).arg(status).arg(discount);
-                    QSqlQuery query2;
-                    ok=query2.exec(sql2);
+                    ok=query.exec(sql2);
                     sql3=QString("CREATE TABLE `%1` (seat_id char(3) PRIMARY KEY,status int(1) NULL)").arg(name);
-                    ok=query2.exec(sql3);
+                    ok=query.exec(sql3);
                     if(type==1){
                         int j=0;
                         for(;j<row_bus;j++){
@@ -62,7 +66,7 @@ void GenArran::run(){
                             for(int k=0;k<6;k++){
                                 sql4=QString("INSERT INTO `%1` (seat_id,status)"
                                                 "VALUES('%2',%3)").arg(name).arg(row+bus[k]).arg(0);
-                                ok=query2.exec(sql4);
+                                ok=query.exec(sql4);
                             }
                         }
                         for(j=0;j<row_eco;j++){
@@ -72,7 +76,7 @@ void GenArran::run(){
                             for(int k=0;k<9;k++){
                                 sql4=QString("INSERT INTO `%1` (seat_id,status)"
                                                 "VALUES('%2',%3)").arg(name).arg(row+eco[k]).arg(0);
-                                ok=query2.exec(sql4);
+                                ok=query.exec(sql4);
                             }
                         }
                     }
@@ -85,7 +89,7 @@ void GenArran::run(){
                             for(int k=0;k<4;k++){
                                 sql4=QString("INSERT INTO `%1` (seat_id,status)"
                                                 "VALUES('%2',%3)").arg(name).arg(row+bus[k]).arg(0);
-                                query2.exec(sql4);
+                                query.exec(sql4);
                             }
                         }
                         for(j=0;j<row_eco;j++){
@@ -95,7 +99,7 @@ void GenArran::run(){
                             for(int k=0;k<6;k++){
                                 sql4=QString("INSERT INTO `%1` (seat_id,status)"
                                                 "VALUES('%2',%3)").arg(name).arg(row+eco[k]).arg(0);
-                                query2.exec(sql4);
+                                query.exec(sql4);
                             }
                         }
                     }
@@ -103,8 +107,12 @@ void GenArran::run(){
                 progress.setValue(i);
                 progress.setLabelText(QObject::tr("Preparing database...%1/%2").arg(i).arg(days));
                 qApp->processEvents();
-                if(progress.wasCanceled())
+                if(progress.wasCanceled()){
+                    if(!QSqlDatabase::database().rollback()){
+                        QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+                    }
                   return;
+                }
             }
             progress.setLabelText(QObject::tr("Writing database..."));
             progress.setCancelButton(NULL);
@@ -123,6 +131,7 @@ void GenArran::run(){
 
 
     }
+    this->quit();
 }
 DropArran::DropArran(QWidget *formptr)
 {
@@ -130,24 +139,25 @@ DropArran::DropArran(QWidget *formptr)
 }
 
 void DropArran::run(){
+    QSqlQuery query1;
     if(QSqlDatabase::database().transaction()){
         QString sql1,sql2;
-        QSqlQuery query1;
+        QSqlQuery query2;
         sql1=QString("Select CONCAT( 'drop table ','`',table_name,'`', ';') FROM information_schema.tables Where table_name LIKE 'seat_%';");
-        QSqlQuery query2=QSqlQuery(sql1);
+        query1.exec(sql1);
         QProgressDialog progress;
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowTitle(QObject::tr("Creating Realtime Flight Info..."));
         progress.setLabelText(QObject::tr("Preparing database..."));
         progress.setMinimum(0);
-        int size=query2.size();
+        int size=query1.size();
         progress.setMaximum(size+1);
         qApp->processEvents();
         int i=0;
-        while(query2.next()){
+        while(query1.next()){
             QApplication::processEvents();
-            sql1=query2.value(0).toString();
-            query1.exec(sql1);
+            sql1=query1.value(0).toString();
+            query2.exec(sql1);
             i++;
             progress.setValue(i);
             progress.setLabelText(QObject::tr("Preparing database...%1/%2").arg(i).arg(size));
@@ -156,7 +166,7 @@ void DropArran::run(){
               return;
         }
         sql2=QString("truncate table flight_arrangment");
-        query1.exec(sql2);
+        query2.exec(sql2);
         progress.setLabelText(QObject::tr("Writing database..."));
         qApp->processEvents();
         progress.setCancelButton(NULL);
@@ -171,4 +181,5 @@ void DropArran::run(){
             QMessageBox::information(form,tr("hint:"),tr("success"));
         }
     }
+    this->quit();
 }

@@ -701,6 +701,7 @@ void mainplatformwindow::on_pushButton_5_clicked()
     int week = ui->lineEdit->text().toInt();
     GenArran gen(week,this);
     gen.run();
+    gen.quit();
 }
 
 void mainplatformwindow::on_pushButton_6_clicked()
