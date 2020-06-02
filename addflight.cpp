@@ -15,9 +15,12 @@ addflight::addflight(QWidget *parent) :
     ui->tableView_airport->setSelectionModel(theselection);
     ui->tableView_airport->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->tableView_airport->setSelectionBehavior(QAbstractItemView::SelectItems);
-    QStringList headerList ={"airport_id","arrival_time","departure_time"};
+    QStringList headerList ={"airport_id","arrival_time","departure_time","upward","downward"};
     airport->setHorizontalHeaderLabels(headerList);
     ui->tableView_airport->resizeColumnsToContents();
+    bool departure=false;
+    bool arrival=false;
+
 }
 
 addflight::~addflight()
@@ -103,8 +106,12 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             query.exec(sql1);
             query.exec(sql2);
             int count = ui->tableView_airport->model()->rowCount();
-            int NULL1 = 0;
-            int NULL2 = 0;
+            if(!(departure&&arrival)){
+                if(!QSqlDatabase::database().rollback()){
+                    qDebug()<<QSqlDatabase::database().lastError();
+                }
+                QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+            }
             for(int i =0;i<count;i++){
                 QModelIndex index0 = ui->tableView_airport->model()->index(i,0);
                 QModelIndex index1 = ui->tableView_airport->model()->index(i,1);
@@ -114,29 +121,22 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
                 QString departure_time = ui->tableView_airport->model()->data(index2).toString();
 
                 if(arrival_time==""){
-                    sql3 = QString("INSERT INTO airline (flight_id,airport_id,departure_time)"
+                    sql3 = QString("INSERT INTO airline (flight_id,airport_id,departure_time,`order`)"
                                   "VALUES('%1','%2','%3')")
-                            .arg(tran.flight_id).arg(airport_id).arg(departure_time);
-                    NULL1 ++;
+                            .arg(tran.flight_id).arg(airport_id).arg(departure_time).arg(i);
                 }
                 else if(departure_time==""){
-                    sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time)"
+                    sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,`order`)"
                                   "VALUES('%1','%2','%3')")
-                            .arg(tran.flight_id).arg(airport_id).arg(arrival_time);
-                    NULL2 ++;
+                            .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(-1);
                 }
                 else
-                    sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,departure_time)"
+                    sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,departure_time,`order`)"
                               "VALUES('%1','%2','%3','%4')")
-                        .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(departure_time);
+                        .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(departure_time).arg(i);
                 query.exec(sql3);
             }
-            if(!(NULL1==1&&NULL2==1)){
-                if(!QSqlDatabase::database().rollback()){
-                    qDebug()<<QSqlDatabase::database().lastError();
-                }
-                QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
-            }
+
             if(!QSqlDatabase::database().commit()){
                 qDebug()<<QSqlDatabase::database().lastError();
                 if(!QSqlDatabase::database().rollback()){
@@ -266,11 +266,51 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
 //}
 
 void addflight::my_pass_get(my_pass tran){
-    int count = ui->tableView_airport->model()->rowCount();
-    ui->tableView_airport->model()->insertRow(count);
-    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,0),tran.airport_id);
-    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,1),tran.arrival_time);
-    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,2),tran.departure_time);
+    if(tran.order==0){
+        if(departure==true){
+            QMessageBox::information(this,tr("failure:"),tr("The departure has already existed"));
+        }
+        else{
+            int count = 0;
+            ui->tableView_airport->model()->insertRow(count);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,0),tran.airport_id);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,1),tran.arrival_time);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,2),tran.departure_time);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,3),"upward");
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,4),"downward");
+            departure = true;
+        }
+    }
+    else if(tran.order==-1){
+        if(arrival==true){
+            QMessageBox::information(this,tr("failure:"),tr("The arrival has already existed"));
+        }
+        else{
+            int count = ui->tableView_airport->model()->rowCount();
+            ui->tableView_airport->model()->insertRow(count);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,0),tran.airport_id);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,1),tran.arrival_time);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,2),tran.departure_time);
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,3),"upward");
+            ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,4),"downward");
+            arrival=true;
+        }
+    }
+    else{
+        int count;
+        if(arrival==true)
+            count = ui->tableView_airport->model()->rowCount()-1;
+        else
+            count = ui->tableView_airport->model()->rowCount();
+        ui->tableView_airport->model()->insertRow(count);
+        ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,0),tran.airport_id);
+        ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,1),tran.arrival_time);
+        ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,2),tran.departure_time);
+        ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,3),"upward");
+        ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,4),"downward");
+    }
+
+
 
 }
 //bool addflight::sql_query3(QString flight_id){
@@ -297,7 +337,7 @@ void addflight::my_seat_get(my_seat tran){
 
 void addflight::on_ADD_clicked()
 {
-    addflight_passingairport* a = new addflight_passingairport;
+    addflight_passingairport* a = new addflight_passingairport();
     a-> show();
     connect(a,SIGNAL(sendPass(my_pass)),this,SLOT(my_pass_get(my_pass)));
 }
@@ -310,6 +350,8 @@ void addflight::on_pushButton_2_clicked()
         return;
     }
     else{
+        if(curRow==0) departure=false;
+        if(curRow==ui->tableView_airport->model()->rowCount()-1) arrival = false;
         ui->tableView_airport->model()->removeRow(curRow);
     }
 }
@@ -319,4 +361,50 @@ void addflight::on_seat_clicked()
     addseat *a = new addseat;
     a->show();
     connect(a,SIGNAL(sendseat(my_seat)),this,SLOT(my_seat_get(my_seat)));
+}
+
+void addflight::on_tableView_airport_clicked(const QModelIndex &index)
+{
+    if (index.isValid()&&index.column()==3){//upward
+        if(index.row()==0){
+            QMessageBox::information(this,tr("failure:"),tr("The current row has already be the first one"));
+        }
+        else if(index.row()==ui->tableView_airport->model()->rowCount()-1){
+            QMessageBox::information(this,tr("failure:"),tr("The arrival should always be the last one"));
+        }
+        else if(index.row()==1){
+            QMessageBox::information(this,tr("failure:"),tr("The departure should always be the first one"));
+        }
+        else{
+            for(int i=0;i<3;i++){
+                QModelIndex index0 = ui->tableView_airport->model()->index(index.row()-1,i);
+                QModelIndex index1 = ui->tableView_airport->model()->index(index.row(),i);
+                QString temp0=ui->tableView_airport->model()->data(index0).toString();
+                QString temp1=ui->tableView_airport->model()->data(index1).toString();
+                ui->tableView_airport->model()->setData(index0,temp1);
+                ui->tableView_airport->model()->setData(index1,temp0);
+            }
+        }
+    }
+    else if(index.isValid()&&index.column()==4){//downward
+        if(index.row()==ui->tableView_airport->model()->rowCount()-1){
+            QMessageBox::information(this,tr("failure:"),tr("The current row has already be the last one"));
+        }
+        else if(index.row()==0){
+            QMessageBox::information(this,tr("failure:"),tr("The departure should always be the first one"));
+        }
+        else if(index.row()==ui->tableView_airport->model()->rowCount()-2){
+            QMessageBox::information(this,tr("failure:"),tr("The arrival should always be the last one"));
+        }
+        else{
+            for(int i=0;i<3;i++){
+                QModelIndex index0 = ui->tableView_airport->model()->index(index.row()+1,i);
+                QModelIndex index1 = ui->tableView_airport->model()->index(index.row(),i);
+                QString temp0=ui->tableView_airport->model()->data(index0).toString();
+                QString temp1=ui->tableView_airport->model()->data(index1).toString();
+                ui->tableView_airport->model()->setData(index0,temp1);
+                ui->tableView_airport->model()->setData(index1,temp0);
+            }
+        }
+    }
 }

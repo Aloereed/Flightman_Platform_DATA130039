@@ -224,6 +224,19 @@
         </widget>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="price">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>116</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Set Up Price</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0">
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>

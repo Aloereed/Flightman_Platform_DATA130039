@@ -30,6 +30,7 @@ public:
 
 private slots:
     void my_seat_get(my_seat tran);
+    void my_pass_get(my_pass tran);
     void on_ADD_clicked();
 
     void on_pushButton_2_clicked();

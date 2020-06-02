@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    add_price.cpp \
     addairport.cpp \
     addcom.cpp \
     addflight.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
     stopover.cpp
 
 HEADERS += \
+    add_price.h \
     addairport.h \
     addcom.h \
     addflight.h \
@@ -56,6 +58,7 @@ HEADERS += \
     stopover.h
 
 FORMS += \
+    add_price.ui \
     addairport.ui \
     addcom.ui \
     addflight.ui \

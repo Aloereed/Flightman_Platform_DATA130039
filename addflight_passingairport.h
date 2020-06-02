@@ -17,6 +17,7 @@ typedef struct PassingInfo
     QString airport_id;
     QString arrival_time;
     QString departure_time;
+    int order;
 
 }my_pass;
 
@@ -45,6 +46,7 @@ private slots:
 
 private:
     Ui::addflight_passingairport *ui;
+    int order;
 };
 
 #endif // ADDFLIGHT_PASSINGAIRPORT_H

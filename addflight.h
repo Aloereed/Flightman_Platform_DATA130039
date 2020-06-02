@@ -37,10 +37,13 @@ public:
     ~addflight();
 private slots:
     void my_pass_get(my_pass tran);
+
     void my_seat_get(my_seat tran);
     void on_pushButton_2_clicked();
 
     void on_seat_clicked();
+
+    void on_tableView_airport_clicked(const QModelIndex &index);
 
 private:
     Ui::addflight *ui;
@@ -49,6 +52,8 @@ private:
     bool type;
     int business;
     int economy;
+    bool departure;
+    bool arrival;
 };
 typedef struct FlightInfo
 {
@@ -56,6 +61,7 @@ typedef struct FlightInfo
     QString schedule;
     QString company_id;
     QString plane_type;
+
 
 
 }my_fli;

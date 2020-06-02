@@ -31,12 +31,24 @@ modflight::~modflight()
 {
     delete ui;
 }
+void modflight::my_pass_get(my_pass tran){
+    int count = ui->tableView_airport->model()->rowCount();
+    ui->tableView_airport->model()->insertRow(count);
+    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,0),flight_id);
+    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,1),tran.airport_id);
+    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,2),tran.arrival_time);
+    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,3),tran.departure_time);
+    ui->tableView_airport->model()->setData(ui->tableView_airport->model()->index(count,4),tran.order);
 
+}
 void modflight::on_ADD_clicked()
 {
-    int rowNum = stop_over->rowCount();
-    stop_over->insertRow(rowNum);
-    stop_over->setData(stop_over->index(rowNum,0),flight_id);
+//    int rowNum = stop_over->rowCount();
+//    stop_over->insertRow(rowNum);
+//    stop_over->setData(stop_over->index(rowNum,0),flight_id);
+    addflight_passingairport* a = new addflight_passingairport;
+    a-> show();
+    connect(a,SIGNAL(sendPass(my_pass)),this,SLOT(my_pass_get(my_pass)));
 }
 
 
