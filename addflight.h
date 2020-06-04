@@ -11,9 +11,11 @@
 #include <QProgressDialog>
 #include <QSqlQuery>
 #include <QCryptographicHash>
+#include <vector>
 #include "mainplatformwindow.h"
 #include "addflight_passingairport.h"
 #include "addseat.h"
+#include "add_price.h"
 namespace Ui {
 class addflight;
 }
@@ -37,7 +39,7 @@ public:
     ~addflight();
 private slots:
     void my_pass_get(my_pass tran);
-
+    void my_price_get(std::vector<std::vector<QString>>);
     void my_seat_get(my_seat tran);
     void on_pushButton_2_clicked();
 
@@ -45,10 +47,13 @@ private slots:
 
     void on_tableView_airport_clicked(const QModelIndex &index);
 
+    void on_price_clicked();
+
 private:
     Ui::addflight *ui;
     QStandardItemModel *airport;
     QItemSelectionModel *theselection;
+    std::vector<std::vector<QString>> price;
     bool type;
     int business;
     int economy;

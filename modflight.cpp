@@ -43,12 +43,12 @@ void modflight::my_pass_get(my_pass tran){
 }
 void modflight::on_ADD_clicked()
 {
-//    int rowNum = stop_over->rowCount();
-//    stop_over->insertRow(rowNum);
-//    stop_over->setData(stop_over->index(rowNum,0),flight_id);
-    addflight_passingairport* a = new addflight_passingairport;
-    a-> show();
-    connect(a,SIGNAL(sendPass(my_pass)),this,SLOT(my_pass_get(my_pass)));
+    int rowNum = stop_over->rowCount();
+    stop_over->insertRow(rowNum);
+    stop_over->setData(stop_over->index(rowNum,0),flight_id);
+//    addflight_passingairport* a = new addflight_passingairport;
+//    a-> show();
+//    connect(a,SIGNAL(sendPass(my_pass)),this,SLOT(my_pass_get(my_pass)));
 }
 
 
@@ -88,7 +88,7 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
         plane_type = ui->planetype->text();
         company_id = ui->company_id->text();
 
-        QProgressDialog dialog(tr("Adding"),tr("cancel"), 0, 30000, this);
+        QProgressDialog dialog(tr("Modifying"),tr("cancel"), 0, 30000, this);
         dialog.setWindowTitle(tr("process"));
         dialog.setWindowModality(Qt::WindowModal);
         dialog.show();

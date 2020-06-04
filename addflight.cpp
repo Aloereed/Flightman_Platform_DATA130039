@@ -8,18 +8,18 @@ addflight::addflight(QWidget *parent) :
     ui(new Ui::addflight)
 {
     ui->setupUi(this);
-    airport = new QStandardItemModel(0,3,this);
+    airport = new QStandardItemModel(0,5,this);
     theselection = new QItemSelectionModel(airport);
     //connect(theselection,SIGNAL(currentChanged(QModelIndex,QModelIndex)),this,SLOT(on_currentChanged(QModelIndex,QModelIndex)));
     ui->tableView_airport->setModel(airport);
     ui->tableView_airport->setSelectionModel(theselection);
     ui->tableView_airport->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->tableView_airport->setSelectionBehavior(QAbstractItemView::SelectItems);
-    QStringList headerList ={"airport_id","arrival_time","departure_time","upward","downward"};
+    QStringList headerList ={tr("airport_id"),tr("arrival_time"),tr("departure_time"),tr("upward"),tr("downward")};
     airport->setHorizontalHeaderLabels(headerList);
     ui->tableView_airport->resizeColumnsToContents();
-    bool departure=false;
-    bool arrival=false;
+    departure=false;
+    arrival=false;
 
 }
 
@@ -90,6 +90,7 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             QString sql1;
             QString sql2;
             QString sql3;
+            QString sql4;
             sql1 = QString("INSERT INTO flight (flight_id,schedule,plane_type,company_id)"
                       "VALUES('%1','%2','%3','%4')")
                 .arg(tran.flight_id).arg(tran.schedule).arg(tran.plane_type).arg(tran.company_id);
@@ -105,6 +106,21 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             }
             query.exec(sql1);
             query.exec(sql2);
+            for(int i=0;i<price.size();i++){
+                if(price[i][2]=="business"){//if business, set class=1
+                    sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
+                              "VALUES('%1',%2,%3,%4,%5)")
+                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
+                }
+                else{
+                    sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
+                              "VALUES('%1',%2,%3,%4,%5)")
+                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(0).arg(price[i][3]);
+                }
+                query.exec(sql4);
+            }
+
+
             int count = ui->tableView_airport->model()->rowCount();
             if(!(departure&&arrival)){
                 if(!QSqlDatabase::database().rollback()){
@@ -345,13 +361,17 @@ void addflight::on_ADD_clicked()
 void addflight::on_pushButton_2_clicked()
 {
     int curRow = ui->tableView_airport->currentIndex().row();
+    QModelIndex index1 = ui->tableView_airport->model()->index(curRow,1);
+    QModelIndex index2 = ui->tableView_airport->model()->index(curRow,2);
+    QString temp1=ui->tableView_airport->model()->data(index1).toString();
+    QString temp2=ui->tableView_airport->model()->data(index2).toString();
     int ok = QMessageBox::warning(this,tr("Delete the current row!"),tr("Are you sure?"),QMessageBox::Yes,QMessageBox::No);
     if(ok==QMessageBox::No){
         return;
     }
     else{
-        if(curRow==0) departure=false;
-        if(curRow==ui->tableView_airport->model()->rowCount()-1) arrival = false;
+        if(temp1==NULL) departure=false;
+        if(temp2==NULL) arrival = false;
         ui->tableView_airport->model()->removeRow(curRow);
     }
 }
@@ -407,4 +427,69 @@ void addflight::on_tableView_airport_clicked(const QModelIndex &index)
             }
         }
     }
+}
+void addflight::my_price_get(std::vector<std::vector<QString>> whole_price){
+   for(int i=0;i<price.size();i++){
+       price[i][3]=whole_price[i][3];
+   }
+}
+
+void addflight::on_price_clicked()
+{
+        price.clear();
+        int count=ui->tableView_airport->model()->rowCount();
+        for(int i=0;i<count;i++){
+            for(int j=i+1;j<count;j++){
+                std::vector<QString> row1;
+                std::vector<QString> row2;
+                QModelIndex index = ui->tableView_airport->model()->index(i,0);
+                QString temp=ui->tableView_airport->model()->data(index).toString();
+                row1.push_back(temp);
+                row2.push_back(temp);
+                index = ui->tableView_airport->model()->index(j,0);
+                temp=ui->tableView_airport->model()->data(index).toString();
+                row1.push_back(temp);
+                row2.push_back(temp);
+                row1.push_back("business");
+                row1.push_back("NULL");
+                row2.push_back("economy");
+                row2.push_back("NULL");
+                if(i==count-1){
+                    row1.push_back(QString::number(-1));
+                    row2.push_back(QString::number(-1));
+                }
+                else{
+                    row1.push_back(QString::number(i));
+                    row2.push_back(QString::number(i));
+                }
+                if(j==count-1){
+                    row1.push_back(QString::number(-1));
+                    row2.push_back(QString::number(-1));
+                }
+                else{
+                    row1.push_back(QString::number(j));
+                    row2.push_back(QString::number(j));
+                }
+
+
+                price.push_back(row1);
+                price.push_back(row2);
+            }
+        }
+
+
+//    QStringList price_list;
+//    int count=ui->tableView_airport->model()->rowCount();
+//    for(int i=0;i<count;i++){
+//        QModelIndex index = ui->tableView_airport->model()->index(i,0);
+//        QString temp=ui->tableView_airport->model()->data(index).toString();
+//        price_list.push_back(temp);
+//    }
+
+
+    add_price* a = new add_price(price);
+    //add_price* a = new add_price(price_list);
+    a-> show();
+    connect(a,SIGNAL(sendprice(std::vector<std::vector<QString>>)),this,SLOT(my_price_get(std::vector<std::vector<QString>>)));
+
 }
