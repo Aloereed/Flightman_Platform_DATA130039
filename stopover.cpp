@@ -12,7 +12,13 @@ stopover::stopover(QWidget *parent,QString flight_id_input) :
     stop_over->setTable("airline");
     stop_over->setEditStrategy(QSqlTableModel::OnManualSubmit);
     stop_over->setFilter(QObject::tr("flight_id='%1'").arg(flight_id));
+    stop_over->setSort(4,Qt::AscendingOrder);
     stop_over->select();
+    stop_over->setHeaderData(0,Qt::Horizontal,QString::fromUtf8(tr("Flight ID").toUtf8()));
+    stop_over->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("Airport Code").toUtf8()));
+    stop_over->setHeaderData(2,Qt::Horizontal,QString::fromUtf8(tr("Arrival Time").toUtf8()));
+    stop_over->setHeaderData(3,Qt::Horizontal,QString::fromUtf8(tr("Depature Time").toUtf8()));
+    stop_over->setHeaderData(4,Qt::Horizontal,QString::fromUtf8(tr("Order").toUtf8()));
     ui->tableView->setModel(stop_over);
 
 
