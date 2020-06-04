@@ -23,6 +23,7 @@ modflight::modflight(QWidget *parent,QString flight_id_input,QString schedule_in
     stop_over->setTable("airline");
     stop_over->setEditStrategy(QSqlTableModel::OnManualSubmit);
     stop_over->setFilter(QObject::tr("flight_id='%1'").arg(flight_id));
+    stop_over->setSort(4,Qt::AscendingOrder);
     stop_over->select();
     ui->tableView_airport->setModel(stop_over);
 }
