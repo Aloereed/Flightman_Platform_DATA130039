@@ -84,23 +84,11 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
+RESOURCES += \
     platform_zh_CN.qm \
     style.qss
 
-win32 {
-COPY_DEST = $$replace(OUT_PWD, /, \\)
-SRC_DEST = $$replace(PWD, /, \\)
-system("copy /y $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\style.qss")
-system("copy /y $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\platform_zh_CN.qm")
-system("copy /y  $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\debug\\style.qss")
-system("copy /y $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\debug\\platform_zh_CN.qm")
-system("copy /y $$SRC_DEST\\style.qss $$COPY_DEST\\$$compiled\\release\\style.qss")
-system("copy /y $$SRC_DEST\\platform_zh_CN.qm $$COPY_DEST\\$$compiled\\release\\platform_zh_CN.qm")
-}
+ANDROID_EXTRA_LIBS +=    \ # modify the path
+        $$PWD/libmariadb.so
 
-mac {
-system("cp  $$PWD/style.qss $$OUT_PWD/$$compiled/platform.app/Contents/MacOS/style.qss")
-system("cp $$PWD/platform_zh_CN.qm $$OUT_PWD/$$compiled/platform.app/Contents/MacOS/platform_zh_CN.qm")
-}
 

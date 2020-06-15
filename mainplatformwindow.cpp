@@ -50,7 +50,7 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui(new Ui::mainplatformwindow)
 {
     ui->setupUi(this);
-    QFile styleFile(QApplication::applicationDirPath()+"/style.qss");//使用qss文件
+    QFile styleFile(":/style.qss");//使用qss文件
     styleFile.open(QIODevice::ReadOnly);//只读
     QString setStyleSheet(styleFile.readAll());//读取所有的
     ui->tabWidget->setStyleSheet(setStyleSheet);//设置样式
@@ -675,7 +675,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
     }
     case 1:{
         qApp->removeTranslator(&translator);
-        QString langdir=QApplication::applicationDirPath()+"/platform_zh_CN.qm";
+        QString langdir=":/platform_zh_CN.qm";
         translator.load(langdir);
         qApp->installTranslator(&translator);
 
@@ -685,7 +685,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
     }
     default :{
         qApp->removeTranslator(&translator);
-        QString langdir=QApplication::applicationDirPath()+"/platform_"+QLocale::system().name()+".qm";
+        QString langdir=":/platform_"+QLocale::system().name()+".qm";
         translator.load(langdir);
         qApp->installTranslator(&translator);
 

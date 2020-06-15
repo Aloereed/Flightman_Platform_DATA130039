@@ -10,8 +10,9 @@
 #include <QTranslator>
 #include <QDateTime>
 #include<QProgressDialog>
+#include<QFileInfo>
 #include "mainplatformwindow.h"
-QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+QSqlDatabase db;
 QTranslator translator;
 mainplatformwindow *w;
 my_admin tranadmin;
@@ -22,7 +23,7 @@ loginwindow::loginwindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
-    QString langdir=QApplication::applicationDirPath()+"/platform_"+QLocale::system().name()+".qm";
+    QString langdir=":/platform_"+QLocale::system().name()+".qm";
     translator.load(langdir);
     qApp->installTranslator(&translator);
     ui->retranslateUi(this);
@@ -41,6 +42,7 @@ loginwindow::~loginwindow()
 
 void loginwindow::on_commandLinkButton_clicked()
 {
+    db = QSqlDatabase::addDatabase("QMYSQL");
     ui->progressBar->setMaximum(0);
 /*    if(ui->checkBox->isChecked()==true){
 
@@ -120,7 +122,8 @@ void loginwindow::on_commandLinkButton_clicked()
       }
       else
       {
-          QMessageBox::critical(this,"Server is wrong, reset please.",db.lastError().text());
+          QFileInfo filedir(QApplication::applicationDirPath()+"/libplugins_sqldrivers_qsqlmysql_armeabi-v7a.so");
+            QMessageBox::critical(this,QApplication::applicationDirPath()+"/libplugins_sqldrivers_qsqlmysql_armeabi-v7a.so",db.lastError().text());
           return;
       }
 }
