@@ -122,8 +122,7 @@ void loginwindow::on_commandLinkButton_clicked()
       }
       else
       {
-          QFileInfo filedir(QApplication::applicationDirPath()+"/libplugins_sqldrivers_qsqlmysql_armeabi-v7a.so");
-            QMessageBox::critical(this,QApplication::applicationDirPath()+"/libplugins_sqldrivers_qsqlmysql_armeabi-v7a.so",db.lastError().text());
+            QMessageBox::critical(this,"Server or client meets trouble!",db.lastError().text());
           return;
       }
 }
