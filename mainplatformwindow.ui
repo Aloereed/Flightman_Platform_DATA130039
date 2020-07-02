@@ -96,7 +96,7 @@
              <item row="0" column="0">
               <widget class="QPushButton" name="pushButton_5">
                <property name="text">
-                <string>Generate Realtime Flight Infomation in</string>
+                <string>Generate Flight Arrangement Infomation in</string>
                </property>
               </widget>
              </item>
@@ -113,7 +113,7 @@
              <item row="1" column="0">
               <widget class="QPushButton" name="pushButton_6">
                <property name="text">
-                <string>Delete all the Realtime Flight Infomation</string>
+                <string>Delete All Flight Arrangement Infomation</string>
                </property>
               </widget>
              </item>
