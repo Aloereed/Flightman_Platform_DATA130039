@@ -113,6 +113,8 @@ private slots:
 
     void on_pushButton_6_clicked();
 
+    void on_listWidget_7_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)

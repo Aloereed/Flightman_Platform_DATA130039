@@ -12,6 +12,7 @@
 #include "modflight.h"
 #include "querydialog.h"
 #include "genarran.h"
+#include "addfliarrange.h"
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
@@ -27,6 +28,8 @@ stopover *stop_over;
 adduser *a;
 addflight *add_flight;
 addairport *add_airport;
+addfliarrange *add_fliarrange;
+
 moduser *modification_user;
 modcom *modification_comp;
 modflight *modification_flight;
@@ -708,4 +711,18 @@ void mainplatformwindow::on_pushButton_6_clicked()
 {
     DropArran drop(this);
     drop.run();
+}
+
+void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item)
+{
+    if(item->text()==tr("Add")){
+        add_fliarrange=new addfliarrange;
+        add_fliarrange->show();
+    }else if(item->text()==tr("Refresh")){
+
+
+    }else if(item->text()==tr("Search")){
+
+    }
+
 }

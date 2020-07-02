@@ -127,6 +127,7 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
                     qDebug()<<QSqlDatabase::database().lastError();
                 }
                 QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+                return;
             }
             for(int i =0;i<count;i++){
                 QModelIndex index0 = ui->tableView_airport->model()->index(i,0);
@@ -161,7 +162,6 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
              }
             else{
                 QMessageBox::information(this,tr("hint:"),tr("add successfully"));
-                w->flightRefresh();
                 this->close();
             }
         }

@@ -20,6 +20,7 @@ SOURCES += \
     add_price.cpp \
     addairport.cpp \
     addcom.cpp \
+    addfliarrange.cpp \
     addflight.cpp \
     addflight_passingairport.cpp \
     addseat.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     add_price.h \
     addairport.h \
     addcom.h \
+    addfliarrange.h \
     addflight.h \
     addflight_passingairport.h \
     addseat.h \
@@ -61,6 +63,7 @@ FORMS += \
     add_price.ui \
     addairport.ui \
     addcom.ui \
+    addfliarrange.ui \
     addflight.ui \
     addflight_passingairport.ui \
     addseat.ui \
