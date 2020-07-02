@@ -26,7 +26,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -477,7 +477,7 @@
        </widget>
        <widget class="QWidget" name="tab_6">
         <attribute name="title">
-         <string>Realtime Flight Info</string>
+         <string>flight arrangement</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <item>
