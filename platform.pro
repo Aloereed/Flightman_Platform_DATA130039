@@ -31,6 +31,7 @@ SOURCES += \
     mainplatformwindow.cpp \
     modairport.cpp \
     modcom.cpp \
+    modfliarrange.cpp \
     modflight.cpp \
     moduser.cpp \
     querydialog.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     mainplatformwindow.h \
     modairport.h \
     modcom.h \
+    modfliarrange.h \
     modflight.h \
     moduser.h \
     querydialog.h \
@@ -72,6 +74,7 @@ FORMS += \
     mainplatformwindow.ui \
     modairport.ui \
     modcom.ui \
+    modfliarrange.ui \
     modflight.ui \
     moduser.ui \
     querydialog.ui \

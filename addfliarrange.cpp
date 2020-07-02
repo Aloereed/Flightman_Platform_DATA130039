@@ -68,6 +68,7 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
                     qDebug()<<QSqlDatabase::database().lastError();
                 }
                 QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+                return;
             }
 
             QString sql1;
