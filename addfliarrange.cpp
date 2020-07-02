@@ -80,6 +80,7 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
             sqlselect=QString("SELECT MAX(`order`),`type`,`business_No.`,`economy_No.` FROM flight_airline_seat WHERE "
                              "flight_id ='%1'").arg(tran.flight_id);
             query.exec(sqlselect);
+            query.next();
             int order = query.value(0).toInt();
             int type = query.value(1).toInt();
             int business = query.value(2).toInt();
@@ -87,10 +88,10 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
 
             QString sql2;
             for(int i = 0; i<=order;i++){
-                sql2 = QString("INSERT INTO `seat_amount`(flight_id,order,departure_date,`type`,`seats_left`)"
+                sql2 = QString("INSERT INTO `seat_amount`(flight_id,`order`,departure_date,`type`,`seats_left`)"
                                "VALUES('%1',%2,'%3',%4,%5)").arg(tran.flight_id).arg(i).arg(departure_time).arg(0).arg(business);
                 query.exec(sql2);
-                sql2 = QString("INSERT INTO `seat_amount`(flight_id,order,departure_date,type,seats_left)"
+                sql2 = QString("INSERT INTO `seat_amount`(flight_id,`order`,departure_date,`type`,`seats_left`)"
                                "VALUES('%1',%2,'%3',%4,%5)").arg(tran.flight_id).arg(i).arg(departure_time).arg(1).arg(economy);
                 query.exec(sql2);
 

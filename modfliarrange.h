@@ -24,7 +24,6 @@ class modfliarrange : public QWidget
 
 public:
     explicit modfliarrange(QWidget *parent = nullptr);
-    explicit modfliarrange(QWidget *parent = nullptr);
     ~modfliarrange();
 
 private:
