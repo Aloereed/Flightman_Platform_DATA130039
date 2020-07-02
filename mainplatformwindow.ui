@@ -26,7 +26,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>5</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -637,7 +637,7 @@
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
-     <string>&amp;File</string>
+     <string>&amp;Account</string>
     </property>
     <addaction name="actionLog_out"/>
    </widget>
