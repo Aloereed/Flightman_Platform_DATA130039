@@ -41,41 +41,50 @@ void GenArran::run(){
                 query1.exec(sql1);
                 while(query1.next()){
                     QString flight_id = query1.value(0).toString();
-                    QString airport_id = query1.value(1).toString();
-                    QString departure_time = query1.value(2).toString();
-                    QString name = QString("seat_")+flight_id+QString("_")+airport_id+QString("_")+now.toString("yyyy-MM-dd");
-                    departure_time = now.toString("yyyy-MM-dd")+QString(" ")+departure_time;
+                    //QString airport_id = query1.value(1).toString();
+                    int order=query1.value(1).toInt();
                     int type = query1.value(4).toInt();
                     int row_bus = query1.value(5).toInt();
                     int row_eco = query1.value(6).toInt();
-                    QString status = QString("pla");
-                    int discount = 1;
+                    QString departure_time = query1.value(2).toString();
                     QString sql2,sql3,sql4;
-                    sql2 = QString("INSERT INTO flight_arrangment (flight_id,departure_datetime,`status`,discount)"
+                    //QString name = QString("seat_")+flight_id+QString("_")+airport_id+QString("_")+now.toString("yyyy-MM-dd");
+                    departure_time = now.toString("yyyy-MM-dd");//+QString(" ")+departure_time;
+                    if(order==0){
+                    QString status = QString("PLA");
+                    int discount = 1;
+
+                    sql2 = QString("INSERT INTO flight_arrangment (flight_id,departure_date,`status`,discount)"
                             "VALUES('%1','%2','%3',%4)")
                     .arg(flight_id).arg(departure_time).arg(status).arg(discount);
                     ok=query.exec(sql2);
-                    sql3=QString("CREATE TABLE `%1` (seat_id char(3) PRIMARY KEY,status int(1) NULL)").arg(name);
+                    sql3=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(order).arg(departure_time).arg(0).arg(row_bus*(type?6:4));
                     ok=query.exec(sql3);
+                    sql3=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(order).arg(departure_time).arg(1).arg(row_bus*(type?9:6));
+                    ok=query.exec(sql3);
+                    }
+
                     if(type==1){
                         int j=0;
                         for(;j<row_bus;j++){
-                            QApplication::processEvents();
+                            //QApplication::processEvents();
                             QString row = QString::number(j+1,10);
                             QStringList bus={"A","C","D","G","H","K"};
-                            for(int k=0;k<6;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+bus[k]).arg(0);
+                            for(int k=0;k<6&&order!=-1;k++){
+
+                                    sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                                    "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(order)).arg(departure_time).arg(row+bus[k]).arg(0);
                                 ok=query.exec(sql4);
+
                             }
                         }
                         for(j=0;j<row_eco;j++){
-                            QApplication::processEvents();
+                            //QApplication::processEvents();
                             QString row = QString::number(j+1+row_bus,10);
                             QStringList eco={"A","B","C","D","E","G","H","J","K"};
-                            for(int k=0;k<9;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+eco[k]).arg(0);
+                            for(int k=0;k<9&&order!=-1;k++){
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                                "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(order)).arg(departure_time).arg(row+eco[k]).arg(0);
                                 ok=query.exec(sql4);
                             }
                         }
@@ -83,22 +92,22 @@ void GenArran::run(){
                     else if(type==0){
                         int j=0;
                         for(;j<row_bus;j++){
-                            QApplication::processEvents();
+                            //QApplication::processEvents();
                             QString row = QString::number(j+1,10);
                             QStringList bus={"A","C","J","L"};
-                            for(int k=0;k<4;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+bus[k]).arg(0);
+                            for(int k=0;k<4&&order!=-1;k++){
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                                "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(order)).arg(departure_time).arg(row+bus[k]).arg(0);
                                 query.exec(sql4);
                             }
                         }
                         for(j=0;j<row_eco;j++){
-                            QApplication::processEvents();
+                            //QApplication::processEvents();
                             QString row = QString::number(j+1+row_bus,10);
                             QStringList eco={"A","B","C","J","K","L"};
-                            for(int k=0;k<6;k++){
-                                sql4=QString("INSERT INTO `%1` (seat_id,status)"
-                                                "VALUES('%2',%3)").arg(name).arg(row+eco[k]).arg(0);
+                            for(int k=0;k<6&&order!=-1;k++){
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                                "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(order)).arg(departure_time).arg(row+eco[k]).arg(0);
                                 query.exec(sql4);
                             }
                         }
