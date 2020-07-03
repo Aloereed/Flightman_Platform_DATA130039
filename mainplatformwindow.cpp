@@ -782,7 +782,7 @@ void mainplatformwindow::on_actionE_xit_triggered(){
 
 void mainplatformwindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-    if(item->text()==tr("Add")){
+    if(item->text()==tr("Add")&&tranadmin.satype){
         add_admin = new addadmin;
         add_admin->show();
     }else if(item->text()==tr("Refresh")){
