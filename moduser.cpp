@@ -12,7 +12,7 @@ moduser::moduser(QWidget *parent,QString ID_input,QString name_input,QString mem
     ui->ID->setText(ID);
     ui->ID->setReadOnly(true);
     ui->name->setText(name);
-    if(membership=="1")
+    if(membership=="√")
         ui->checkVIPBox->setChecked(true);
     else
         ui->checkVIPBox->setChecked(false);
