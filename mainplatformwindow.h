@@ -46,6 +46,7 @@ public:
     void _init();
     void userRefresh();
     void flightRefresh();
+    void fliarrangeRefresh();
     void airportRefresh(int page =1);
     void compRefresh(int page=1);
     void adminRefresh();
@@ -127,6 +128,8 @@ private slots:
 
     void on_comboBox_2_activated(int index);
 
+    void on_tableView_7_clicked(const QModelIndex &index);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
@@ -145,6 +148,10 @@ public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myadminmodel:public QSqlQueryModel{
+public:
+    QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
+};
+class myfliarrangemodel:public QSqlQueryModel{
 public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };

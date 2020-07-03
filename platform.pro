@@ -39,6 +39,7 @@ SOURCES += \
     querydialog.cpp \
     queryplugin.cpp \
     search_result.cpp \
+    show_seat_a.cpp \
     stopover.cpp
 
 HEADERS += \
@@ -63,6 +64,7 @@ HEADERS += \
     querydialog.h \
     queryplugin.h \
     search_result.h \
+    show_seat_a.h \
     stopover.h
 
 FORMS += \
@@ -86,6 +88,7 @@ FORMS += \
     querydialog.ui \
     queryplugin.ui \
     search_result.ui \
+    show_seat_a.ui \
     stopover.ui
 
 TRANSLATIONS += \

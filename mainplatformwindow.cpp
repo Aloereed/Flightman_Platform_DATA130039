@@ -15,6 +15,7 @@
 #include "addfliarrange.h"
 #include "addadmin.h"
 #include "modadmin.h"
+#include "show_seat_a.h"
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
@@ -32,6 +33,7 @@ addflight *add_flight;
 addairport *add_airport;
 addfliarrange *add_fliarrange;
 addadmin *add_admin;
+show_seat_a *show_seat;
 
 modadmin *modification_admin;
 moduser *modification_user;
@@ -99,6 +101,8 @@ void mainplatformwindow::_init(){
     userRefresh();
 
     flightRefresh();
+
+    fliarrangeRefresh();
 
     //compRefresh();
 
@@ -183,6 +187,26 @@ void mainplatformwindow::ExecAdd(QVariantMap userinfo){
 
 void mainplatformwindow::on_listWidget_user_currentRowChanged(int currentRow)
 {
+
+}
+void mainplatformwindow::fliarrangeRefresh(){
+    myfliarrangemodel *fliarrangemodel = new myfliarrangemodel;
+    fliarrangemodel->setQuery("select * from flight_arrangement");
+    ui->tableView_7->setModel(fliarrangemodel);
+
+    fliarrangemodel->insertColumn(4);
+    fliarrangemodel->setHeaderData(4,Qt::Horizontal,QString::fromUtf8(tr("Seat amount").toUtf8()));
+    fliarrangemodel->insertColumn(5);
+    fliarrangemodel->setHeaderData(5,Qt::Horizontal,QString::fromUtf8(tr("Seat arrangement").toUtf8()));
+    fliarrangemodel->insertColumn(6);
+    fliarrangemodel->setHeaderData(6,Qt::Horizontal,QString::fromUtf8(tr("Modify").toUtf8()));
+    fliarrangemodel->insertColumn(7);
+    fliarrangemodel->setHeaderData(7,Qt::Horizontal,QString::fromUtf8(tr("Delete").toUtf8()));
+    fliarrangemodel->setHeaderData(0,Qt::Horizontal,QString::fromUtf8(tr("Departure Date").toUtf8()));
+    fliarrangemodel->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("Flight ID").toUtf8()));
+    fliarrangemodel->setHeaderData(2,Qt::Horizontal,QString::fromUtf8(tr("Status").toUtf8()));
+    fliarrangemodel->setHeaderData(3,Qt::Horizontal,QString::fromUtf8(tr("Discount").toUtf8()));
+    ui->tableView_7->resizeColumnsToContents();
 
 }
 void mainplatformwindow::airportRefresh(int page){
@@ -603,6 +627,24 @@ QVariant myusermodel::data(const QModelIndex &item, int role) const{
     }
     return value;
 }
+QVariant myfliarrangemodel::data(const QModelIndex &item, int role) const{
+    QVariant value = QSqlQueryModel::data(item, role);
+    if (role == Qt::BackgroundColorRole){
+        if(item.column()==4||item.column()==5||item.column()==6||item.column()==7)
+            return QVariant::fromValue(QColor(225,225,225)); //第一个属性的字体颜色为灰色
+    }
+    if (role == Qt::DisplayRole){
+        if(item.column()==4)
+            return QVariant::fromValue(tr("Click to View"));
+        else if(item.column()==5)
+            return QVariant::fromValue(tr("     Click to View"));
+        else if(item.column()==6)
+            return QVariant::fromValue(tr("Modify"));
+        else if(item.column()==7)
+            return QVariant::fromValue(tr("Delete"));
+    }
+    return value;
+}
 QVariant myadminmodel::data(const QModelIndex &item, int role) const{
     QVariant value = QSqlQueryModel::data(item, role);
     if (role == Qt::BackgroundColorRole){
@@ -834,5 +876,26 @@ void mainplatformwindow::on_comboBox_2_activated(int index)
             qApp->setStyleSheet(style_sheet);
             break;
         }
+    }
+}
+
+void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
+{
+    if(index.isValid()&&index.column()==4){//seat_amount
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_7->model();
+        QString ID = model->data(model->index(row,1)).toString();
+        QString departure_date = model->data(model->index(row,0)).toString();
+        show_seat=new show_seat_a("seat_amount",departure_date,ID);
+        show_seat->show();
+    }
+    else if(index.isValid()&&index.column()==5){//seat_arrangement
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_7->model();
+        QString ID = model->data(model->index(row,1)).toString();
+        QString departure_date = model->data(model->index(row,0)).toString();
+        show_seat=new show_seat_a("seat_arrangement",departure_date,ID);
+        show_seat->show();
+
     }
 }
