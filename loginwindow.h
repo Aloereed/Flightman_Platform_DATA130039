@@ -27,5 +27,6 @@ typedef struct AdminInfo
     QString ID;
     QString name;
     QString passwordmd5;
+    bool satype;
 }my_admin;
 #endif // LOGINWINDOW_H

@@ -100,9 +100,10 @@ void loginwindow::on_commandLinkButton_clicked()
           tranadmin.ID = ui->lineEdit->text();
           tranadmin.passwordmd5=strPwdMd5;
           QSqlQuery login;
-          login.exec("select adminpwd,adminName from admin where adminID=\'"+tranadmin.ID+"\'");
+          login.exec("select adminpwd,adminName,satype from admin where adminID=\'"+tranadmin.ID+"\'");
           login.next();
           if(tranadmin.passwordmd5==login.value(0).toString()){
+          tranadmin.satype=login.value(2).toBool();
           tranadmin.name=login.value(1).toString();
           if(ui->checkBox_2->isChecked()){
               settings.setValue("AdminID",tranadmin.ID);

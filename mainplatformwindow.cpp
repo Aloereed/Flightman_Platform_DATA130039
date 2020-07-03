@@ -105,12 +105,10 @@ void mainplatformwindow::_init(){
 
     localtimer->start();
 
-    QSqlQueryModel *adminmodel = new QSqlQueryModel;
-    adminmodel->setQuery(QString("select name as Name,language as Language,createdate as [Create Date], updatedate as [Update Date] FROM master.dbo.syslogins where sysadmin=1 and isntname=0"));
-    ui->tableView_6->setModel(adminmodel);
+    adminRefresh();
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
-
+    ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
 }
 
 
@@ -185,12 +183,12 @@ void mainplatformwindow::on_listWidget_user_currentRowChanged(int currentRow)
 void mainplatformwindow::airportRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from airport");
     ui->statusBar->showMessage(tr("Querying..."));
-
+    int itemsperpage=settings.value("itemsperpage",20).toInt();
     query.next();
-    ui->horizontalSlider_2->setMaximum(query.value(0).toInt()/20+1);
-    int item2 = 20*(page-1);
+    ui->horizontalSlider_2->setMaximum(query.value(0).toInt()/itemsperpage+1);
+    int item2 = itemsperpage*(page-1);
     mycompmodel *apmodel = new mycompmodel;
-    apmodel->setQuery("select * from airport limit "+QString::number(item2)+","+"20");
+    apmodel->setQuery("select * from airport limit "+QString::number(item2)+","+QString::number(itemsperpage));
     ui->tableView_5->setModel(apmodel);
     apmodel->insertColumn(3);//这里是在模型的第4列后面插入一列
     apmodel->setHeaderData(3,Qt::Horizontal,QString::fromUtf8(tr("Modify").toUtf8()));
@@ -200,6 +198,22 @@ void mainplatformwindow::airportRefresh(int page){
     apmodel->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("Airport Name").toUtf8()));
     apmodel->setHeaderData(2,Qt::Horizontal,QString::fromUtf8(tr("Airport City").toUtf8()));
     ui->tableView_5->resizeColumnsToContents();
+}
+void mainplatformwindow::adminRefresh(){
+    if(tranadmin.satype){
+        myadminmodel *admodel = new myadminmodel;
+        admodel->setQuery("select adminID,adminName,satype from admin");
+        ui->tableView_6->setModel(admodel);
+        admodel->insertColumn(3);//这里是在模型的第4列后面插入一列
+        admodel->setHeaderData(3,Qt::Horizontal,QString::fromUtf8(tr("Modify").toUtf8()));
+        admodel->insertColumn(4);
+        admodel->setHeaderData(4,Qt::Horizontal,QString::fromUtf8(tr("Delete").toUtf8()));
+        admodel->setHeaderData(0,Qt::Horizontal,QString::fromUtf8(tr("Admin ID").toUtf8()));
+        admodel->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("Admin Name").toUtf8()));
+        admodel->setHeaderData(2,Qt::Horizontal,QString::fromUtf8(tr("SA Type").toUtf8()));
+        ui->tableView_6->resizeColumnsToContents();
+    }else
+        ui->label_5->setText("Only For Super Administrator, but you are not a SA.");
 }
 void mainplatformwindow::flightRefresh(){
     myflightmodel *flightmodel = new myflightmodel;
@@ -226,14 +240,14 @@ void mainplatformwindow::flightRefresh(){
 void mainplatformwindow::compRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from company");
     ui->statusBar->showMessage(tr("Querying..."));
-
+    int itemsperpage=settings.value("itemsperpage",20).toInt();
     query.next();
-    ui->horizontalSlider->setMaximum(query.value(0).toInt()/20+1);
+    ui->horizontalSlider->setMaximum(query.value(0).toInt()/itemsperpage+1);
     //compmapper= new QSignalMapper;
     //compmapper_mod = new QSignalMapper;
     mycompmodel *compmodel = new mycompmodel;
-    int item2 = 20*(page-1);
-    compmodel->setQuery("select * from company limit "+QString::number(item2)+","+"20");
+    int item2 = itemsperpage*(page-1);
+    compmodel->setQuery("select * from company limit "+QString::number(item2)+","+QString::number(itemsperpage));
     comptable->setModel(compmodel);
 
     compmodel->insertColumn(3);//这里是在模型的第4列后面插入一列
@@ -568,7 +582,7 @@ QVariant myusermodel::data(const QModelIndex &item, int role) const{
         if(item.column()==4)
             return QVariant::fromValue(QColor(225,225,225));
         else if(item.column()==5)
-            return QVariant::fromValue(QColor(225,225,225));//第一个属性的字体颜色为红色
+            return QVariant::fromValue(QColor(225,225,225));//第一个属性的字体颜色为灰色
     }
     if (role == Qt::DisplayRole){
         if(item.column()==2){
@@ -580,6 +594,28 @@ QVariant myusermodel::data(const QModelIndex &item, int role) const{
         if(item.column()==4)
             return QVariant::fromValue(tr("Modify"));
         else if(item.column()==5)
+            return QVariant::fromValue(tr("Delete"));
+    }
+    return value;
+}
+QVariant myadminmodel::data(const QModelIndex &item, int role) const{
+    QVariant value = QSqlQueryModel::data(item, role);
+    if (role == Qt::BackgroundColorRole){
+        if(item.column()==3)
+            return QVariant::fromValue(QColor(225,225,225));
+        else if(item.column()==4)
+            return QVariant::fromValue(QColor(225,225,225));//第一个属性的字体颜色为灰色
+    }
+    if (role == Qt::DisplayRole){
+        if(item.column()==2){
+            if(QSqlQueryModel::data(item).toInt()==0)
+                return QVariant::fromValue(QString("×"));
+            else
+                return QVariant::fromValue(QString("√"));
+        }
+        if(item.column()==3)
+            return QVariant::fromValue(tr("Modify"));
+        else if(item.column()==4)
             return QVariant::fromValue(tr("Delete"));
     }
     return value;
@@ -725,4 +761,11 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item)
 
     }
 
+}
+
+void mainplatformwindow::on_spinBox_valueChanged(int arg1)
+{
+    settings.setValue("itemsperpage",arg1);
+    flightRefresh();
+    airportRefresh();
 }

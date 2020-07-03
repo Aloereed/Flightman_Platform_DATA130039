@@ -48,6 +48,7 @@ public:
     void flightRefresh();
     void airportRefresh(int page =1);
     void compRefresh(int page=1);
+    void adminRefresh();
     ~mainplatformwindow();
 
 public slots:
@@ -115,6 +116,8 @@ private slots:
 
     void on_listWidget_7_itemClicked(QListWidgetItem *item);
 
+    void on_spinBox_valueChanged(int arg1);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
@@ -129,6 +132,10 @@ public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myflightmodel:public QSqlQueryModel{
+public:
+    QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
+};
+class myadminmodel:public QSqlQueryModel{
 public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
