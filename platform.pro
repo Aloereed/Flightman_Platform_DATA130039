@@ -99,15 +99,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     platform_zh_CN.qm \
     icon.png \
-    qss/AMOLED.qss \
     qss/Aqua.qss \
-    qss/ConsoleStyle.qss \
-    qss/ElegantDark.qss \
-    qss/ManjaroMix.qss \
-    qss/MaterialDark.qss \
-    qss/Ubuntu.qss \
-    qss/material-blue.qss \
-    qss/style.qss
+    qss/ElegantDark.qss
+
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path
         $$PWD/libmariadb.so

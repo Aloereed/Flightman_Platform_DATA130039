@@ -9,7 +9,6 @@ modadmin::modadmin(QWidget *parent,QString ID_input,QString name_input,QString t
     ui(new Ui::modadmin),ID(ID_input),name(name_input),type(type_input)
 {
     ui->setupUi(this);
-    ui->setupUi(this);
     ui->ID->setText(ID);
     ui->ID->setReadOnly(true);
     ui->name->setText(name);

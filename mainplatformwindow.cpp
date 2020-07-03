@@ -57,10 +57,7 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui(new Ui::mainplatformwindow)
 {
     ui->setupUi(this);
-    QFile styleFile(":/style.qss");//使用qss文件
-    styleFile.open(QIODevice::ReadOnly);//只读
-    QString setStyleSheet(styleFile.readAll());//读取所有的
-    ui->tabWidget->setStyleSheet(setStyleSheet);//设置样式
+    ui->comboBox_2->setCurrentIndex(settings.value("Langcase",0).toInt());
     ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt());
     _init();
 }
@@ -803,5 +800,28 @@ void mainplatformwindow::on_tableView_6_clicked(const QModelIndex &index)
         QString type = model->data(model->index(row,2)).toString();
         modification_admin = new modadmin(nullptr,ID,name,type);
         modification_admin->show();
+    }
+}
+
+void mainplatformwindow::on_comboBox_2_currentIndexChanged(int index)
+{
+
+}
+extern QByteArray readTextFile(const QString&);
+void mainplatformwindow::on_comboBox_2_activated(int index)
+{
+    switch (index){
+        case 0:{
+            settings.setValue("theme",":/qss/ElegantDark.qss");
+            QString style_sheet = readTextFile(settings.value("theme",":/qss/ElegantDark.qss").toString());
+            qApp->setStyleSheet(style_sheet);
+            break;
+        }
+        case 1:{
+            settings.setValue("theme",":/qss/Aqua.qss");
+            QString style_sheet = readTextFile(settings.value("theme",":/qss/ElegantDark.qss").toString());
+            qApp->setStyleSheet(style_sheet);
+            break;
+        }
     }
 }

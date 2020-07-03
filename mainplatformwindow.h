@@ -123,6 +123,10 @@ private slots:
 
     void on_tableView_6_clicked(const QModelIndex &index);
 
+    void on_comboBox_2_currentIndexChanged(int index);
+
+    void on_comboBox_2_activated(int index);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
