@@ -804,4 +804,15 @@ void mainplatformwindow::on_tableView_6_clicked(const QModelIndex &index)
         modification_admin = new modadmin(nullptr,ID,name,type);
         modification_admin->show();
     }
+    else if(index.isValid()&&index.column()==4){//admin delete
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_6->model();
+        QString ID = model->data(model->index(row,0)).toString();
+        QSqlQuery query;
+        bool status = query.exec(tr("delete from admin where adminID = \'")+ID+"\'");
+        if(status)
+            adminRefresh();
+        else
+            QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
+    }
 }
