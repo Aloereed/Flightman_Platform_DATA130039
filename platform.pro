@@ -111,7 +111,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android_sources
 
 DISTFILES += \
     android_sources/AndroidManifest.xml \
-    android_sources/png/icon.png \
+    android_sources/png/icon.png
 
 
 
