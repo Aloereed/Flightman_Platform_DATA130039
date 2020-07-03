@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>Flight Background Management Tool</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../../../Downloads/favicon.ico</normaloff>../../../Downloads/favicon.ico</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
@@ -26,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>6</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">

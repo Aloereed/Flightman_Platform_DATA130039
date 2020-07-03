@@ -140,6 +140,7 @@ void mainplatformwindow::on_actionLog_out_triggered(){
     db.close();
     this->close();
     l=new loginwindow;
+    l->setWindowIcon(QIcon(":/icon.png"));
     l->show();
 }
 /*

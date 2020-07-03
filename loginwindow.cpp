@@ -112,6 +112,7 @@ void loginwindow::on_commandLinkButton_clicked()
           settings.setValue("AdminisSaved",ui->checkBox_2->isChecked());
           QApplication::processEvents();
           w = new mainplatformwindow();
+          w->setWindowIcon(QIcon(":/icon.png"));
           QApplication::processEvents();
           w->show();
           QApplication::processEvents();
