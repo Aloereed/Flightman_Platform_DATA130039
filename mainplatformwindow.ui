@@ -22,11 +22,11 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>5</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
-         <string>Home </string>
+         <string>🏘Home </string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
@@ -136,7 +136,7 @@
        </widget>
        <widget class="QWidget" name="flight">
         <attribute name="title">
-         <string>flight</string>
+         <string>✈Flight</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
@@ -184,7 +184,7 @@
        </widget>
        <widget class="QWidget" name="user">
         <attribute name="title">
-         <string>user</string>
+         <string>😀User</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
@@ -236,7 +236,7 @@
        </widget>
        <widget class="QWidget" name="company">
         <attribute name="title">
-         <string>flight company</string>
+         <string>🏢Airline</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
@@ -357,7 +357,7 @@
        </widget>
        <widget class="QWidget" name="tab_5">
         <attribute name="title">
-         <string>airport</string>
+         <string>🚁Airport</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
@@ -478,7 +478,7 @@
        </widget>
        <widget class="QWidget" name="tab_6">
         <attribute name="title">
-         <string>flight arrangement</string>
+         <string>🛫Flight Arrangement</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <item>
@@ -525,9 +525,14 @@
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="tab_7">
+        <attribute name="title">
+         <string>💳Tickets</string>
+        </attribute>
+       </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>system</string>
+         <string>⚙System</string>
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
          <item>
@@ -543,8 +548,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>208</width>
-              <height>156</height>
+              <width>221</width>
+              <height>134</height>
              </rect>
             </property>
             <attribute name="label">
@@ -606,8 +611,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>683</width>
-              <height>398</height>
+              <width>713</width>
+              <height>433</height>
              </rect>
             </property>
             <attribute name="label">
@@ -695,7 +700,7 @@
      <x>0</x>
      <y>0</y>
      <width>753</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
