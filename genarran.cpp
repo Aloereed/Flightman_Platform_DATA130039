@@ -12,6 +12,7 @@ GenArran::GenArran(int weekno, QWidget *formptr)
 
 void GenArran::run(){
     bool ok;
+    QSqlQuery starttran;
     if(week<=0){
         QMessageBox::information(form,tr("hint:"),tr("invalid week number"));
     }
@@ -31,6 +32,7 @@ void GenArran::run(){
         //progress.setMaximum(days+1);
         qApp->processEvents();
 
+        starttran.exec("SET AUTOCOMMIT=0");
         if(QSqlDatabase::database().transaction()){
             QSqlQuery query1;
             QSqlQuery query;
@@ -63,10 +65,14 @@ void GenArran::run(){
                             "VALUES(\'%1\',\'%2\',\'%3\',%4)")
                     .arg(flight_id).arg(departure_time).arg(status).arg(discount);
                     ok=query.exec(sql2);
-                    sql3=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(order).arg(departure_time).arg(0).arg(row_bus*(type?6:4));
-                    ok=query.exec(sql3);
-                    sql5=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(order).arg(departure_time).arg(1).arg(row_eco*(type?9:6));
-                    ok=query.exec(sql5);
+                    for(int i=0;i!=order+1;++i){
+                        sql3=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(i).arg(departure_time).arg(0).arg(row_bus*(type?6:4));
+                        ok=query.exec(sql3);
+                    }
+                    for(int i=0;i!=order+1;++i){
+                        sql5=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(i).arg(departure_time).arg(1).arg(row_eco*(type?9:6));
+                        ok=query.exec(sql5);
+                    }
 
 
                     if(type==1){
@@ -123,17 +129,18 @@ void GenArran::run(){
                             }
                         }
                     }
+                    if(progress.wasCanceled()){
+                        if(!QSqlDatabase::database().rollback()){
+                            QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+                        }
+                      isStop=true;
+                      starttran.exec("SET AUTOCOMMIT=1");
+                      return;
+                    }
                 }
                 //progress.setValue(i);
                 progress.setLabelText(QObject::tr("Preparing database...%1/%2").arg(i).arg(days));
                 qApp->processEvents();
-                if(progress.wasCanceled()){
-                    if(!QSqlDatabase::database().rollback()){
-                        QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
-                    }
-                  isStop=true;
-                  return;
-                }
             }
             progress.setLabelText(QObject::tr("Writing database..."));
             progress.setCancelButton(NULL);
@@ -142,9 +149,10 @@ void GenArran::run(){
                 if(!QSqlDatabase::database().rollback()){
                     QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                 }
+                progress.close();
              }
             else{
-                progress.setValue(days+1);
+                progress.close();
                 qApp->processEvents();
                 QMessageBox::information(form,tr("hint:"),tr("success"));
             }
@@ -152,6 +160,7 @@ void GenArran::run(){
 
 
     }
+    starttran.exec("SET AUTOCOMMIT=1");
     this->quit();
     closeThread();
     return;
@@ -165,6 +174,8 @@ DropArran::DropArran(QWidget *formptr)
 void DropArran::run(){
 
     QSqlQuery query1;
+    QSqlQuery starttran;
+    starttran.exec("SET AUTOCOMMIT=0");
     if(QSqlDatabase::database().transaction()){
         QString sql1,sql2;
         QSqlQuery query2;
@@ -196,6 +207,7 @@ void DropArran::run(){
             QMessageBox::information(form,tr("hint:"),tr("success"));
         }
     }
+    starttran.exec("SET AUTOCOMMIT=1");
     this->closeThread();
     this->quit();
     return;
