@@ -92,8 +92,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     platform_zh_CN.qm \
-    style.qss   \
-    icon.png
+    icon.png \
+    qss/AMOLED.qss \
+    qss/Aqua.qss \
+    qss/ConsoleStyle.qss \
+    qss/ElegantDark.qss \
+    qss/ManjaroMix.qss \
+    qss/MaterialDark.qss \
+    qss/Ubuntu.qss \
+    qss/material-blue.qss \
+    qss/style.qss
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path
         $$PWD/libmariadb.so
@@ -103,6 +111,8 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android_sources
 
 DISTFILES += \
     android_sources/AndroidManifest.xml \
-    android_sources/png/icon.png
+    android_sources/png/icon.png \
+
+
 
 
