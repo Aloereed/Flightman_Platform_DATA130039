@@ -13,6 +13,8 @@
 #include "querydialog.h"
 #include "genarran.h"
 #include "addfliarrange.h"
+#include "addadmin.h"
+#include "modadmin.h"
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
@@ -29,7 +31,9 @@ adduser *a;
 addflight *add_flight;
 addairport *add_airport;
 addfliarrange *add_fliarrange;
+addadmin *add_admin;
 
+modadmin *modification_admin;
 moduser *modification_user;
 modcom *modification_comp;
 modflight *modification_flight;
@@ -777,4 +781,27 @@ void mainplatformwindow::on_spinBox_valueChanged(int arg1)
 }
 void mainplatformwindow::on_actionE_xit_triggered(){
     qApp->quit();
+}
+
+void mainplatformwindow::on_listWidget_itemClicked(QListWidgetItem *item)
+{
+    if(item->text()==tr("Add")){
+        add_admin = new addadmin;
+        add_admin->show();
+    }else if(item->text()==tr("Refresh")){
+        adminRefresh();
+    }
+}
+
+void mainplatformwindow::on_tableView_6_clicked(const QModelIndex &index)
+{
+    if (index.isValid()&&index.column()==3) {//admin modification
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_6->model();
+        QString ID = model->data(model->index(row,0)).toString();
+        QString name = model->data(model->index(row,1)).toString();
+        QString type = model->data(model->index(row,2)).toString();
+        modification_admin = new modadmin(nullptr,ID,name,type);
+        modification_admin->show();
+    }
 }
