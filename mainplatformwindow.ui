@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -524,15 +524,15 @@
          <item>
           <widget class="QToolBox" name="toolBox">
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page">
             <property name="geometry">
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>713</width>
-              <height>433</height>
+              <width>683</width>
+              <height>398</height>
              </rect>
             </property>
             <attribute name="label">
@@ -562,6 +562,26 @@
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
                 <item>
+                 <widget class="QListWidget" name="listWidget">
+                  <property name="maximumSize">
+                   <size>
+                    <width>150</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Add</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Refresh</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QTableView" name="tableView_6"/>
                 </item>
                </layout>
@@ -574,8 +594,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>713</width>
-              <height>433</height>
+              <width>683</width>
+              <height>398</height>
              </rect>
             </property>
             <attribute name="label">
@@ -642,7 +662,7 @@
      <x>0</x>
      <y>0</y>
      <width>753</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     add_price.cpp \
+    addadmin.cpp \
     addairport.cpp \
     addcom.cpp \
     addfliarrange.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     main.cpp \
     loginwindow.cpp \
     mainplatformwindow.cpp \
+    modadmin.cpp \
     modairport.cpp \
     modcom.cpp \
     modfliarrange.cpp \
@@ -41,6 +43,7 @@ SOURCES += \
 
 HEADERS += \
     add_price.h \
+    addadmin.h \
     addairport.h \
     addcom.h \
     addfliarrange.h \
@@ -51,6 +54,7 @@ HEADERS += \
     genarran.h \
     loginwindow.h \
     mainplatformwindow.h \
+    modadmin.h \
     modairport.h \
     modcom.h \
     modfliarrange.h \
@@ -63,6 +67,7 @@ HEADERS += \
 
 FORMS += \
     add_price.ui \
+    addadmin.ui \
     addairport.ui \
     addcom.ui \
     addfliarrange.ui \
@@ -72,6 +77,7 @@ FORMS += \
     adduser.ui \
     loginwindow.ui \
     mainplatformwindow.ui \
+    modadmin.ui \
     modairport.ui \
     modcom.ui \
     modfliarrange.ui \

@@ -1,44 +1,33 @@
-#include "moduser.h"
-#include "ui_moduser.h"
-
+#include "addadmin.h"
+#include "ui_addadmin.h"
 extern QSqlDatabase db;
 extern mainplatformwindow *w;
 
-moduser::moduser(QWidget *parent,QString ID_input,QString name_input,QString membership_input,QString account_input) :
+addadmin::addadmin(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::moduser),ID(ID_input),name(name_input),membership(membership_input),account(account_input)
+    ui(new Ui::addadmin)
 {
     ui->setupUi(this);
-    ui->ID->setText(ID);
-    ui->ID->setReadOnly(true);
-    ui->name->setText(name);
-    if(membership=="√")
-        ui->checkVIPBox->setChecked(true);
-    else
-        ui->checkVIPBox->setChecked(false);
-    ui->account->setText(account);
-
+    ui->password->setEchoMode(QLineEdit::Password);
 }
 
-moduser::~moduser()
+addadmin::~addadmin()
 {
     delete ui;
 }
 
-void moduser::on_buttonBox_clicked(QAbstractButton *button)
+void addadmin::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(ui->buttonBox->button(QDialogButtonBox::Ok) == button)
     {
         QByteArray bytePwd = ui->password->text().toLatin1();
         QByteArray bytePwdMd5 = QCryptographicHash::hash(bytePwd, QCryptographicHash::Md5);
         QString strPwdMd5 = bytePwdMd5.toHex();
-
-        ID = ui->ID->text();
-        account = ui->account->text();
-        name = ui->name->text();
-        membership = QString(ui->checkVIPBox->isChecked()?"1":"0");
-        account = ui->account->text();
-        passwordmd5=strPwdMd5;
+        my_Admin tran;
+        tran.ID = ui->ID->text();
+        tran.name = ui->name->text();
+        tran.type = QString(ui->checktypeBox->isChecked()?"1":"0");
+        tran.passwordmd5=strPwdMd5;
 
         QProgressDialog dialog(tr("Adding"),tr("cancel"), 0, 30000, this);
         dialog.setWindowTitle(tr("process"));
@@ -56,17 +45,14 @@ void moduser::on_buttonBox_clicked(QAbstractButton *button)
         dialog.setValue(30000);
 
         QString sql;
-        if(ui->password->text().isEmpty())
-            sql = QString("UPDATE user SET name='%1',membership='%2',account='%3' WHERE ID='%4'" )
-                   .arg(name).arg(membership).arg(account).arg(ID);
-        else
-            sql = QString("UPDATE user SET name='%1',membership='%2',account='%3',password='%4' WHERE ID='%5'" )
-               .arg(name).arg(membership).arg(account).arg(passwordmd5).arg(ID);
+        sql = QString("INSERT INTO admin (adminID,adminName,satype,adminpwd)"
+                      "VALUES('%1','%2','%3','%4')")
+                .arg(tran.ID).arg(tran.name).arg(tran.type).arg(tran.passwordmd5);
         QSqlQuery query;
         bool ok = query.exec(sql);
         if(ok){
-            QMessageBox::information(this,tr("hint:"),tr("modify successfully"));
-            w->userRefresh();
+            QMessageBox::information(this,tr("hint:"),tr("add successfully"));
+            w->adminRefresh();
             this->close();
         }
         else{
@@ -76,7 +62,6 @@ void moduser::on_buttonBox_clicked(QAbstractButton *button)
     }
     else if(ui->buttonBox->button(QDialogButtonBox::Cancel) == button)
     {
-        this->close();
         QProgressDialog dialog(tr("Returning to the mainwindow"),tr("cancel"), 0, 3000, this);
         dialog.setWindowTitle(tr("process"));
         dialog.setWindowModality(Qt::WindowModal);
@@ -91,6 +76,7 @@ void moduser::on_buttonBox_clicked(QAbstractButton *button)
             }
         }
         dialog.setValue(3000);
+        this->close();
        }
 
 }

@@ -1,31 +1,30 @@
-#include "moduser.h"
-#include "ui_moduser.h"
+#include "modadmin.h"
+#include "ui_modadmin.h"
 
 extern QSqlDatabase db;
 extern mainplatformwindow *w;
 
-moduser::moduser(QWidget *parent,QString ID_input,QString name_input,QString membership_input,QString account_input) :
+modadmin::modadmin(QWidget *parent,QString ID_input,QString name_input,QString type_input) :
     QWidget(parent),
-    ui(new Ui::moduser),ID(ID_input),name(name_input),membership(membership_input),account(account_input)
+    ui(new Ui::modadmin),ID(ID_input),name(name_input),type(type_input)
 {
+    ui->setupUi(this);
     ui->setupUi(this);
     ui->ID->setText(ID);
     ui->ID->setReadOnly(true);
     ui->name->setText(name);
-    if(membership=="√")
-        ui->checkVIPBox->setChecked(true);
+    if(type=="√")
+        ui->checktypeBox->setChecked(true);
     else
-        ui->checkVIPBox->setChecked(false);
-    ui->account->setText(account);
-
+        ui->checktypeBox->setChecked(false);
 }
 
-moduser::~moduser()
+modadmin::~modadmin()
 {
     delete ui;
 }
 
-void moduser::on_buttonBox_clicked(QAbstractButton *button)
+void modadmin::on_buttonBox_clicked(QAbstractButton *button)
 {
     if(ui->buttonBox->button(QDialogButtonBox::Ok) == button)
     {
@@ -34,10 +33,8 @@ void moduser::on_buttonBox_clicked(QAbstractButton *button)
         QString strPwdMd5 = bytePwdMd5.toHex();
 
         ID = ui->ID->text();
-        account = ui->account->text();
         name = ui->name->text();
-        membership = QString(ui->checkVIPBox->isChecked()?"1":"0");
-        account = ui->account->text();
+        type = QString(ui->checktypeBox->isChecked()?"1":"0");
         passwordmd5=strPwdMd5;
 
         QProgressDialog dialog(tr("Adding"),tr("cancel"), 0, 30000, this);
@@ -57,16 +54,16 @@ void moduser::on_buttonBox_clicked(QAbstractButton *button)
 
         QString sql;
         if(ui->password->text().isEmpty())
-            sql = QString("UPDATE user SET name='%1',membership='%2',account='%3' WHERE ID='%4'" )
-                   .arg(name).arg(membership).arg(account).arg(ID);
+            sql = QString("UPDATE admin SET adminName='%1',satype='%2' WHERE adminID='%3'" )
+                   .arg(name).arg(type).arg(ID);
         else
-            sql = QString("UPDATE user SET name='%1',membership='%2',account='%3',password='%4' WHERE ID='%5'" )
-               .arg(name).arg(membership).arg(account).arg(passwordmd5).arg(ID);
+            sql = QString("UPDATE admin SET adminName='%1',satype='%2' ,password='%3' WHERE adminID='%4'")
+               .arg(name).arg(type).arg(passwordmd5).arg(ID);
         QSqlQuery query;
         bool ok = query.exec(sql);
         if(ok){
             QMessageBox::information(this,tr("hint:"),tr("modify successfully"));
-            w->userRefresh();
+            w->adminRefresh();
             this->close();
         }
         else{
@@ -92,5 +89,4 @@ void moduser::on_buttonBox_clicked(QAbstractButton *button)
         }
         dialog.setValue(3000);
        }
-
 }

@@ -119,6 +119,10 @@ private slots:
 
     void on_spinBox_valueChanged(int arg1);
 
+    void on_listWidget_itemClicked(QListWidgetItem *item);
+
+    void on_tableView_6_clicked(const QModelIndex &index);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
