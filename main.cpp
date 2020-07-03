@@ -10,5 +10,6 @@ int main(int argc, char *argv[])
     loginwindow w;
     w.setWindowIcon(QIcon(":/icon.png"));
     w.show();
+
     return a.exec();
 }

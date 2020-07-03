@@ -57,6 +57,7 @@ private slots:
     void on_listWidget_clicked(const QModelIndex &index);
     void on_actionAbout_Qt_triggered();
     void on_actionLog_out_triggered();
+    void on_actionE_xit_triggered();
     //void on_listWidget_4_clicked(const QModelIndex &index);
 
 

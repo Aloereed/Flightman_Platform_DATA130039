@@ -74,46 +74,50 @@ void GenArran::run(){
                         ok=query.exec(sql5);
                     }
 
-
-                    if(type==1){
-                        int j=0;
+                    //db.transaction();
+                    if(type==1){            
+                        int j=0;                      
+                        QVariantList seats;
                         for(;j<row_bus;j++){
                             QApplication::processEvents();
                             QString row = QString::number(j+1,10);
                             QStringList bus={"A","C","D","G","H","K"};
                             for(int k=0;k<6;k++){
-                                   for(int i=0;i!=order+1;++i){
-                                    sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
-                                                    "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+bus[k]).arg(0);
-                                ok=query.exec(sql4);
-                            }
+                                seats<<row+bus[k];
                             }
                         }
                         for(j=0;j<row_eco;j++){
+
                             QApplication::processEvents();
                             QString row = QString::number(j+1+row_bus,10);
                             QStringList eco={"A","B","C","D","E","G","H","J","K"};
                             for(int k=0;k<9;k++){
-                                for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
-                                                "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+eco[k]).arg(0);
-                                ok=query.exec(sql4);
-                                }
+                                seats<<row+eco[k];
                             }
                         }
+                            for(int i=0;i!=order+1;++i){
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status) VALUES ");
+                                for(int i=0;i!=seats.size();++i)
+                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\',0),";
+                                sql4=sql4.left(sql4.size()-1);
+                                query.prepare(sql4);
+                                //query.addBindValue(seats);
+                                ok=query.exec();
+                            }
+
+                        seats.clear();
+
                     }
+
                     else if(type==0){
                         int j=0;
+                        QVariantList seats;
                         for(;j<row_bus;j++){
                             QApplication::processEvents();
                             QString row = QString::number(j+1,10);
                             QStringList bus={"A","C","J","L"};
                             for(int k=0;k<4;k++){
-                                for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
-                                                "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+bus[k]).arg(0);
-                                query.exec(sql4);
-                                }
+                                seats<<row+bus[k];
                             }
                         }
                         for(j=0;j<row_eco;j++){
@@ -121,13 +125,22 @@ void GenArran::run(){
                             QString row = QString::number(j+1+row_bus,10);
                             QStringList eco={"A","B","C","J","K","L"};
                             for(int k=0;k<6;k++){
-                                for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
-                                                "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+eco[k]).arg(0);
-                                query.exec(sql4);
-                                }
+                                seats<<row+eco[k];
                             }
                         }
+
+                            for(int i=0;i!=order+1;++i){
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status) VALUES ");
+                                for(int i=0;i!=seats.size();++i)
+                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\',0),";
+                                sql4=sql4.left(sql4.size()-1);
+                                query.prepare(sql4);
+                                //query.addBindValue(seats);
+                                ok=query.exec();
+
+                            }
+
+                        seats.clear();
                     }
                     if(progress.wasCanceled()){
                         if(!QSqlDatabase::database().rollback()){

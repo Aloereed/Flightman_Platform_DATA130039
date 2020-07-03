@@ -21,6 +21,7 @@ loginwindow::loginwindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::loginwindow)
 {
+    //settings.sync();
     ui->setupUi(this);
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
     QString langdir=":/platform_"+QLocale::system().name()+".qm";
@@ -32,11 +33,14 @@ loginwindow::loginwindow(QWidget *parent)
         ui->lineEdit_2->setText(settings.value("AdminPWD").toString());
         ui->checkBox_2->setChecked(true);
     }
+    //settings.sync();
+
 }
 
 loginwindow::~loginwindow()
 {
     delete ui;
+    //settings.sync();
 }
 
 

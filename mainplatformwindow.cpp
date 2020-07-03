@@ -62,6 +62,8 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
 }
 
 void mainplatformwindow::_init(){
+    //settings.sync();
+
     ui->label->setText(tr("System Version:")+osVersion());
 
     QSqlQuery query = QSqlQuery("select @@VERSION");
@@ -120,6 +122,7 @@ void mainplatformwindow::updatetime(){
 mainplatformwindow::~mainplatformwindow()
 {
     delete ui;
+    //settings.sync();
 }
 
 
@@ -733,6 +736,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
         settings.setValue("Langcase",2);
     }
     }
+    //settings.sync();
     _init();
 }
 
@@ -767,6 +771,10 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item)
 void mainplatformwindow::on_spinBox_valueChanged(int arg1)
 {
     settings.setValue("itemsperpage",arg1);
+    //settings.sync();
     flightRefresh();
     airportRefresh();
+}
+void mainplatformwindow::on_actionE_xit_triggered(){
+    qApp->quit();
 }

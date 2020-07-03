@@ -650,6 +650,8 @@
      <string>&amp;Account</string>
     </property>
     <addaction name="actionLog_out"/>
+    <addaction name="separator"/>
+    <addaction name="actionE_xit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -675,6 +677,11 @@
   <action name="actionLog_out">
    <property name="text">
     <string>Log&amp;out</string>
+   </property>
+  </action>
+  <action name="actionE_xit">
+   <property name="text">
+    <string>E&amp;xit</string>
    </property>
   </action>
  </widget>
