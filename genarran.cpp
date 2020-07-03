@@ -7,6 +7,7 @@ GenArran::GenArran(int weekno, QWidget *formptr)
 {
     week=weekno;
     form=formptr;
+    isStop=false;
 }
 
 void GenArran::run(){
@@ -33,7 +34,7 @@ void GenArran::run(){
         if(QSqlDatabase::database().transaction()){
             QSqlQuery query1;
             QSqlQuery query;
-            for(int i=1;i<=days;i++,now=now.addDays(1)){
+            for(int i=1;i<=days&&(!isStop);i++,now=now.addDays(1)){
                 QApplication::processEvents();
                 QString day = QString::number(i%7,10);
                 QString sql1 = QString("SELECT * FROM seat_oneclick_view WHERE schedule like '%%1%'").arg(day);
@@ -76,7 +77,7 @@ void GenArran::run(){
                             QStringList bus={"A","C","D","G","H","K"};
                             for(int k=0;k<6;k++){
                                    for(int i=0;i!=order+1;++i){
-                                    sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                    sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
                                                     "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+bus[k]).arg(0);
                                 ok=query.exec(sql4);
                             }
@@ -88,7 +89,7 @@ void GenArran::run(){
                             QStringList eco={"A","B","C","D","E","G","H","J","K"};
                             for(int k=0;k<9;k++){
                                 for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
                                                 "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+eco[k]).arg(0);
                                 ok=query.exec(sql4);
                                 }
@@ -103,7 +104,7 @@ void GenArran::run(){
                             QStringList bus={"A","C","J","L"};
                             for(int k=0;k<4;k++){
                                 for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
                                                 "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+bus[k]).arg(0);
                                 query.exec(sql4);
                                 }
@@ -115,7 +116,7 @@ void GenArran::run(){
                             QStringList eco={"A","B","C","J","K","L"};
                             for(int k=0;k<6;k++){
                                 for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,depature_date,seat_id,status)"
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status)"
                                                 "VALUES('%1',%2,'%3','%4',%5)").arg(flight_id).arg(QString::number(i)).arg(departure_time).arg(row+eco[k]).arg(0);
                                 query.exec(sql4);
                                 }
@@ -130,6 +131,7 @@ void GenArran::run(){
                     if(!QSqlDatabase::database().rollback()){
                         QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                     }
+                  isStop=true;
                   return;
                 }
             }
@@ -151,40 +153,32 @@ void GenArran::run(){
 
     }
     this->quit();
+    closeThread();
+    return;
 }
 DropArran::DropArran(QWidget *formptr)
 {
     form=formptr;
+    isStop=false;
 }
 
 void DropArran::run(){
-    /*
+
     QSqlQuery query1;
     if(QSqlDatabase::database().transaction()){
         QString sql1,sql2;
         QSqlQuery query2;
-        sql1=QString("Select CONCAT( 'drop table ','`',table_name,'`', ';') FROM information_schema.tables Where table_name LIKE 'seat_%';");
-        query1.exec(sql1);
+;
         QProgressDialog progress;
         progress.setWindowModality(Qt::WindowModal);
-        progress.setWindowTitle(QObject::tr("Creating Realtime Flight Info..."));
+        progress.setWindowTitle(QObject::tr("Deleting Realtime Flight Info..."));
         progress.setLabelText(QObject::tr("Preparing database..."));
         progress.setMinimum(0);
-        int size=query1.size();
-        progress.setMaximum(size+1);
-        qApp->processEvents();
-        int i=0;
-        while(query1.next()){
-            QApplication::processEvents();
-            sql1=query1.value(0).toString();
-            query2.exec(sql1);
-            i++;
-            progress.setValue(i);
-            progress.setLabelText(QObject::tr("Preparing database...%1/%2").arg(i).arg(size));
-            qApp->processEvents();
-            if(progress.wasCanceled())
-              return;
-        }
+        progress.setMaximum(0);
+        sql1=QString("truncate table seat_arrangment");
+        query1.exec(sql1);
+        sql2=QString("truncate table seat_amount");
+        query2.exec(sql2);
         sql2=QString("truncate table flight_arrangment");
         query2.exec(sql2);
         progress.setLabelText(QObject::tr("Writing database..."));
@@ -195,12 +189,14 @@ void DropArran::run(){
             if(!QSqlDatabase::database().rollback()){
                 QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
             }
+            progress.close();
          }
         else{
-            progress.setValue(size+1);
+            progress.close();
             QMessageBox::information(form,tr("hint:"),tr("success"));
         }
     }
-    */
+    this->closeThread();
     this->quit();
+    return;
 }

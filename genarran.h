@@ -17,6 +17,11 @@ public:
     void run();
     int week;
     QWidget *form;
+    void closeThread(){
+        isStop = true;
+    }
+private:
+    volatile bool isStop;
 };
 class DropArran:public QThread
 {
@@ -25,5 +30,10 @@ public:
     DropArran(QWidget* formptr);
     void run();
     QWidget *form;
+    void closeThread(){
+        isStop = true;
+    }
+private:
+    volatile bool isStop;
 };
 #endif // GENARRAN_H
