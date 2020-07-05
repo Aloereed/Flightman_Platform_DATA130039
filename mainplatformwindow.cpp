@@ -15,6 +15,7 @@
 #include "addfliarrange.h"
 #include "addadmin.h"
 #include "modadmin.h"
+#include "modfliarrange.h"
 #include "show_seat_a.h"
 #include "QRibbon/QRibbon.h"
 #include<QCheckBox>
@@ -37,6 +38,7 @@ addfliarrange *add_fliarrange;
 addadmin *add_admin;
 show_seat_a *show_seat;
 
+modfliarrange *modification_fliarrange;
 modadmin *modification_admin;
 moduser *modification_user;
 modcom *modification_comp;
@@ -911,6 +913,8 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
         QString departure_date = model->data(model->index(row,0)).toString();
         show_seat=new show_seat_a("seat_arrangement",departure_date,ID);
         show_seat->show();
+    }
+    else if(index.isValid()&&index.column()==6){
 
     }
 }

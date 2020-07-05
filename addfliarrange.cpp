@@ -31,12 +31,12 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
         tran.day = ui->day->text();
         tran.flight_id = ui->flight_id->text();
         if(ui->plan->isChecked()){
-            tran.status = QString("pla");
+            tran.status = QString("PLA");
         }
         else{
-            tran.status = QString("can");
+            tran.status = QString("CAN");
         }
-        tran.dicount = ui->discount->text();
+        tran.discount = ui->discount->text();
         QString departure_time = tran.year+QString("-")+tran.month+QString("-")+tran.day;
         QDate departure = QDate::fromString(departure_time,"yyyy-M-d");
 
@@ -73,7 +73,7 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
 
             QString sql1;
             sql1=QString("INSERT INTO `flight_arrangement`(departure_date,flight_id,status,discount)"
-                        "VALUES('%1','%2','%3',%4)").arg(departure_time).arg(tran.flight_id).arg(tran.status).arg(tran.dicount);
+                        "VALUES('%1','%2','%3',%4)").arg(departure_time).arg(tran.flight_id).arg(tran.status).arg(tran.discount);
             query.exec(sql1);
 
             QString sqlselect;

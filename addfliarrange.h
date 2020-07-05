@@ -39,7 +39,7 @@ typedef struct fliarrangeInfo
     QString day;
     QString flight_id;
     QString status;
-    QString dicount;
+    QString discount;
 
 }my_fliarrange;
 
