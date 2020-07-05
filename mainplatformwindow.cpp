@@ -16,10 +16,12 @@
 #include "addadmin.h"
 #include "modadmin.h"
 #include "show_seat_a.h"
+#include "QRibbon/QRibbon.h"
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
 extern QSqlDatabase db;
+extern QByteArray readTextFile(const QString&);
 extern mainplatformwindow *w;
 QueryDialog *q;
 loginwindow *l;
@@ -59,7 +61,9 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui(new Ui::mainplatformwindow)
 {
     ui->setupUi(this);
-    ui->comboBox_2->setCurrentIndex(settings.value("themeno",0).toInt());
+    QRibbon::install(this);
+    ui->comboBox_2->setCurrentIndex(settings.value("themeno",1).toInt());
+
     ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt());
     _init();
 }
@@ -116,6 +120,7 @@ void mainplatformwindow::_init(){
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
     ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
+    qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
 
 }
 
@@ -861,21 +866,21 @@ void mainplatformwindow::on_comboBox_2_currentIndexChanged(int index)
 {
 
 }
-extern QByteArray readTextFile(const QString&);
+
 void mainplatformwindow::on_comboBox_2_activated(int index)
 {
     switch (index){
         case 0:{
             settings.setValue("theme",":/qss/ElegantDark.qss");
             settings.setValue("themeno",0);
-            QString style_sheet = readTextFile(settings.value("theme",":/qss/ElegantDark.qss").toString());
+            QString style_sheet = readTextFile(settings.value("theme",":/qss/Aqua.qss").toString());
             qApp->setStyleSheet(style_sheet);
             break;
         }
         case 1:{
             settings.setValue("theme",":/qss/Aqua.qss");
             settings.setValue("themeno",1);
-            QString style_sheet = readTextFile(settings.value("theme",":/qss/ElegantDark.qss").toString());
+            QString style_sheet = readTextFile(settings.value("theme",":/qss/Aqua.qss").toString());
             qApp->setStyleSheet(style_sheet);
             break;
         }

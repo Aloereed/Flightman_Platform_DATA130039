@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QApplication::addLibraryPath(QApplication::applicationDirPath());
     QApplication::addLibraryPath("./");
-    QString style_sheet = readTextFile(settings.value("theme",":/qss/ElegantDark.qss").toString());
+    QString style_sheet = readTextFile(settings.value("theme",":/qss/Aqua.qss").toString());
     a.setStyleSheet(style_sheet);
     loginwindow w;
 

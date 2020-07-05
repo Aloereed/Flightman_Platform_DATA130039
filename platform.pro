@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    QRibbon/QRibbon.cpp \
     add_price.cpp \
     addadmin.cpp \
     addairport.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
     stopover.cpp
 
 HEADERS += \
+    QRibbon/QRibbon.h \
     add_price.h \
     addadmin.h \
     addairport.h \
@@ -68,6 +70,7 @@ HEADERS += \
     stopover.h
 
 FORMS += \
+    QRibbon/qribbon.ui \
     add_price.ui \
     addadmin.ui \
     addairport.ui \
@@ -100,10 +103,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    QRibbon/QRibbon.qrc \
     platform_zh_CN.qm \
     icon.png \
     qss/Aqua.qss \
-    qss/ElegantDark.qss
+    qss/ElegantDark.qss \
+    png/about.png \
+    png/exit.png \
+    png/logout.png \
+    png/qt.png
 
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path
@@ -113,8 +121,39 @@ ANDROID_EXTRA_LIBS +=    \ # modify the path
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android_sources
 
 DISTFILES += \
+    QRibbon/Resource/icon/add_bottom.png \
+    QRibbon/Resource/icon/add_left.png \
+    QRibbon/Resource/icon/add_right.png \
+    QRibbon/Resource/icon/add_top.png \
+    QRibbon/Resource/icon/arrowBottom.png \
+    QRibbon/Resource/icon/branch-closed.png \
+    QRibbon/Resource/icon/branch-end.png \
+    QRibbon/Resource/icon/branch-more.png \
+    QRibbon/Resource/icon/branch-open.png \
+    QRibbon/Resource/icon/branch_close.png \
+    QRibbon/Resource/icon/branch_open.png \
+    QRibbon/Resource/icon/calendar_nextmonth.png \
+    QRibbon/Resource/icon/calendar_prevmonth.png \
+    QRibbon/Resource/icon/checkbox_checked.png \
+    QRibbon/Resource/icon/checkbox_checked_disable.png \
+    QRibbon/Resource/icon/checkbox_parcial.png \
+    QRibbon/Resource/icon/checkbox_parcial_disable.png \
+    QRibbon/Resource/icon/checkbox_unchecked.png \
+    QRibbon/Resource/icon/checkbox_unchecked_disable.png \
+    QRibbon/Resource/icon/downarrow.png \
+    QRibbon/Resource/icon/eye.png \
+    QRibbon/Resource/icon/eyeClosed.png \
+    QRibbon/Resource/icon/eyeClosed0.png \
+    QRibbon/Resource/icon/radiobutton_checked.png \
+    QRibbon/Resource/icon/radiobutton_checked_disable.png \
+    QRibbon/Resource/icon/radiobutton_unchecked.png \
+    QRibbon/Resource/icon/radiobutton_unchecked_disable.png \
+    QRibbon/Resource/icon/unknow.png \
+    QRibbon/Resource/icon/uparrow.png \
+    QRibbon/Resource/icon/vline.png \
     android_sources/AndroidManifest.xml \
     android_sources/png/icon.png
+
 
 
 

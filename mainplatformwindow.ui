@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -723,26 +723,44 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionA_bout">
+   <property name="icon">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
+     <normaloff>:/png/about.png</normaloff>:/png/about.png</iconset>
+   </property>
    <property name="text">
     <string>A&amp;bout</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
+   <property name="icon">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
+     <normaloff>:/png/qt.png</normaloff>:/png/qt.png</iconset>
+   </property>
    <property name="text">
     <string>About &amp;QT</string>
    </property>
   </action>
   <action name="actionLog_out">
+   <property name="icon">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
+     <normaloff>:/png/logout.png</normaloff>:/png/logout.png</iconset>
+   </property>
    <property name="text">
     <string>Log&amp;out</string>
    </property>
   </action>
   <action name="actionE_xit">
+   <property name="icon">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
+     <normaloff>:/png/exit.png</normaloff>:/png/exit.png</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../build-platform-Desktop_Qt_5_14_2_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc"/>
+ </resources>
  <connections/>
 </ui>
