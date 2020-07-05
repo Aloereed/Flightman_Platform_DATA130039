@@ -1680,7 +1680,7 @@ width:2px;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">.QWidget{
-background: rgb(243,243,243);
+background: transparent;
 border-left:1px solid gray;
 }</string>
           </property>
