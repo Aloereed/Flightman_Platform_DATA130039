@@ -44,16 +44,7 @@
    <bool>false</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
@@ -1229,16 +1220,7 @@ QPushButton#pushButtonMinimizeTab:hover{
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
+      <property name="margin">
        <number>0</number>
       </property>
       <item>
@@ -1440,7 +1422,7 @@ QPushButton#pushButtonMinimizeTab:hover{
           <property name="elideMode">
            <enum>Qt::ElideNone</enum>
           </property>
-          <property name="tabBarAutoHide">
+          <property name="tabBarAutoHide" stdset="0">
            <bool>true</bool>
           </property>
           <widget class="QWidget" name="tab">
@@ -1448,16 +1430,7 @@ QPushButton#pushButtonMinimizeTab:hover{
             <string>文件</string>
            </attribute>
            <layout class="QHBoxLayout" name="horizontalLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
+            <property name="margin">
              <number>0</number>
             </property>
             <item>
