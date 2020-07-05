@@ -3,27 +3,24 @@
 #include <QApplication>
 #include <QSqlDriver>
 extern QSqlDatabase db;
-GenArran::GenArran(int weekno, QWidget *formptr)
+GenArran::GenArran(int weekno, QWidget *formptr,QDate _startdate,int _weekday)
 {
     week=weekno;
     form=formptr;
+    startdate=_startdate;
+    weekday=_weekday;
     isStop=false;
 }
 
 void GenArran::run(){
-    bool ok;
+    bool ok=true;
     QSqlQuery starttran;
     if(week<=0){
         QMessageBox::information(form,tr("hint:"),tr("invalid week number"));
     }
     else{
-        QDate now = QDate::currentDate();
-        int nowweek = now.dayOfWeek();
-        while( nowweek !=1){
-            now = now.addDays(1);
-            nowweek = now.dayOfWeek();
-        }
-        int days = 7*week;
+        QDate now = startdate;
+        int days = weekday*week;
         QProgressDialog progress;
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowTitle(QObject::tr("Creating Realtime Flight Info..."));
@@ -40,7 +37,7 @@ void GenArran::run(){
                 QApplication::processEvents();
                 QString day = QString::number(i%7,10);
                 QString sql1 = QString("SELECT * FROM seat_oneclick_view WHERE schedule like '%%1%'").arg(day);
-                query1.exec(sql1);
+                ok&=query1.exec(sql1);
                 progress.setMaximum(query1.size()+1);
                 int recount=0;
                 while(query1.next()){
@@ -64,14 +61,14 @@ void GenArran::run(){
                     sql2 = QString("INSERT INTO flight_arrangement (flight_id,departure_date,`status`,discount)"
                             "VALUES(\'%1\',\'%2\',\'%3\',%4)")
                     .arg(flight_id).arg(departure_time).arg(status).arg(discount);
-                    ok=query.exec(sql2);
+                    ok&=query.exec(sql2);
                     for(int i=0;i!=order+1;++i){
                         sql3=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(i).arg(departure_time).arg(0).arg(row_bus*(type?6:4));
-                        ok=query.exec(sql3);
+                        ok&=query.exec(sql3);
                     }
                     for(int i=0;i!=order+1;++i){
                         sql5=QString("INSERT INTO seat_amount (flight_id,`order`,departure_date,`type`,seats_left) VALUES('%1',%2,'%3',%4,%5)").arg(flight_id).arg(i).arg(departure_time).arg(1).arg(row_eco*(type?9:6));
-                        ok=query.exec(sql5);
+                        ok&=query.exec(sql5);
                     }
 
                     //db.transaction();
@@ -97,12 +94,14 @@ void GenArran::run(){
                         }
                             for(int i=0;i!=order+1;++i){
                                 sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id) VALUES ");
-                                for(int i=0;i!=seats.size();++i)
-                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\'),";
+                                for(int j=0;j!=seats.size();++j)
+                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[j].toString()+"\'),";
                                 sql4=sql4.left(sql4.size()-1);
-                                query.prepare(sql4);
+
+                                ok&=query.exec(sql4);
+                                //qDebug()<<query.lastError();
                                 //query.addBindValue(seats);
-                                ok=query.exec();
+
                             }
 
                         seats.clear();
@@ -131,16 +130,20 @@ void GenArran::run(){
 
                             for(int i=0;i!=order+1;++i){
                                 sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id) VALUES ");
-                                for(int i=0;i!=seats.size();++i)
-                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\'),";
+                                for(int j=0;j!=seats.size();++j)
+                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[j].toString()+"\'),";
                                 sql4=sql4.left(sql4.size()-1);
                                 query.prepare(sql4);
                                 //query.addBindValue(seats);
-                                ok=query.exec();
+                                ok&=query.exec();
 
                             }
 
                         seats.clear();
+                        if(!ok){
+                            QMessageBox::warning(form,tr("Failure to commit"),tr("Query went wrong:%1").arg(query.lastError().text()+query1.lastError().text()));
+                            progress.cancel();
+                        }
                     }
                     if(progress.wasCanceled()){
                         if(!QSqlDatabase::database().rollback()){
@@ -157,10 +160,11 @@ void GenArran::run(){
             }
             progress.setLabelText(QObject::tr("Writing database..."));
             progress.setCancelButton(NULL);
-            if(!QSqlDatabase::database().commit()){
+            if(!ok||!QSqlDatabase::database().commit()){
                 qDebug()<<QSqlDatabase::database().lastError();
+                QMessageBox::warning(form,tr("Failure to commit"),tr("Query went wrong or database met error:%1").arg(QSqlDatabase::database().lastError().text()));
                 if(!QSqlDatabase::database().rollback()){
-                    QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+                    QMessageBox::warning(form,tr("Failure to rollback"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                 }
                 progress.close();
              }

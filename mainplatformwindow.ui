@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>5</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -35,7 +35,7 @@
             <enum>QTabWidget::West</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <property name="elideMode">
             <enum>Qt::ElideNone</enum>
@@ -94,6 +94,9 @@
              <string>Quick Action</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEdit"/>
+             </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="pushButton_5">
                <property name="text">
@@ -101,22 +104,36 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="lineEdit"/>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Weeks</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
+             <item row="5" column="0">
               <widget class="QPushButton" name="pushButton_6">
                <property name="text">
                 <string>Delete All Flight Arrangement Infomation</string>
                </property>
               </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>From:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QComboBox" name="comboBox_3">
+               <item>
+                <property name="text">
+                 <string>Week(s)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Day(s)</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QDateEdit" name="dateEdit"/>
              </item>
             </layout>
            </widget>
@@ -480,8 +497,8 @@
         <attribute name="title">
          <string>🛫Flight Arrangement</string>
         </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_12">
-         <item>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0" rowspan="2">
           <widget class="QListWidget" name="listWidget_7">
            <property name="maximumSize">
             <size>
@@ -516,11 +533,75 @@
            </item>
           </widget>
          </item>
-         <item>
+         <item row="0" column="1">
           <widget class="QTableView" name="tableView_7">
            <property name="showGrid">
             <bool>true</bool>
            </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QWidget" name="widget_3" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>60</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QSlider" name="horizontalSlider_3">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>41</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_7">
+              <property name="maximumSize">
+               <size>
+                <width>21</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&lt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="plainTextEdit_3">
+              <property name="maximumSize">
+               <size>
+                <width>50</width>
+                <height>50</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_8">
+              <property name="maximumSize">
+               <size>
+                <width>21</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>&gt;</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>

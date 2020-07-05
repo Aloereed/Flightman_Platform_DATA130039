@@ -106,7 +106,6 @@ void mainplatformwindow::_init(){
 
     flightRefresh();
 
-    fliarrangeRefresh();
 
     //compRefresh();
 
@@ -117,11 +116,13 @@ void mainplatformwindow::_init(){
     localtimer->start();
 
     adminRefresh();
+    on_horizontalSlider_3_valueChanged(1);
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
     ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
     qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
-
+    ui->dateEdit->setDate(QDate::currentDate());
+    ui->dateEdit->setMinimumDate(QDate::currentDate());
 }
 
 
@@ -195,9 +196,15 @@ void mainplatformwindow::on_listWidget_user_currentRowChanged(int currentRow)
 {
 
 }
-void mainplatformwindow::fliarrangeRefresh(){
+void mainplatformwindow::fliarrangeRefresh(int page){
+    QSqlQuery query = QSqlQuery("select count(1) from flight_arrangement");
+    ui->statusBar->showMessage(tr("Querying..."));
+    int itemsperpage=settings.value("itemsperpage",20).toInt();
+    query.next();
+    ui->horizontalSlider_3->setMaximum(query.value(0).toInt()/itemsperpage+1);
+    int item2 = itemsperpage*(page-1);
     myfliarrangemodel *fliarrangemodel = new myfliarrangemodel;
-    fliarrangemodel->setQuery("select * from flight_arrangement");
+    fliarrangemodel->setQuery("select * from `flight_arrangement` limit "+QString::number(item2)+","+QString::number(itemsperpage));
     ui->tableView_7->setModel(fliarrangemodel);
 
     fliarrangemodel->insertColumn(4);
@@ -792,7 +799,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
 void mainplatformwindow::on_pushButton_5_clicked()
 {
     int week = ui->lineEdit->text().toInt();
-    GenArran gen(week,this);
+    GenArran gen(week,this,ui->dateEdit->date(),(ui->comboBox_3->currentIndex()?1:7));
     gen.run();
     gen.quit();
 }
@@ -907,3 +914,26 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
 
     }
 }
+
+void mainplatformwindow::on_pushButton_7_clicked()
+{
+    ui->horizontalSlider_3->setValue(ui->horizontalSlider_3->value()-1);
+}
+
+void mainplatformwindow::on_pushButton_8_clicked()
+{
+    ui->horizontalSlider_3->setValue(ui->horizontalSlider_3->value()+1);
+}
+
+void mainplatformwindow::on_plainTextEdit_3_returnPressed()
+{
+    ui->horizontalSlider_3->setValue(ui->plainTextEdit_3->text().toInt());
+}
+void mainplatformwindow::on_horizontalSlider_3_valueChanged(int value)
+{
+    ui->statusBar->showMessage(tr("Querying..."));
+    ui->plainTextEdit_3->setText(QString::number(value));
+    fliarrangeRefresh(value);
+}
+
+

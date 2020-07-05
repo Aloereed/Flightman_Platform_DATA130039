@@ -13,9 +13,11 @@ class GenArran:public QThread
 {
     Q_OBJECT
 public:
-    GenArran(int weekno,QWidget* formptr);
+    GenArran(int weekno,QWidget* formptr,QDate _startdate=QDate::currentDate(),int weekday=7);
     void run();
     int week;
+    int weekday;
+    QDate startdate;
     QWidget *form;
     void closeThread(){
         isStop = true;

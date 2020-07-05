@@ -46,7 +46,7 @@ public:
     void _init();
     void userRefresh();
     void flightRefresh();
-    void fliarrangeRefresh();
+    void fliarrangeRefresh(int page=1);
     void airportRefresh(int page =1);
     void compRefresh(int page=1);
     void adminRefresh();
@@ -129,6 +129,14 @@ private slots:
     void on_comboBox_2_activated(int index);
 
     void on_tableView_7_clicked(const QModelIndex &index);
+
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_8_clicked();
+
+    void on_plainTextEdit_3_returnPressed();
+
+    void on_horizontalSlider_3_valueChanged(int value);
 
 private:
     Ui::mainplatformwindow *ui;
