@@ -156,7 +156,7 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
              }
             else{
                 QMessageBox::information(this,tr("hint:"),tr("add successfully"));
-                w->flightRefresh();
+                w->fliarrangeRefresh();
                 this->close();
             }
         }

@@ -57,7 +57,7 @@ void modfliarrange::on_buttonBox_clicked(QAbstractButton *button)
 
 
 
-        QProgressDialog dialog(tr("Adding"),tr("cancel"), 0, 30000, this);
+        QProgressDialog dialog(tr("Modifying"),tr("cancel"), 0, 30000, this);
         dialog.setWindowTitle(tr("process"));
         dialog.setWindowModality(Qt::WindowModal);
         dialog.show();
@@ -98,8 +98,8 @@ void modfliarrange::on_buttonBox_clicked(QAbstractButton *button)
                 }
              }
             else{
-                QMessageBox::information(this,tr("hint:"),tr("add successfully"));
-                w->flightRefresh();
+                QMessageBox::information(this,tr("hint:"),tr("Modify successfully"));
+                w->fliarrangeRefresh();
                 this->close();
             }
         }

@@ -2,14 +2,14 @@
 
 #include "QRibbon.h"
 #include "ui_qribbon.h"
-#include "QtGui\qevent.h"
+#include <QtGui/qevent.h>
 
 #include <QPropertyAnimation>
 
 #include <QDebug>
-#include "QtCore\QTimer"
-#include "QtWidgets\QMainWindow"
-#include "QtCore\qcoreevent.h"
+#include <QtCore/QTimer>
+#include <QtWidgets/QMainWindow>
+#include <QtCore/qcoreevent.h>
 
 const auto MINIMUM_HEIGHT = 62;
 
