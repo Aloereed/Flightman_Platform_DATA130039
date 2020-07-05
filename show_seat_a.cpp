@@ -31,7 +31,7 @@ show_seat_a::show_seat_a(QString tablename_input, QString departure_date_input, 
         seat->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("Order").toUtf8()));
         seat->setHeaderData(2,Qt::Horizontal,QString::fromUtf8(tr("Departure Date").toUtf8()));
         seat->setHeaderData(3,Qt::Horizontal,QString::fromUtf8(tr("Seat ID").toUtf8()));
-        seat->setHeaderData(4,Qt::Horizontal,QString::fromUtf8(tr("Status").toUtf8()));
+        seat->setHeaderData(4,Qt::Horizontal,QString::fromUtf8(tr("User Who Bought It").toUtf8()));
     }
     title+= flight_id +" on " + departure_date;
     ui->label->setText(title);
