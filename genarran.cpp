@@ -96,9 +96,9 @@ void GenArran::run(){
                             }
                         }
                             for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status) VALUES ");
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id) VALUES ");
                                 for(int i=0;i!=seats.size();++i)
-                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\',0),";
+                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\'),";
                                 sql4=sql4.left(sql4.size()-1);
                                 query.prepare(sql4);
                                 //query.addBindValue(seats);
@@ -130,9 +130,9 @@ void GenArran::run(){
                         }
 
                             for(int i=0;i!=order+1;++i){
-                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id,status) VALUES ");
+                                sql4=QString("INSERT INTO `seat_arrangement` (flight_id,`order`,departure_date,seat_id) VALUES ");
                                 for(int i=0;i!=seats.size();++i)
-                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\',0),";
+                                    sql4+=QString("('%1',%2,'%3',\'").arg(flight_id).arg(QString::number(i)).arg(departure_time)+seats[i].toString()+"\'),";
                                 sql4=sql4.left(sql4.size()-1);
                                 query.prepare(sql4);
                                 //query.addBindValue(seats);
