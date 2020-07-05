@@ -913,7 +913,17 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
         show_seat=new show_seat_a("seat_arrangement",departure_date,ID);
         show_seat->show();
     }
-    else if(index.isValid()&&index.column()==6){
+    else if(index.isValid()&&index.column()==6){//modify
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_7->model();
+        QString ID = model->data(model->index(row,1)).toString();
+        QString departure_date = model->data(model->index(row,0)).toString();
+        QString status = model->data(model->index(row,2)).toString();
+        QString discount = model->data(model->index(row,3)).toString();
+        modification_fliarrange = new modfliarrange(departure_date,ID,status,discount);
+        modification_fliarrange->show();
+
+
 
     }
 }
