@@ -818,8 +818,7 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item)
         add_fliarrange=new addfliarrange;
         add_fliarrange->show();
     }else if(item->text()==tr("Refresh")){
-
-
+        ui->horizontalSlider_3->setValue(1);
     }else if(item->text()==tr("Search")){
 
     }
