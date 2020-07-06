@@ -132,7 +132,6 @@ void mainplatformwindow::_init(){
 
     ui->spinBox->setValue(settings.value("Platform/itemsperpage",20).toInt());
 
-
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
 }

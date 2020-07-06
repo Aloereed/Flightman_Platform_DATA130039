@@ -58,7 +58,7 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
                 QString sign_2 = ptr_temp->sign_2();
                 if(sign_2==tr("Contain")){
                     QString text = ptr_temp->text();
-                    sql2 += QString(" ")+index+QString(" LIKE \'\%")+text+QString("\%\'")+QString(" ");
+                    sql2 += QString(" ")+index+QString(" LIKE \'%")+text+QString("%\'")+QString(" ");
                 }else{
                 if(sign_2=="=="){
                     sign_2="=";
@@ -73,7 +73,7 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
                 QString sign_2 = ptr_temp->sign_2();
                 if(sign_2==tr("Contain")){
                     QString text = ptr_temp->text();
-                    sql2 += sign_1+QString(" ")+index+QString(" LIKE \'\%")+text+QString("\%\'")+QString(" ");
+                    sql2 += sign_1+QString(" ")+index+QString(" LIKE \'%")+text+QString("%\'")+QString(" ");
                 }
                 else{
                 if(sign_2=="=="){
