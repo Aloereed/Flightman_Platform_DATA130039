@@ -6,11 +6,10 @@
 
 
 extern QSettings settings;
-QFont uifont;
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
 #endif
-#include <QFontDatabase>
+
 
 bool checkPermission(const QString &permission)
 {
@@ -55,10 +54,6 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath(QApplication::applicationDirPath());
     QApplication::addLibraryPath("./");
     checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-    int fontId = QFontDatabase::addApplicationFont(":/pingfangSS.ttf");
-    QString pingfang = QFontDatabase::applicationFontFamilies ( fontId ).at(0);
-    uifont=QFont(pingfang,10);
-    QApplication::setFont((settings.value("Platform/UIFont",uifont).value<QFont>()));
     QString style_sheet = readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString());
     a.setStyleSheet(style_sheet);
     loginwindow w;

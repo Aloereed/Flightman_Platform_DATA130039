@@ -48,7 +48,6 @@ SOURCES += \
     stopover.cpp
 
 HEADERS += \
-    CException.h \
     QRibbon/QRibbon.h \
     add_price.h \
     addadmin.h \
@@ -116,8 +115,7 @@ RESOURCES += \
     png/about.png \
     png/exit.png \
     png/logout.png \
-    png/qt.png\
-    pingfangSS.ttf
+    png/qt.png
 
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path

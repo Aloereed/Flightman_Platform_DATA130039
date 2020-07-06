@@ -11,7 +11,9 @@
 #include <QDateTime>
 #include<QProgressDialog>
 #include<QFileInfo>
+#include <QFontDatabase>
 #include "mainplatformwindow.h"
+QFont uifont;
 QSqlDatabase db;
 QTranslator translator;
 mainplatformwindow *w;
@@ -39,6 +41,12 @@ loginwindow::loginwindow(QWidget *parent)
         ui->lineEdit_2->setText(settings.value("Platform/AdminPWD").toString());
         ui->checkBox_2->setChecked(true);
     }
+    /*
+    int fontId = QFontDatabase::addApplicationFont(":/pingfangSS.ttf");
+    QString pingfang = QFontDatabase::applicationFontFamilies ( fontId ).at(0);
+    uifont=QFont(pingfang,10);
+    */
+    QApplication::setFont((settings.value("Platform/UIFont",this->font()).value<QFont>()));
 
     //settings.sync();
 

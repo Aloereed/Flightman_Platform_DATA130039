@@ -69,17 +69,10 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
 #ifdef WIN32
     QRibbon::install(this);
 #endif
-<<<<<<< HEAD
     qApp->setStyleSheet(readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString()));
     ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno",1).toInt());
     ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont",uifont).value<QFont>()));
     ui->comboBox->setCurrentIndex(settings.value("Platform/Langcase",2).toInt());
-=======
-    qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
-    ui->comboBox_2->setCurrentIndex(settings.value("themeno",1).toInt());
-
-    ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt());
->>>>>>> 2fe9945e018e84a6ff25db362db32de09561fdea
     _init();
 }
 
@@ -134,11 +127,9 @@ void mainplatformwindow::_init(){
     on_horizontalSlider_3_valueChanged(1);
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
-<<<<<<< HEAD
+
     ui->spinBox->setValue(settings.value("Platform/itemsperpage",20).toInt());
-=======
-    ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
->>>>>>> 2fe9945e018e84a6ff25db362db32de09561fdea
+
 
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
@@ -945,7 +936,6 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
         modification_fliarrange->show();
 
 
-
     }
 }
 
@@ -972,8 +962,11 @@ void mainplatformwindow::on_horizontalSlider_3_valueChanged(int value)
 
 
 
+
 void mainplatformwindow::on_fontComboBox_currentFontChanged(const QFont &f)
 {
     settings.setValue("Platform/UIFont",f);
     QApplication::setFont(f);
 }
+
+
