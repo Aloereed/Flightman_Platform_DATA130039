@@ -46,6 +46,7 @@ public:
     void _init();
     void userRefresh();
     void flightRefresh();
+    void ticketRefresh(int page=1);
     void fliarrangeRefresh(int page=1);
     void airportRefresh(int page =1);
     void compRefresh(int page=1);
@@ -147,6 +148,10 @@ private:
 };
 
 class mycompmodel:public QSqlQueryModel{
+public:
+    QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
+};
+class myticketmodel:public QSqlQueryModel{
 public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };

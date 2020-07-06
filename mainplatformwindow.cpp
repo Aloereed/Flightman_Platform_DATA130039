@@ -51,6 +51,7 @@ addcom *add_comp;
 QTableView *usertable;
 QTableView *flighttable;
 QTableView *comptable;
+QTableView *tickettable;
 QTimer *localtimer;
 QSignalMapper *usermapper;
 QSignalMapper *usermapper_mod;
@@ -112,9 +113,13 @@ void mainplatformwindow::_init(){
 
     comptable=ui->tableView_4;
 
+    tickettable = ui->tableView_8;
+
     userRefresh();
 
     flightRefresh();
+
+    ticketRefresh();
 
 
     //compRefresh();
@@ -290,6 +295,42 @@ void mainplatformwindow::flightRefresh(){
     flightmodel->setHeaderData(7,Qt::Horizontal,QString::fromUtf8(tr("Airline Company ID").toUtf8()));
     flighttable->resizeColumnsToContents();
 }
+void mainplatformwindow::ticketRefresh(int page){
+    QSqlQuery query = QSqlQuery("select count(1) from ticket_all_view");
+    ui->statusBar->showMessage(tr("Querying..."));
+    int itemsperpage=settings.value("Platform/itemsperpage",20).toInt();
+    query.next();
+    ui->horizontalSlider->setMaximum(query.value(0).toInt()/itemsperpage+1);
+
+    myticketmodel *ticketmodel = new myticketmodel;
+    int item2 = itemsperpage*(page-1);
+    ticketmodel->setQuery("select * from ticket_all_view limit "+QString::number(item2)+","+QString::number(itemsperpage));
+    tickettable->setModel(ticketmodel);
+
+    ticketmodel->insertColumn(11);
+    ticketmodel->setHeaderData(11,Qt::Horizontal,QString::fromUtf8(tr("Refund").toUtf8()));
+
+    ticketmodel->setHeaderData(0,Qt::Horizontal,QString::fromUtf8(tr("Ticket ID").toUtf8()));
+    ticketmodel->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("User ID").toUtf8()));
+    ticketmodel->setHeaderData(2,Qt::Horizontal,QString::fromUtf8(tr("Flight ID").toUtf8()));
+    ticketmodel->setHeaderData(3,Qt::Horizontal,QString::fromUtf8(tr("Departure Datetime").toUtf8()));
+    ticketmodel->setHeaderData(4,Qt::Horizontal,QString::fromUtf8(tr("Class").toUtf8()));
+    ticketmodel->setHeaderData(5,Qt::Horizontal,QString::fromUtf8(tr("Purchase Date").toUtf8()));
+    ticketmodel->setHeaderData(6,Qt::Horizontal,QString::fromUtf8(tr("Actual Payment").toUtf8()));
+    ticketmodel->setHeaderData(7,Qt::Horizontal,QString::fromUtf8(tr("Departure Airport").toUtf8()));
+    ticketmodel->setHeaderData(8,Qt::Horizontal,QString::fromUtf8(tr("Arrival Airport").toUtf8()));
+    ticketmodel->setHeaderData(9,Qt::Horizontal,QString::fromUtf8(tr("Refund Date").toUtf8()));
+    ticketmodel->setHeaderData(10,Qt::Horizontal,QString::fromUtf8(tr("Actual Refund").toUtf8()));
+
+
+
+
+    tickettable->resizeColumnsToContents();
+    ui->statusBar->showMessage(tr("Completing..."));
+    ui->statusBar->showMessage(tr("Completed!"));
+}
+
+
 void mainplatformwindow::compRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from company");
     ui->statusBar->showMessage(tr("Querying..."));
@@ -602,6 +643,18 @@ QVariant mycompmodel::data(const QModelIndex &item, int role) const{
     }
     return value;
 }
+QVariant myticketmodel::data(const QModelIndex &item, int role) const{
+    QVariant value = QSqlQueryModel::data(item, role);
+    if (role == Qt::BackgroundColorRole){
+        if(item.column()==11)
+            return QVariant::fromValue(QColor(225,225,225));
+    }
+    if (role == Qt::DisplayRole){
+
+    }
+    return value;
+}
+
 QVariant myflightmodel::data(const QModelIndex &item, int role) const{
     QVariant value = QSqlQueryModel::data(item, role);
     if (role == Qt::BackgroundColorRole){
