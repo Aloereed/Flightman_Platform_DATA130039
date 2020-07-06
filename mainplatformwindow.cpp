@@ -63,7 +63,10 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui(new Ui::mainplatformwindow)
 {
     ui->setupUi(this);
+#ifdef WIN32
     QRibbon::install(this);
+#endif
+    qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
     ui->comboBox_2->setCurrentIndex(settings.value("themeno",1).toInt());
 
     ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt());
@@ -122,7 +125,7 @@ void mainplatformwindow::_init(){
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
     ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
-    qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
+
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
 }
