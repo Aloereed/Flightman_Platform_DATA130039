@@ -45,10 +45,10 @@ SOURCES += \
     queryplugin.cpp \
     search_result.cpp \
     show_seat_a.cpp \
+    sqlquery.cpp \
     stopover.cpp
 
 HEADERS += \
-    CException.h \
     QRibbon/QRibbon.h \
     add_price.h \
     addadmin.h \
@@ -72,6 +72,7 @@ HEADERS += \
     queryplugin.h \
     search_result.h \
     show_seat_a.h \
+    sqlquery.h \
     stopover.h
 
 FORMS += \
@@ -97,6 +98,7 @@ FORMS += \
     queryplugin.ui \
     search_result.ui \
     show_seat_a.ui \
+    sqlquery.ui \
     stopover.ui
 
 TRANSLATIONS += \
@@ -116,8 +118,7 @@ RESOURCES += \
     png/about.png \
     png/exit.png \
     png/logout.png \
-    png/qt.png\
-    pingfangSS.ttf
+    png/qt.png
 
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path

@@ -950,7 +950,6 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
         else
             QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
 
-
     }
 }
 
@@ -977,8 +976,11 @@ void mainplatformwindow::on_horizontalSlider_3_valueChanged(int value)
 
 
 
+
 void mainplatformwindow::on_fontComboBox_currentFontChanged(const QFont &f)
 {
     settings.setValue("Platform/UIFont",f);
     QApplication::setFont(f);
 }
+
+
