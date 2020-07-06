@@ -69,17 +69,12 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
 #ifdef WIN32
     QRibbon::install(this);
 #endif
-<<<<<<< HEAD
+
     qApp->setStyleSheet(readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString()));
     ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno",1).toInt());
     ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont",uifont).value<QFont>()));
     ui->comboBox->setCurrentIndex(settings.value("Platform/Langcase",2).toInt());
-=======
-    qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
-    ui->comboBox_2->setCurrentIndex(settings.value("themeno",1).toInt());
 
-    ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt());
->>>>>>> 2fe9945e018e84a6ff25db362db32de09561fdea
     _init();
 }
 
@@ -134,11 +129,9 @@ void mainplatformwindow::_init(){
     on_horizontalSlider_3_valueChanged(1);
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
-<<<<<<< HEAD
+
     ui->spinBox->setValue(settings.value("Platform/itemsperpage",20).toInt());
-=======
-    ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
->>>>>>> 2fe9945e018e84a6ff25db362db32de09561fdea
+
 
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
@@ -943,7 +936,19 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
         QString discount = model->data(model->index(row,3)).toString();
         modification_fliarrange = new modfliarrange(departure_date,ID,status,discount);
         modification_fliarrange->show();
-
+    }
+    else if(index.isValid()&&index.column()==7){//cancel
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_7->model();
+        QString ID = model->data(model->index(row,1)).toString();
+        QString departure_date = model->data(model->index(row,0)).toString();
+        QString sql = QString("CALL cancel_fliarrangement('%1','%2')").arg(ID).arg(departure_date);
+        QSqlQuery query;
+        bool status = query.exec(sql);
+        if(status)
+            fliarrangeRefresh();
+        else
+            QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
 
 
     }

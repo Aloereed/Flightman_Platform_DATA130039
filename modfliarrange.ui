@@ -93,7 +93,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>50</width>
+             <width>60</width>
              <height>16777215</height>
             </size>
            </property>
@@ -116,12 +116,12 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>30</width>
+             <width>10</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="text">
-            <string>year</string>
+            <string>y</string>
            </property>
           </widget>
          </widget>
@@ -138,7 +138,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>30</width>
+             <width>50</width>
              <height>16777215</height>
             </size>
            </property>
@@ -161,12 +161,12 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>40</width>
+             <width>10</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="text">
-            <string>month</string>
+            <string>m</string>
            </property>
           </widget>
          </widget>
@@ -183,7 +183,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>30</width>
+             <width>50</width>
              <height>16777215</height>
             </size>
            </property>
@@ -206,12 +206,12 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>30</width>
+             <width>10</width>
              <height>16777215</height>
             </size>
            </property>
            <property name="text">
-            <string>day</string>
+            <string>d</string>
            </property>
           </widget>
          </widget>

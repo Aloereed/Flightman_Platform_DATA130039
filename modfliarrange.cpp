@@ -72,36 +72,31 @@ void modfliarrange::on_buttonBox_clicked(QAbstractButton *button)
         }
         dialog.setValue(30000);
 
+        if(newdeparture.daysTo(olddeparture)==0){
+            QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg("the new departure date couldn't be the same as the old one"));
+            return;
+        }
+
         if(limit_down.daysTo(newdeparture)<0||newdeparture.daysTo(limit_up)<0){
             QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg("the new departure date couldn't be such early or late"));
             return;
         }
 
 
-        if(QSqlDatabase::database().transaction()){
-            bool ok = true;
+        QString sql1;
+        QSqlQuery query;
+        sql1=QString("CALL modify_fliarrangement('%1','%2','%3','%4',%5)")
+                    .arg(flight_id).arg(olddeparture_time).arg(newdeparture_time).arg(status).arg(discount);
+        bool ok = query.exec(sql1);
 
-            QString sql1;
-            QSqlQuery query;
-            sql1=QString("UPDATE `flight_arrangement` SET `status` = '%1', `discount` = %2 "
-                         "WHERE `flight_id`='%3'").arg(status).arg(discount).arg(flight_id);
-            ok &= query.exec(sql1);
+        if(ok){
+            QMessageBox::information(this,tr("hint:"),tr("Modify successfully"));
+            w->fliarrangeRefresh();
+            this->close();
+        }
+        else{
+            QMessageBox::warning(this,tr("error:"),tr("Modify Failure"));
 
-            sql1=QString("CALL modify_fliarrangement('%1','%2','%3')").arg(flight_id).arg(olddeparture_time).arg(newdeparture_time);
-            ok &= query.exec(sql1);
-
-
-            if(!QSqlDatabase::database().commit()){
-                qDebug()<<QSqlDatabase::database().lastError();
-                if(!QSqlDatabase::database().rollback()){
-                    QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
-                }
-             }
-            else{
-                QMessageBox::information(this,tr("hint:"),tr("Modify successfully"));
-                w->fliarrangeRefresh();
-                this->close();
-            }
         }
 
     }
