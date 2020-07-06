@@ -1,6 +1,10 @@
 QT       += core gui
 QT       += sql
 QT       += network
+android{
+    QT += androidextras
+}
+QT += core-private
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -44,6 +48,7 @@ SOURCES += \
     stopover.cpp
 
 HEADERS += \
+    CException.h \
     QRibbon/QRibbon.h \
     add_price.h \
     addadmin.h \
@@ -111,7 +116,8 @@ RESOURCES += \
     png/about.png \
     png/exit.png \
     png/logout.png \
-    png/qt.png
+    png/qt.png\
+    pingfangSS.ttf
 
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path

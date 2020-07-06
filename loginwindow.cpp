@@ -16,7 +16,13 @@ QSqlDatabase db;
 QTranslator translator;
 mainplatformwindow *w;
 my_admin tranadmin;
+#ifdef Q_OS_ANDROID
+#include <QStandardPaths>
+QSettings settings(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)+"/plat_settings.ini", QSettings::NativeFormat);
+#else
 QSettings settings("FDU4021","FBMT");
+#endif
+
 loginwindow::loginwindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::loginwindow)
@@ -28,11 +34,12 @@ loginwindow::loginwindow(QWidget *parent)
     translator.load(langdir);
     qApp->installTranslator(&translator);
     ui->retranslateUi(this);
-    if(settings.value("AdminisSaved").toBool()){
-        ui->lineEdit->setText(settings.value("AdminID").toString());
-        ui->lineEdit_2->setText(settings.value("AdminPWD").toString());
+    if(settings.value("Platform/AdminisSaved").toBool()){
+        ui->lineEdit->setText(settings.value("Platform/AdminID").toString());
+        ui->lineEdit_2->setText(settings.value("Platform/AdminPWD").toString());
         ui->checkBox_2->setChecked(true);
     }
+
     //settings.sync();
 
 }
@@ -40,7 +47,7 @@ loginwindow::loginwindow(QWidget *parent)
 loginwindow::~loginwindow()
 {
     delete ui;
-    //settings.sync();
+    settings.sync();
 }
 
 
@@ -110,17 +117,19 @@ void loginwindow::on_commandLinkButton_clicked()
           tranadmin.satype=login.value(2).toBool();
           tranadmin.name=login.value(1).toString();
           if(ui->checkBox_2->isChecked()){
-              settings.setValue("AdminID",tranadmin.ID);
-              settings.setValue("AdminPWD",ui->lineEdit_2->text());
+              settings.setValue("Platform/AdminID",tranadmin.ID);
+              settings.setValue("Platform/AdminPWD",ui->lineEdit_2->text());
+              settings.sync();
           }
-          settings.setValue("AdminisSaved",ui->checkBox_2->isChecked());
+          settings.setValue("Platform/AdminisSaved",ui->checkBox_2->isChecked());
+          settings.sync();
           QApplication::processEvents();
           w = new mainplatformwindow();
           w->setWindowIcon(QIcon(":/icon.png"));
           QApplication::processEvents();
           w->show();
           QApplication::processEvents();
-          this->hide();
+          this->close();
           }else      {
               QMessageBox::critical(this,"ID or Password Wrong.","Your ID or Password is Wrong.");
               return;

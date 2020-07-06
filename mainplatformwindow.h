@@ -138,6 +138,8 @@ private slots:
 
     void on_horizontalSlider_3_valueChanged(int value);
 
+    void on_fontComboBox_currentFontChanged(const QFont &f);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)

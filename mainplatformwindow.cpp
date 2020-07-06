@@ -17,7 +17,9 @@
 #include "modadmin.h"
 #include "modfliarrange.h"
 #include "show_seat_a.h"
+#ifdef WIN32
 #include "QRibbon/QRibbon.h"
+#endif
 #include<QCheckBox>
 #include<QToolTip>
 #include <QSysInfo>
@@ -29,6 +31,7 @@ loginwindow *l;
 extern QTranslator translator;
 extern my_admin tranadmin;
 extern QSettings settings;
+extern QFont uifont;
 
 stopover *stop_over;
 adduser *a;
@@ -63,10 +66,13 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui(new Ui::mainplatformwindow)
 {
     ui->setupUi(this);
+#ifdef WIN32
     QRibbon::install(this);
-    ui->comboBox_2->setCurrentIndex(settings.value("themeno",1).toInt());
-
-    ui->comboBox->setCurrentIndex(settings.value("Langcase",2).toInt());
+#endif
+    qApp->setStyleSheet(readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString()));
+    ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno",1).toInt());
+    ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont",uifont).value<QFont>()));
+    ui->comboBox->setCurrentIndex(settings.value("Platform/Langcase",2).toInt());
     _init();
 }
 
@@ -121,8 +127,8 @@ void mainplatformwindow::_init(){
     on_horizontalSlider_3_valueChanged(1);
     on_horizontalSlider_2_valueChanged(1);
     on_horizontalSlider_valueChanged(1);
-    ui->spinBox->setValue(settings.value("itemsperpage",20).toInt());
-    qApp->setStyleSheet(readTextFile(settings.value("theme",":/qss/Aqua.qss").toString()));
+    ui->spinBox->setValue(settings.value("Platform/itemsperpage",20).toInt());
+
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit->setMinimumDate(QDate::currentDate());
 }
@@ -136,7 +142,7 @@ void mainplatformwindow::updatetime(){
 mainplatformwindow::~mainplatformwindow()
 {
     delete ui;
-    //settings.sync();
+    settings.sync();
 }
 
 
@@ -201,7 +207,7 @@ void mainplatformwindow::on_listWidget_user_currentRowChanged(int currentRow)
 void mainplatformwindow::fliarrangeRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from flight_arrangement");
     ui->statusBar->showMessage(tr("Querying..."));
-    int itemsperpage=settings.value("itemsperpage",20).toInt();
+    int itemsperpage=settings.value("Platform/itemsperpage",20).toInt();
     query.next();
     ui->horizontalSlider_3->setMaximum(query.value(0).toInt()/itemsperpage+1);
     int item2 = itemsperpage*(page-1);
@@ -227,7 +233,7 @@ void mainplatformwindow::fliarrangeRefresh(int page){
 void mainplatformwindow::airportRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from airport");
     ui->statusBar->showMessage(tr("Querying..."));
-    int itemsperpage=settings.value("itemsperpage",20).toInt();
+    int itemsperpage=settings.value("Platform/itemsperpage",20).toInt();
     query.next();
     ui->horizontalSlider_2->setMaximum(query.value(0).toInt()/itemsperpage+1);
     int item2 = itemsperpage*(page-1);
@@ -284,7 +290,7 @@ void mainplatformwindow::flightRefresh(){
 void mainplatformwindow::compRefresh(int page){
     QSqlQuery query = QSqlQuery("select count(1) from company");
     ui->statusBar->showMessage(tr("Querying..."));
-    int itemsperpage=settings.value("itemsperpage",20).toInt();
+    int itemsperpage=settings.value("Platform/itemsperpage",20).toInt();
     query.next();
     ui->horizontalSlider->setMaximum(query.value(0).toInt()/itemsperpage+1);
     //compmapper= new QSignalMapper;
@@ -652,11 +658,15 @@ QVariant myfliarrangemodel::data(const QModelIndex &item, int role) const{
         if(item.column()==4)
             return QVariant::fromValue(tr("Click to View"));
         else if(item.column()==5)
-            return QVariant::fromValue(tr("     Click to View"));
+            return QVariant::fromValue(tr("Click to View"));
         else if(item.column()==6)
             return QVariant::fromValue(tr("Modify"));
         else if(item.column()==7)
             return QVariant::fromValue(tr("Delete"));
+    }
+    if (role == Qt::TextAlignmentRole){
+        if(item.column()==4||item.column()==5)
+            return Qt::AlignCenter;
     }
     return value;
 }
@@ -771,7 +781,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
         qApp->removeTranslator(&translator);
 
         ui->retranslateUi(this);
-        settings.setValue("Langcase",0);
+        settings.setValue("Platform/Langcase",0);
         break;
     }
     case 1:{
@@ -781,7 +791,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
         qApp->installTranslator(&translator);
 
         ui->retranslateUi(this);
-        settings.setValue("Langcase",1);
+        settings.setValue("Platform/Langcase",1);
         break;
     }
     default :{
@@ -791,7 +801,7 @@ void mainplatformwindow::on_comboBox_activated(int index)
         qApp->installTranslator(&translator);
 
         ui->retranslateUi(this);
-        settings.setValue("Langcase",2);
+        settings.setValue("Platform/Langcase",2);
     }
     }
     //settings.sync();
@@ -827,7 +837,7 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item)
 
 void mainplatformwindow::on_spinBox_valueChanged(int arg1)
 {
-    settings.setValue("itemsperpage",arg1);
+    settings.setValue("Platform/itemsperpage",arg1);
     //settings.sync();
     flightRefresh();
     airportRefresh();
@@ -879,16 +889,16 @@ void mainplatformwindow::on_comboBox_2_activated(int index)
 {
     switch (index){
         case 0:{
-            settings.setValue("theme",":/qss/ElegantDark.qss");
-            settings.setValue("themeno",0);
-            QString style_sheet = readTextFile(settings.value("theme",":/qss/Aqua.qss").toString());
+            settings.setValue("Platform/theme",":/qss/ElegantDark.qss");
+            settings.setValue("Platform/themeno",0);
+            QString style_sheet = readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString());
             qApp->setStyleSheet(style_sheet);
             break;
         }
         case 1:{
-            settings.setValue("theme",":/qss/Aqua.qss");
-            settings.setValue("themeno",1);
-            QString style_sheet = readTextFile(settings.value("theme",":/qss/Aqua.qss").toString());
+            settings.setValue("Platform/theme",":/qss/Aqua.qss");
+            settings.setValue("Platform/themeno",1);
+            QString style_sheet = readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString());
             qApp->setStyleSheet(style_sheet);
             break;
         }
@@ -950,3 +960,9 @@ void mainplatformwindow::on_horizontalSlider_3_valueChanged(int value)
 }
 
 
+
+void mainplatformwindow::on_fontComboBox_currentFontChanged(const QFont &f)
+{
+    settings.setValue("Platform/UIFont",f);
+    QApplication::setFont(f);
+}
