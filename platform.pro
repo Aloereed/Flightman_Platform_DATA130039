@@ -45,6 +45,7 @@ SOURCES += \
     queryplugin.cpp \
     search_result.cpp \
     show_seat_a.cpp \
+    sqlquery.cpp \
     stopover.cpp
 
 HEADERS += \
@@ -71,6 +72,7 @@ HEADERS += \
     queryplugin.h \
     search_result.h \
     show_seat_a.h \
+    sqlquery.h \
     stopover.h
 
 FORMS += \
@@ -96,6 +98,7 @@ FORMS += \
     queryplugin.ui \
     search_result.ui \
     show_seat_a.ui \
+    sqlquery.ui \
     stopover.ui
 
 TRANSLATIONS += \
