@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>6</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -94,8 +94,32 @@
              <string>Quick Action</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="lineEdit"/>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="pushButton_6">
+               <property name="text">
+                <string>Delete All Flight Arrangement Infomation</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" colspan="3">
+              <widget class="QWidget" name="widget_5" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                  <item>
+                   <widget class="QPushButton" name="pushButton_11">
+                    <property name="text">
+                     <string>Deliver Messages to users</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTextEdit" name="textEdit"/>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
              </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="pushButton_5">
@@ -104,19 +128,8 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
-              <widget class="QPushButton" name="pushButton_6">
-               <property name="text">
-                <string>Delete All Flight Arrangement Infomation</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>From:</string>
-               </property>
-              </widget>
+             <item row="1" column="1">
+              <widget class="QDateEdit" name="dateEdit"/>
              </item>
              <item row="0" column="2">
               <widget class="QComboBox" name="comboBox_3">
@@ -132,8 +145,15 @@
                </item>
               </widget>
              </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QDateEdit" name="dateEdit"/>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>From:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="lineEdit"/>
              </item>
             </layout>
            </widget>
@@ -737,8 +757,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>713</width>
-              <height>433</height>
+              <width>683</width>
+              <height>398</height>
              </rect>
             </property>
             <attribute name="label">
@@ -800,8 +820,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>377</width>
-              <height>125</height>
+              <width>364</width>
+              <height>153</height>
              </rect>
             </property>
             <attribute name="label">
@@ -892,6 +912,17 @@
      </widget>
     </item>
    </layout>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_5"/>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -899,7 +930,7 @@
      <x>0</x>
      <y>0</y>
      <width>753</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
