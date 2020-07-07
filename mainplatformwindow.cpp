@@ -305,10 +305,13 @@ void mainplatformwindow::ticketRefresh(int page){
     ticketmodel->setQuery("select * from ticket_all_view limit "+QString::number(item2)+","+QString::number(itemsperpage));
     tickettable->setModel(ticketmodel);
 
-    ticketmodel->insertColumn(11);
-    ticketmodel->setHeaderData(11,Qt::Horizontal,QString::fromUtf8(tr("Refund").toUtf8()));
     ticketmodel->insertColumn(12);
-    ticketmodel->setHeaderData(12,Qt::Horizontal,QString::fromUtf8(tr("Delete").toUtf8()));
+    ticketmodel->setHeaderData(12,Qt::Horizontal,QString::fromUtf8(tr("Refund").toUtf8()));
+    ticketmodel->insertColumn(13);
+    ticketmodel->setHeaderData(13,Qt::Horizontal,QString::fromUtf8(tr("Delete").toUtf8()));
+    ticketmodel->insertColumn(14);
+    ticketmodel->setHeaderData(14,Qt::Horizontal,QString::fromUtf8(tr("Check In").toUtf8()));
+
 
     ticketmodel->setHeaderData(0,Qt::Horizontal,QString::fromUtf8(tr("Ticket ID").toUtf8()));
     ticketmodel->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("User ID").toUtf8()));
@@ -321,6 +324,8 @@ void mainplatformwindow::ticketRefresh(int page){
     ticketmodel->setHeaderData(8,Qt::Horizontal,QString::fromUtf8(tr("Arrival Airport").toUtf8()));
     ticketmodel->setHeaderData(9,Qt::Horizontal,QString::fromUtf8(tr("Refund Date").toUtf8()));
     ticketmodel->setHeaderData(10,Qt::Horizontal,QString::fromUtf8(tr("Actual Refund").toUtf8()));
+    ticketmodel->setHeaderData(11,Qt::Horizontal,QString::fromUtf8(tr("Seat ID").toUtf8()));
+
 
 
 
@@ -646,14 +651,16 @@ QVariant mycompmodel::data(const QModelIndex &item, int role) const {
 QVariant myticketmodel::data(const QModelIndex &item, int role) const{
     QVariant value = QSqlQueryModel::data(item, role);
     if (role == Qt::BackgroundColorRole){
-        if(item.column()==11||item.column()==12)
+        if(item.column()==13||item.column()==12||item.column()==14)
             return QVariant::fromValue(QColor(225,225,225));
     }
     if (role == Qt::DisplayRole){
-        if(item.column()==11)
-            return QVariant::fromValue(tr("Refund"));
         if(item.column()==12)
+            return QVariant::fromValue(tr("Refund"));
+        if(item.column()==13)
             return QVariant::fromValue(tr("Delete"));
+        if(item.column()==14)
+            return QVariant::fromValue(tr("Check In"));
 
     }
     return value;
@@ -1051,31 +1058,56 @@ void mainplatformwindow::on_fontComboBox_currentFontChanged(const QFont &f) {
 
 void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
 {
-    if(index.isValid()&&index.column()==11){//Refund
+    if(index.isValid()&&index.column()==12){//Refund
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_8->model();
         QString refund_date = model->data(model->index(row,9)).toString();
+        QString seat_id = model->data(model->index(row,11)).toString();
         if(refund_date!=""){
             QMessageBox::critical(this,tr("Error:"),tr("The ticket has already been refunded"));
             return;
         }
+        if(seat_id!=""){
+            QMessageBox::critical(this,tr("Error:"),tr("The ticket has already been checked in"));
+            return;
+        }
+        QString dep = model->data(model->index(row,3)).toString();
+        QStringList list = dep.split("T");
+        QString dep_datetime = list[0] + QString(" ")+list[1];
+        qDebug()<<dep_datetime;
         QString ticket_ID = model->data(model->index(row,0)).toString();
         QString actual_payment = model->data(model->index(row,6)).toString();
         float money = actual_payment.toFloat();
+
+        float actualRefund = money;
+        int TimeDistance = 0;
+        QString sql = QString("SELECT UNIX_TIMESTAMP(CAST('%1' AS DATETIME)) - UNIX_TIMESTAMP(NOW())").arg(dep_datetime);
+        QSqlQuery query;
+        query.exec(sql);
+        query.first();
+        TimeDistance = query.value(0).toInt();
+        if(TimeDistance>=86400) { //距离起飞还有24小时以及更久
+           actualRefund *= 0.90;
+        } else if(TimeDistance>=7200) { //距离起飞还有2-24小时
+           actualRefund *= 0.80;
+        } else {
+           actualRefund *= 0.65;
+        }
+
         QDate now = QDate::currentDate();
         refund_date = now.toString("yyyy-MM-dd");
 
-        QString sql = QString("INSERT INTO ticket_refund(`ticket_id`,`refund_date`,`actual refund`) VALUES"
-                              "('%1','%2',%3)").arg(ticket_ID).arg(refund_date).arg(money);
+        sql = QString("INSERT INTO ticket_refund(`ticket_id`,`refund_date`,`actual refund`) VALUES"
+                              "('%1','%2',%3)").arg(ticket_ID).arg(refund_date).arg(actualRefund);
 
-        QSqlQuery query;
+
         bool status = query.exec(sql);
         if(status)
             ticketRefresh();
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Refund failed."));
     }
-    else if(index.isValid()&&index.column()==12){//Delete
+    else if(index.isValid()&&index.column()==13){//Delete
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_8->model();
         QString refund_date = model->data(model->index(row,9)).toString();
@@ -1091,9 +1123,6 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
             ticketRefresh();
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
-
-
-
     }
 }
 
