@@ -17,6 +17,7 @@
 #include "modadmin.h"
 #include "modfliarrange.h"
 #include "show_seat_a.h"
+#include "addticket.h"
 #ifdef WIN32
 #include "QRibbon/QRibbon.h"
 #endif
@@ -41,6 +42,7 @@ addairport *add_airport;
 addfliarrange *add_fliarrange;
 addadmin *add_admin;
 show_seat_a *show_seat;
+addticket *add_ticket;
 
 modfliarrange *modification_fliarrange;
 modadmin *modification_admin;
@@ -1092,5 +1094,13 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
 
 
 
+    }
+}
+
+void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item)
+{
+    if(item->text() == tr("Add") && tranadmin.satype) {
+        add_ticket = new addticket;
+        add_ticket->show();
     }
 }

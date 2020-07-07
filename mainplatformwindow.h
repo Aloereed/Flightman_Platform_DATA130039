@@ -145,6 +145,8 @@ private slots:
 
     void on_tableView_8_clicked(const QModelIndex &index);
 
+    void on_listWidget_8_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)

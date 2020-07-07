@@ -30,6 +30,7 @@ SOURCES += \
     addflight.cpp \
     addflight_passingairport.cpp \
     addseat.cpp \
+    addticket.cpp \
     adduser.cpp \
     genarran.cpp \
     main.cpp \
@@ -46,7 +47,8 @@ SOURCES += \
     search_result.cpp \
     show_seat_a.cpp \
     sqlquery.cpp \
-    stopover.cpp
+    stopover.cpp \
+    usercheck.cpp
 
 HEADERS += \
     QRibbon/QRibbon.h \
@@ -58,6 +60,7 @@ HEADERS += \
     addflight.h \
     addflight_passingairport.h \
     addseat.h \
+    addticket.h \
     adduser.h \
     genarran.h \
     loginwindow.h \
@@ -73,7 +76,8 @@ HEADERS += \
     search_result.h \
     show_seat_a.h \
     sqlquery.h \
-    stopover.h
+    stopover.h \
+    usercheck.h
 
 FORMS += \
     QRibbon/qribbon.ui \
@@ -85,6 +89,7 @@ FORMS += \
     addflight.ui \
     addflight_passingairport.ui \
     addseat.ui \
+    addticket.ui \
     adduser.ui \
     loginwindow.ui \
     mainplatformwindow.ui \
@@ -99,7 +104,8 @@ FORMS += \
     search_result.ui \
     show_seat_a.ui \
     sqlquery.ui \
-    stopover.ui
+    stopover.ui \
+    usercheck.ui
 
 TRANSLATIONS += \
     platform_zh_CN.ts
