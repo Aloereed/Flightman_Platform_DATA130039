@@ -38,11 +38,10 @@ namespace Ui {
 class mainplatformwindow;
 }
 
-class mainplatformwindow : public QMainWindow
-{
+class mainplatformwindow : public QMainWindow {
     Q_OBJECT
 
-public:
+  public:
     explicit mainplatformwindow(QWidget *parent = nullptr);
     void _init();
     void userRefresh();
@@ -54,9 +53,9 @@ public:
     void adminRefresh();
     ~mainplatformwindow();
 
-public slots:
+  public slots:
     void on_horizontalSlider_2_valueChanged(int value);
-private slots:
+  private slots:
     void on_listWidget_clicked(const QModelIndex &index);
     void on_actionAbout_Qt_triggered();
     void on_actionLog_out_triggered();
@@ -74,6 +73,7 @@ private slots:
 
 
     void updatetime();
+    void updatest();
     //bool onTableDelBtnClicked(QString id);
     //bool onTableModBtnClicked(QString id);
     //bool onCompTableDelBtnClicked(QString id);
@@ -147,33 +147,33 @@ private slots:
 
     void on_listWidget_8_itemClicked(QListWidgetItem *item);
 
-private:
+  private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
 };
 
-class mycompmodel:public QSqlQueryModel{
-public:
+class mycompmodel:public QSqlQueryModel {
+  public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
-class myticketmodel:public QSqlQueryModel{
-public:
+class myticketmodel:public QSqlQueryModel {
+  public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
-class myusermodel:public QSqlQueryModel{
-public:
+class myusermodel:public QSqlQueryModel {
+  public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
-class myflightmodel:public QSqlQueryModel{
-public:
+class myflightmodel:public QSqlQueryModel {
+  public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
-class myadminmodel:public QSqlQueryModel{
-public:
+class myadminmodel:public QSqlQueryModel {
+  public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
-class myfliarrangemodel:public QSqlQueryModel{
-public:
+class myfliarrangemodel:public QSqlQueryModel {
+  public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 

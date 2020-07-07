@@ -105,16 +105,23 @@
               <widget class="QWidget" name="widget_5" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_6">
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <widget class="Line" name="line">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_7">
+                  <item>
+                   <widget class="QTextEdit" name="textEdit"/>
+                  </item>
                   <item>
                    <widget class="QPushButton" name="pushButton_11">
                     <property name="text">
                      <string>Deliver Messages to users</string>
                     </property>
                    </widget>
-                  </item>
-                  <item>
-                   <widget class="QTextEdit" name="textEdit"/>
                   </item>
                  </layout>
                 </item>
@@ -163,7 +170,7 @@
             </attribute>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
-              <widget class="QTableWidget" name="tableWidget_2"/>
+              <widget class="QTableView" name="staView"/>
              </item>
             </layout>
            </widget>
@@ -750,15 +757,15 @@
             <bool>false</bool>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="page">
             <property name="geometry">
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>683</width>
-              <height>398</height>
+              <width>228</width>
+              <height>134</height>
              </rect>
             </property>
             <attribute name="label">
@@ -820,8 +827,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>364</width>
-              <height>153</height>
+              <width>713</width>
+              <height>433</height>
              </rect>
             </property>
             <attribute name="label">
@@ -912,7 +919,7 @@
      </widget>
     </item>
    </layout>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -930,7 +937,7 @@
      <x>0</x>
      <y>0</y>
      <width>753</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

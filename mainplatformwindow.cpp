@@ -56,6 +56,7 @@ QTableView *flighttable;
 QTableView *comptable;
 QTableView *tickettable;
 QTimer *localtimer;
+QTimer *localtimer2;
 QSignalMapper *usermapper;
 QSignalMapper *usermapper_mod;
 QSignalMapper *compmapper;
@@ -84,69 +85,86 @@ void mainplatformwindow::_init() {
     //settings.sync();
     qDebug()<<db.driver()->hasFeature(QSqlDriver::Transactions);
     ui->label->setText(tr("System Version:") + osVersion());
-
+    QApplication::processEvents();
     QSqlQuery query = QSqlQuery("select @@VERSION");
-
+    QApplication::processEvents();
     query.next();
-
+    QApplication::processEvents();
     ui->label_2->setText(QString(tr("Server Version:\n ")) + query.value(0).toString());
-
+    QApplication::processEvents();
     query = QSqlQuery("select user()");
-
+    QApplication::processEvents();
     query.next();
-
+    QApplication::processEvents();
     ui->label_3->setText(QString(tr("Login system user: ")) + query.value(0).toString());
-
+    QApplication::processEvents();
     ui->label_4->setText(QString(tr("Language: ")) + QLocale::system().name());
-
-    QSqlQueryModel *infomodel = new QSqlQueryModel;
-
-    infomodel->setQuery(QString("show status"));
-
-    ui->tableView_2->setModel(infomodel);
-
-    ui->tableView_2->resizeColumnsToContents();
+    QApplication::processEvents();
 
 
     usertable = ui->tableView;
-
+    QApplication::processEvents();
     flighttable = ui->tableView_3;
-
+    QApplication::processEvents();
     comptable = ui->tableView_4;
-
+    QApplication::processEvents();
     tickettable = ui->tableView_8;
-
+    QApplication::processEvents();
     userRefresh();
-
+    QApplication::processEvents();
     flightRefresh();
-
+    QApplication::processEvents();
     ticketRefresh();
-
+    QApplication::processEvents();
 
     //compRefresh();
 
     localtimer = new QTimer(this);
-
+    localtimer2 =new QTimer(this);
     connect(localtimer, SIGNAL(timeout()), this, SLOT(updatetime()));
+    connect(localtimer2, SIGNAL(timeout()), this, SLOT(updatest()));
 
-    localtimer->start();
-
+    localtimer->start(1000);
+    localtimer2->start(1000);
+    QApplication::processEvents();
     adminRefresh();
+    QApplication::processEvents();
     on_horizontalSlider_3_valueChanged(1);
+    QApplication::processEvents();
     on_horizontalSlider_2_valueChanged(1);
+    QApplication::processEvents();
     on_horizontalSlider_valueChanged(1);
+    QApplication::processEvents();
 
     ui->spinBox->setValue(settings.value("Platform/itemsperpage", 20).toInt());
-
+    QApplication::processEvents();
     ui->dateEdit->setDate(QDate::currentDate());
+    QApplication::processEvents();
     ui->dateEdit->setMinimumDate(QDate::currentDate());
+    QApplication::processEvents();
 }
 
 
 void mainplatformwindow::updatetime() {
     ui->statusBar->showMessage(tr("Welcome, ") + tranadmin.name + "! " + QDateTime::currentDateTime().toString());
 }
+void mainplatformwindow::updatest() {
+    QSqlQueryModel *statistics =new QSqlQueryModel();
+    statistics->setQuery("select * from statistics_view");
+    ui->staView->setModel(statistics);
+    statistics->setHeaderData(0, Qt::Horizontal, QString::fromUtf8(tr("Variables").toUtf8()));
+    statistics->setHeaderData(1, Qt::Horizontal, QString::fromUtf8(tr("Value").toUtf8()));
+    QSqlQueryModel *infomodel = new QSqlQueryModel;
+    QApplication::processEvents();
+    infomodel->setQuery(QString("show status"));
+    QApplication::processEvents();
+    ui->tableView_2->setModel(infomodel);
+    QApplication::processEvents();
+    ui->tableView_2->resizeColumnsToContents();
+    ui->staView->resizeColumnsToContents();
+    QApplication::processEvents();
 
+}
 
 mainplatformwindow::~mainplatformwindow() {
     delete ui;
@@ -293,7 +311,7 @@ void mainplatformwindow::flightRefresh() {
     flightmodel->setHeaderData(7, Qt::Horizontal, QString::fromUtf8(tr("Airline Company ID").toUtf8()));
     flighttable->resizeColumnsToContents();
 }
-void mainplatformwindow::ticketRefresh(int page){
+void mainplatformwindow::ticketRefresh(int page) {
     QSqlQuery query = QSqlQuery("select count(1) from ticket_all_view");
     ui->statusBar->showMessage(tr("Querying..."));
     int itemsperpage=settings.value("Platform/itemsperpage",20).toInt();
@@ -303,8 +321,9 @@ void mainplatformwindow::ticketRefresh(int page){
     myticketmodel *ticketmodel = new myticketmodel;
     int item2 = itemsperpage*(page-1);
     ticketmodel->setQuery("select * from ticket_all_view limit "+QString::number(item2)+","+QString::number(itemsperpage));
+    QApplication::processEvents();
     tickettable->setModel(ticketmodel);
-
+    QApplication::processEvents();
     ticketmodel->insertColumn(12);
     ticketmodel->setHeaderData(12,Qt::Horizontal,QString::fromUtf8(tr("Refund").toUtf8()));
     ticketmodel->insertColumn(13);
@@ -336,7 +355,7 @@ void mainplatformwindow::ticketRefresh(int page){
 }
 
 
-void mainplatformwindow::compRefresh(int page){
+void mainplatformwindow::compRefresh(int page) {
     QSqlQuery query = QSqlQuery("select count(1) from company");
     ui->statusBar->showMessage(tr("Querying..."));
     int itemsperpage = settings.value("Platform/itemsperpage", 20).toInt();
@@ -648,13 +667,13 @@ QVariant mycompmodel::data(const QModelIndex &item, int role) const {
 
     return value;
 }
-QVariant myticketmodel::data(const QModelIndex &item, int role) const{
+QVariant myticketmodel::data(const QModelIndex &item, int role) const {
     QVariant value = QSqlQueryModel::data(item, role);
-    if (role == Qt::BackgroundColorRole){
+    if (role == Qt::BackgroundColorRole) {
         if(item.column()==13||item.column()==12||item.column()==14)
             return QVariant::fromValue(QColor(225,225,225));
     }
-    if (role == Qt::DisplayRole){
+    if (role == Qt::DisplayRole) {
         if(item.column()==12)
             return QVariant::fromValue(tr("Refund"));
         if(item.column()==13)
@@ -666,7 +685,7 @@ QVariant myticketmodel::data(const QModelIndex &item, int role) const{
     return value;
 }
 
-QVariant myflightmodel::data(const QModelIndex &item, int role) const{
+QVariant myflightmodel::data(const QModelIndex &item, int role) const {
     QVariant value = QSqlQueryModel::data(item, role);
 
     if(role == Qt::BackgroundColorRole) {
@@ -1056,18 +1075,17 @@ void mainplatformwindow::on_fontComboBox_currentFontChanged(const QFont &f) {
 
 
 
-void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
-{
-    if(index.isValid()&&index.column()==12){//Refund
+void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
+    if(index.isValid()&&index.column()==12) { //Refund
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_8->model();
         QString refund_date = model->data(model->index(row,9)).toString();
         QString seat_id = model->data(model->index(row,11)).toString();
-        if(refund_date!=""){
+        if(refund_date!="") {
             QMessageBox::critical(this,tr("Error:"),tr("The ticket has already been refunded"));
             return;
         }
-        if(seat_id!=""){
+        if(seat_id!="") {
             QMessageBox::critical(this,tr("Error:"),tr("The ticket has already been checked in"));
             return;
         }
@@ -1087,18 +1105,18 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
         query.first();
         TimeDistance = query.value(0).toInt();
         if(TimeDistance>=86400) { //距离起飞还有24小时以及更久
-           actualRefund *= 0.90;
+            actualRefund *= 0.90;
         } else if(TimeDistance>=7200) { //距离起飞还有2-24小时
-           actualRefund *= 0.80;
+            actualRefund *= 0.80;
         } else {
-           actualRefund *= 0.65;
+            actualRefund *= 0.65;
         }
 
         QDate now = QDate::currentDate();
         refund_date = now.toString("yyyy-MM-dd");
 
         sql = QString("INSERT INTO ticket_refund(`ticket_id`,`refund_date`,`actual refund`) VALUES"
-                              "('%1','%2',%3)").arg(ticket_ID).arg(refund_date).arg(actualRefund);
+                      "('%1','%2',%3)").arg(ticket_ID).arg(refund_date).arg(actualRefund);
 
 
         bool status = query.exec(sql);
@@ -1106,12 +1124,11 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
             ticketRefresh();
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Refund failed."));
-    }
-    else if(index.isValid()&&index.column()==13){//Delete
+    } else if(index.isValid()&&index.column()==13) { //Delete
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_8->model();
         QString refund_date = model->data(model->index(row,9)).toString();
-        if(refund_date==""){
+        if(refund_date=="") {
             QMessageBox::critical(this,tr("Error:"),tr("The ticket has not been refunded"));
             return;
         }
@@ -1126,8 +1143,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
     }
 }
 
-void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item)
-{
+void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item) {
     if(item->text() == tr("Add") && tranadmin.satype) {
         add_ticket = new addticket;
         add_ticket->show();
