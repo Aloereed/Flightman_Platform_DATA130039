@@ -32,6 +32,7 @@
 #include <QSignalMapper>
 #include <QStandardItemModel>
 #include <QDateTime>
+#include <QDate>
 
 namespace Ui {
 class mainplatformwindow;
@@ -141,6 +142,8 @@ private slots:
 
     void on_fontComboBox_currentFontChanged(const QFont &f);
 
+
+    void on_tableView_8_clicked(const QModelIndex &index);
 
 private:
     Ui::mainplatformwindow *ui;

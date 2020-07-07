@@ -113,12 +113,9 @@ RESOURCES += \
     QRibbon/QRibbon.qrc \
     platform_zh_CN.qm \
     icon.png \
+    png.qrc \
     qss/Aqua.qss \
-    qss/ElegantDark.qss \
-    png/about.png \
-    png/exit.png \
-    png/logout.png \
-    png/qt.png
+    qss/ElegantDark.qss
 
 
 ANDROID_EXTRA_LIBS +=    \ # modify the path
@@ -159,7 +156,11 @@ DISTFILES += \
     QRibbon/Resource/icon/uparrow.png \
     QRibbon/Resource/icon/vline.png \
     android_sources/AndroidManifest.xml \
-    android_sources/png/icon.png
+    android_sources/png/icon.png \
+    png/about.png \
+    png/exit.png \
+    png/logout.png \
+    png/qt.png
 
 
 

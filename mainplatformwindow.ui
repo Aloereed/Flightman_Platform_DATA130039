@@ -753,8 +753,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>683</width>
-              <height>398</height>
+              <width>713</width>
+              <height>433</height>
              </rect>
             </property>
             <attribute name="label">
@@ -816,8 +816,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>364</width>
-              <height>153</height>
+              <width>377</width>
+              <height>125</height>
              </rect>
             </property>
             <attribute name="label">
@@ -915,7 +915,7 @@
      <x>0</x>
      <y>0</y>
      <width>753</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -939,7 +939,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionA_bout">
    <property name="icon">
-    <iconset resource="../build-platform-Desktop_Qt_5_14_2_clang_64bit-Debug/qmake_qmake_immediate.qrc">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MSVC2017_64bit-Debug/debug/qmake_qmake_immediate.qrc">
      <normaloff>:/png/about.png</normaloff>:/png/about.png</iconset>
    </property>
    <property name="text">
@@ -948,7 +948,7 @@
   </action>
   <action name="actionAbout_Qt">
    <property name="icon">
-    <iconset resource="../build-platform-Desktop_Qt_5_14_2_clang_64bit-Debug/qmake_qmake_immediate.qrc">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MSVC2017_64bit-Debug/debug/qmake_qmake_immediate.qrc">
      <normaloff>:/png/qt.png</normaloff>:/png/qt.png</iconset>
    </property>
    <property name="text">
@@ -957,7 +957,7 @@
   </action>
   <action name="actionLog_out">
    <property name="icon">
-    <iconset resource="../build-platform-Desktop_Qt_5_14_2_clang_64bit-Debug/qmake_qmake_immediate.qrc">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MSVC2017_64bit-Debug/debug/qmake_qmake_immediate.qrc">
      <normaloff>:/png/logout.png</normaloff>:/png/logout.png</iconset>
    </property>
    <property name="text">
@@ -966,7 +966,7 @@
   </action>
   <action name="actionE_xit">
    <property name="icon">
-    <iconset resource="../build-platform-Desktop_Qt_5_14_2_clang_64bit-Debug/qmake_qmake_immediate.qrc">
+    <iconset resource="../build-platform-Desktop_Qt_5_14_2_MSVC2017_64bit-Debug/debug/qmake_qmake_immediate.qrc">
      <normaloff>:/png/exit.png</normaloff>:/png/exit.png</iconset>
    </property>
    <property name="text">
@@ -975,7 +975,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../build-platform-Desktop_Qt_5_14_2_clang_64bit-Debug/qmake_qmake_immediate.qrc"/>
+  <include location="../build-platform-Desktop_Qt_5_14_2_MSVC2017_64bit-Debug/debug/qmake_qmake_immediate.qrc"/>
  </resources>
  <connections/>
 </ui>
