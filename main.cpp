@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
     a.setStyleSheet(style_sheet);
     loginwindow w;
 
-    //w.setWindowIcon(QIcon(":/icon.png"));
+    w.setWindowIcon(QIcon(":/icon.png"));
     w.show();
     settings.sync();
 
