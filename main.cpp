@@ -11,38 +11,38 @@ extern QSettings settings;
 #endif
 
 
-bool checkPermission(const QString &permission)
-{
+bool checkPermission(const QString &permission) {
 #ifdef Q_OS_ANDROID
     QtAndroid::PermissionResult r = QtAndroid::checkPermission(permission);
-       if(r != QtAndroid::PermissionResult::Granted) {
-           QtAndroid::requestPermissionsSync( QStringList() << permission );
-           r = QtAndroid::checkPermission(permission);
-           if(r == QtAndroid::PermissionResult::Denied) {
-                return false;
-           }
-      }
+
+    if(r != QtAndroid::PermissionResult::Granted) {
+        QtAndroid::requestPermissionsSync(QStringList() << permission);
+        r = QtAndroid::checkPermission(permission);
+
+        if(r == QtAndroid::PermissionResult::Denied) {
+            return false;
+        }
+    }
+
 #endif
     return true;
 
 }
 
 QByteArray readTextFile(const QString &file_path) {
-  QFile input_file(file_path);
-  QByteArray input_data;
+    QFile input_file(file_path);
+    QByteArray input_data;
 
-  if (input_file.open(QIODevice::Text | QIODevice::Unbuffered | QIODevice::ReadOnly)) {
-    input_data = input_file.readAll();
-    input_file.close();
-    return input_data;
-  }
-  else {
-    return QByteArray();
-  }
+    if(input_file.open(QIODevice::Text | QIODevice::Unbuffered | QIODevice::ReadOnly)) {
+        input_data = input_file.readAll();
+        input_file.close();
+        return input_data;
+    } else {
+        return QByteArray();
+    }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 #ifdef Q_OS_ANDROID
     a.setOrganizationDomain("FDU/BigData");
@@ -54,11 +54,11 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath(QApplication::applicationDirPath());
     QApplication::addLibraryPath("./");
     checkPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-    QString style_sheet = readTextFile(settings.value("Platform/theme",":/qss/Aqua.qss").toString());
+    QString style_sheet = readTextFile(settings.value("Platform/theme", ":/qss/Aqua.qss").toString());
     a.setStyleSheet(style_sheet);
     loginwindow w;
 
-    w.setWindowIcon(QIcon(":/icon.png"));
+    //w.setWindowIcon(QIcon(":/icon.png"));
     w.show();
     settings.sync();
 

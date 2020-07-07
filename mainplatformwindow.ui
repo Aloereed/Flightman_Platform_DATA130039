@@ -22,7 +22,7 @@
       </property>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>6</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="home">
         <attribute name="title">
@@ -610,114 +610,130 @@
         <attribute name="title">
          <string>💳Tickets</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0" rowspan="2">
-          <widget class="QListWidget" name="listWidget_8">
-           <property name="maximumSize">
-            <size>
-             <width>150</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <item>
-            <property name="text">
-             <string>Modification</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Search</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Add</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Delete</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Refresh</string>
-            </property>
-           </item>
-          </widget>
+        <widget class="QListWidget" name="listWidget_8">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>9</y>
+           <width>150</width>
+           <height>489</height>
+          </rect>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>150</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <item>
+          <property name="text">
+           <string>Modification</string>
+          </property>
          </item>
-         <item row="0" column="1">
-          <widget class="QTableView" name="tableView_8">
-           <property name="showGrid">
-            <bool>true</bool>
-           </property>
-          </widget>
+         <item>
+          <property name="text">
+           <string>Search</string>
+          </property>
          </item>
-         <item row="1" column="1">
-          <widget class="QWidget" name="widget_4" native="true">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>60</height>
-            </size>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
-            <item>
-             <widget class="QSlider" name="horizontalSlider_4">
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>41</height>
-               </size>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_9">
-              <property name="maximumSize">
-               <size>
-                <width>21</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>&lt;</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="plainTextEdit_4">
-              <property name="maximumSize">
-               <size>
-                <width>50</width>
-                <height>50</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_10">
-              <property name="maximumSize">
-               <size>
-                <width>21</width>
-                <height>50</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>&gt;</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+         <item>
+          <property name="text">
+           <string>Add</string>
+          </property>
          </item>
-        </layout>
+         <item>
+          <property name="text">
+           <string>Delete</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+         </item>
+        </widget>
+        <widget class="QTableView" name="tableView_8">
+         <property name="geometry">
+          <rect>
+           <x>165</x>
+           <y>9</y>
+           <width>256</width>
+           <height>192</height>
+          </rect>
+         </property>
+         <property name="showGrid">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QWidget" name="widget_4" native="true">
+         <property name="geometry">
+          <rect>
+           <x>165</x>
+           <y>458</y>
+           <width>212</width>
+           <height>40</height>
+          </rect>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QSlider" name="horizontalSlider_4">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="maximumSize">
+             <size>
+              <width>21</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="plainTextEdit_4">
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_10">
+            <property name="maximumSize">
+             <size>
+              <width>21</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>&gt;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -754,7 +770,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>Only For Super Administrator:</string>
+                <string>Only For Super Administrator！</string>
                </property>
               </widget>
              </item>
