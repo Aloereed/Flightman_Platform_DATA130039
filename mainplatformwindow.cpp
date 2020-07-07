@@ -309,6 +309,8 @@ void mainplatformwindow::ticketRefresh(int page){
 
     ticketmodel->insertColumn(11);
     ticketmodel->setHeaderData(11,Qt::Horizontal,QString::fromUtf8(tr("Refund").toUtf8()));
+    ticketmodel->insertColumn(12);
+    ticketmodel->setHeaderData(12,Qt::Horizontal,QString::fromUtf8(tr("Delete").toUtf8()));
 
     ticketmodel->setHeaderData(0,Qt::Horizontal,QString::fromUtf8(tr("Ticket ID").toUtf8()));
     ticketmodel->setHeaderData(1,Qt::Horizontal,QString::fromUtf8(tr("User ID").toUtf8()));
@@ -646,10 +648,14 @@ QVariant mycompmodel::data(const QModelIndex &item, int role) const{
 QVariant myticketmodel::data(const QModelIndex &item, int role) const{
     QVariant value = QSqlQueryModel::data(item, role);
     if (role == Qt::BackgroundColorRole){
-        if(item.column()==11)
+        if(item.column()==11||item.column()==12)
             return QVariant::fromValue(QColor(225,225,225));
     }
     if (role == Qt::DisplayRole){
+        if(item.column()==11)
+            return QVariant::fromValue(tr("Refund"));
+        if(item.column()==12)
+            return QVariant::fromValue(tr("Delete"));
 
     }
     return value;
@@ -1001,7 +1007,6 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index)
             fliarrangeRefresh();
         else
             QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
-
     }
 }
 
@@ -1036,3 +1041,51 @@ void mainplatformwindow::on_fontComboBox_currentFontChanged(const QFont &f)
 }
 
 
+
+void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index)
+{
+    if(index.isValid()&&index.column()==11){//Refund
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_8->model();
+        QString refund_date = model->data(model->index(row,9)).toString();
+        if(refund_date!=""){
+            QMessageBox::critical(this,tr("Error:"),tr("The ticket has already been refunded"));
+            return;
+        }
+        QString ticket_ID = model->data(model->index(row,0)).toString();
+        QString actual_payment = model->data(model->index(row,6)).toString();
+        float money = actual_payment.toFloat();
+        QDate now = QDate::currentDate();
+        refund_date = now.toString("yyyy-MM-dd");
+
+        QString sql = QString("INSERT INTO ticket_refund(`ticket_id`,`refund_date`,`actual refund`) VALUES"
+                              "('%1','%2',%3)").arg(ticket_ID).arg(refund_date).arg(money);
+
+        QSqlQuery query;
+        bool status = query.exec(sql);
+        if(status)
+            ticketRefresh();
+        else
+            QMessageBox::critical(this,tr("Refund failed."),tr("Refund failed."));
+    }
+    else if(index.isValid()&&index.column()==12){//Delete
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_8->model();
+        QString refund_date = model->data(model->index(row,9)).toString();
+        if(refund_date==""){
+            QMessageBox::critical(this,tr("Error:"),tr("The ticket has not been refunded"));
+            return;
+        }
+        QString ticket_ID = model->data(model->index(row,0)).toString();
+        QString sql = QString("DELETE FROM ticket WHERE ticket_id = '%1'").arg(ticket_ID);
+        QSqlQuery query;
+        bool status = query.exec(sql);
+        if(status)
+            ticketRefresh();
+        else
+            QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
+
+
+
+    }
+}
