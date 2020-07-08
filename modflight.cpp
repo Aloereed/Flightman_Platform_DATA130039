@@ -104,7 +104,12 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
         }
         dialog.setValue(30000);
 
+#ifdef Q_OS_ANDROID
+        QSqlQuery transaction;
+        if(transaction.exec("start transaction")){
+#else
         if(QSqlDatabase::database().transaction()){
+#endif
             QSqlQuery query;
             QString sql1;
             QString sql2;
@@ -119,9 +124,17 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
             query.exec(sql1);
             query.exec(sql2);
             stop_over->submitAll();
+#ifdef Q_OS_ANDROID
+            if(!transaction.exec("commit")){
+#else
             if(!QSqlDatabase::database().commit()){
+#endif
                 qDebug()<<QSqlDatabase::database().lastError();
+#ifdef Q_OS_ANDROID
+                if(!transaction.exec("rollback")){
+#else
                 if(!QSqlDatabase::database().rollback()){
+#endif
                     qDebug()<<QSqlDatabase::database().lastError();
                 }
              }

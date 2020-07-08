@@ -37,12 +37,25 @@ void search_result::on_pushButton_clicked()
 
 void search_result::on_submit_clicked()
 {
-    search->database().transaction();
+#ifdef Q_OS_ANDROID
+    QSqlQuery transaction;
+    transaction.exec("start transaction");
+#else
+     search->database().transaction();
+#endif
     if(search->submitAll()){
+#ifdef Q_OS_ANDROID
+        transaction.exec("commit");
+#else
         search->database().commit();
+#endif
     }
     else{
+#ifdef Q_OS_ANDROID
+        transaction.exec("rollback");
+#else
         search->database().rollback();
+#endif
         QMessageBox::warning(this,tr("submission failed"),tr("error:%1").arg(search->lastError().text()));
     }
 }

@@ -55,7 +55,12 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
             }
         }
         dialog.setValue(30000);
+#ifdef Q_OS_ANDROID
+        QSqlQuery transaction;
+        if(transaction.exec("start transaction")){
+#else
         if(QSqlDatabase::database().transaction()){
+#endif
             QSqlQuery query;
             int week = departure.dayOfWeek();
             QString sqlcheck;
@@ -148,9 +153,17 @@ void addfliarrange::on_buttonBox_clicked(QAbstractButton *button)
                     }
                 }
             }
+#ifdef Q_OS_ANDROID
+            if(!transaction.exec("commit")){
+#else
             if(!QSqlDatabase::database().commit()){
+#endif
                 qDebug()<<QSqlDatabase::database().lastError();
+#ifdef Q_OS_ANDROID
+                if(!transaction.exec("rollback")){
+#else
                 if(!QSqlDatabase::database().rollback()){
+#endif
                     QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                 }
              }

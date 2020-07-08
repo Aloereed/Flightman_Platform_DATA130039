@@ -31,7 +31,12 @@ void GenArran::run(){
 
 
         //starttran.exec("SET AUTOCOMMIT=0");
+#ifdef Q_OS_ANDROID
+        QSqlQuery transaction;
+        if(transaction.exec("start transaction")){
+#else
         if(QSqlDatabase::database().transaction()){
+#endif
             QSqlQuery query1;
             QSqlQuery query;
             for(int i=1;i<=days&&(!isStop);i++,now=now.addDays(1)){
@@ -146,7 +151,11 @@ void GenArran::run(){
                     }
 
                     if(progress.wasCanceled()){
+#ifdef Q_OS_ANDROID
+                        if(!transaction.exec("rollback")){
+#else
                         if(!QSqlDatabase::database().rollback()){
+#endif
                             QMessageBox::warning(form,tr("Failure to rollback"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                         }
                       isStop=true;
@@ -180,10 +189,18 @@ void GenArran::run(){
             }
             progress.setLabelText(QObject::tr("Writing database..."));
             progress.setCancelButton(NULL);
+#ifdef Q_OS_ANDROID
+            if(!ok||!transaction.exec("commit")){
+#else
             if(!ok||!QSqlDatabase::database().commit()){
+#endif
                 qDebug()<<QSqlDatabase::database().lastError();
                 QMessageBox::warning(form,tr("Failure to commit"),tr("Query went wrong or database met error.%1").arg(QSqlDatabase::database().lastError().text()));
+#ifdef Q_OS_ANDROID
+                if(!transaction.exec("rollback")){
+#else
                 if(!QSqlDatabase::database().rollback()){
+#endif
                     QMessageBox::warning(form,tr("Failure to rollback"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                 }
                 progress.close();

@@ -153,7 +153,7 @@ void mainplatformwindow::_init() {
     QApplication::processEvents();
     on_horizontalSlider_valueChanged(1);//Airline Refresh
     on_horizontalSlider_4_valueChanged(1); //Ticket Refresh
-    ui->horizontalSlider_5->setValue(1); //Annoucement Refresh
+    on_horizontalSlider_5_valueChanged(1); //Annoucement Refresh
     QApplication::processEvents();
 
     ui->spinBox->setValue(settings.value("Platform/itemsperpage", 20).toInt());
@@ -516,16 +516,28 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
         QAbstractItemModel* model = ui->tableView_3->model();
         QString flight_id = model->data(model->index(row, 0)).toString();
 
-        if(QSqlDatabase::database().transaction()) {
+#ifdef Q_OS_ANDROID
+        QSqlQuery transaction;
+        if(transaction.exec("start transaction")){
+#else
+        if(QSqlDatabase::database().transaction()){
+#endif
             QSqlQuery query;
             query.exec(tr("delete from airline where flight_id = \'") + flight_id + "\'");
             query.exec(tr("delete from flight where flight_id = \'") + flight_id + "\'");
             query.exec(tr("delete from seat where flight_id = \'") + flight_id + "\'");
 
-            if(!QSqlDatabase::database().commit()) {
-                qDebug() << QSqlDatabase::database().lastError();
-
-                if(!QSqlDatabase::database().rollback()) {
+#ifdef Q_OS_ANDROID
+            if(!transaction.exec("commit")){
+#else
+            if(!QSqlDatabase::database().commit()){
+#endif
+                qDebug()<<QSqlDatabase::database().lastError();
+#ifdef Q_OS_ANDROID
+                if(!transaction.exec("rollback")){
+#else
+                if(!QSqlDatabase::database().rollback()){
+#endif
                     qDebug() << QSqlDatabase::database().lastError();
                 }
 

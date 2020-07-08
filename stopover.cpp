@@ -37,12 +37,25 @@ void stopover::on_back_clicked()
 
 void stopover::on_submit_clicked()
 {
+#ifdef Q_OS_ANDROID
+    QSqlQuery transaction;
+    transaction.exec("start transaction");
+#else
     stop_over->database().transaction();
+#endif
     if(stop_over->submitAll()){
+#ifdef Q_OS_ANDROID
+        transaction.exec("commit");
+#else
         stop_over->database().commit();
+#endif
     }
     else{
+#ifdef Q_OS_ANDROID
+        transaction.exec("rollback");
+#else
         stop_over->database().rollback();
+#endif
         QMessageBox::warning(this,tr("submission failed"),tr("error:%1").arg(stop_over->lastError().text()));
     }
 }
