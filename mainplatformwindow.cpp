@@ -571,13 +571,13 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item) {
     } else if(item->text() == tr("Refresh")) {
         flightRefresh();
     } else if(item->text() == tr("Search")) {
-        QStringList sqllist = {"Flight Id", "Schedule", "Plane Type","depap_id","Departure Time","arrap_id","Arrival Time","Company Id"};
-        QStringList indexlist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
-        QString table = "flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
+        QStringList indexlist = {"Flight Id", "Schedule", "Plane Type","Departure Airport ID","Departure Time","ArrivalAirport ID","Arrival Time","Company Id"};
+        QStringList sqllist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
+        QString table = QString("flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
                         "dep.departure_time,arr.airport_id arrap_id,arr.arrival_time "
                         "From (select * from airline where arrival_time is null)  dep,"
                         "(select * from airline where departure_time is null) arr where dep.flight_id=arr.flight_id) "
-                        "b using (flight_id)";
+                        "b using (flight_id)");
         q = new QueryDialog(table, sqllist, indexlist);
         q->show();
     }
@@ -1020,6 +1020,11 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item) {
     } else if(item->text() == tr("Refresh")) {
         ui->horizontalSlider_3->setValue(1);
     } else if(item->text() == tr("Search")) {
+        QStringList sqllist = {"departure_date", "flight_id", "status","discount"};
+        QStringList indexlist = {"Departure Date", "Flight ID", "Status","Discount"};
+        QString table = "flight_arrangement";
+        q = new QueryDialog(table, sqllist, indexlist);
+        q->show();
 
     }
 
@@ -1207,7 +1212,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
 
         bool status = query.exec(sql);
         if(status)
-            ticketRefresh();
+            QMessageBox::information(this,tr("Refund successfully."),tr("Refund successfully."));
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Refund failed."));
     } else if(index.isValid()&&index.column()==13) { //Delete
@@ -1223,7 +1228,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
         QSqlQuery query;
         bool status = query.exec(sql);
         if(status)
-            ticketRefresh();
+            QMessageBox::information(this,tr("Delete successfully."),tr("Delete successfully."));
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
     } else if(index.isValid()&&index.column()==14) { //Checkin
@@ -1303,9 +1308,21 @@ void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item) {
     if(item->text() == tr("Add") ) {
         add_ticket = new addticket;
         add_ticket->show();
-    }if(item->text() == tr("Refresh")) {
+    }else if(item->text() == tr("Refresh")) {
        ui->horizontalSlider->setValue(1);
+       ticketRefresh();
+    }else if(item->text()==tr("Search")){
+        QStringList sqllist = {"ticket_id", "user_id", "flight_id","departure_datetime","class","purchase_date","actual_payment",
+                              "departure_airport","arrival_airport","refund_date","actual refund","seat_id"};
+        QStringList indexlist = {"Ticket ID", "User ID", "Flight ID","Departure Datetime","Class","Purchase Date",
+                                 "Actual Payment","Departure Airport","Arrival Airport","Refund Date","Actual Refund",
+                                "Seat ID"};
+        QString table = "ticket_all_view";
+        q = new QueryDialog(table, sqllist, indexlist);
+        q->show();
+
     }
+
 }
 
 void mainplatformwindow::on_deliver_clicked()
@@ -1333,6 +1350,17 @@ void mainplatformwindow::on_listWidget_9_itemClicked(QListWidgetItem *item)
     if(item->text() == tr("Add") && tranadmin.satype) {
         add_ann = new addannouncement;
         add_ann->show();
+    }
+    else if(item->text()==tr("Refresh")){
+        annoucementRefresh();
+    }
+    else if(item->text()==tr("Search")){
+        QStringList sqllist = {"userID", "time", "text"};
+        QStringList indexlist = {"User ID", "Delivery Time", "Message"};
+        QString table = "announcement";
+        q = new QueryDialog(table, sqllist, indexlist);
+        q->show();
+
     }
 }
 

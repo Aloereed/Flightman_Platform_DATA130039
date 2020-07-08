@@ -176,7 +176,7 @@ class mainplatformwindow : public QMainWindow {
 
     void on_pushButton_12_clicked();
 
-    void on_listWidget_3_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
 
 private:
     Ui::mainplatformwindow *ui;
