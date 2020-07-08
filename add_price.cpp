@@ -21,7 +21,7 @@ add_price::add_price(std::vector<std::vector<QString>> whole_price, QWidget *par
     ui->tableView->setSelectionModel(theselection);
     ui->tableView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectItems);
-    QStringList headerList = {tr("start_airport"), tr("arrival_airport"), tr("class"), tr("price")};
+    QStringList headerList = {tr("start airport"), tr("arrival airport"), tr("class"), tr("price")};
     price->setHorizontalHeaderLabels(headerList);
     ui->tableView->resizeColumnsToContents();
 

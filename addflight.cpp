@@ -112,15 +112,15 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             query.exec(sql1);
             query.exec(sql2);
             for(int i=0;i<price.size();i++){
-                if(price[i][2]=="business"){//if business, set class=1
+                if(price[i][2]=="business"){//if business, set class=0
                     sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
                               "VALUES('%1',%2,%3,%4,%5)")
-                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
+                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(0).arg(price[i][3]);
                 }
                 else{
                     sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
                               "VALUES('%1',%2,%3,%4,%5)")
-                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(0).arg(price[i][3]);
+                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
                 }
                 query.exec(sql4);
             }

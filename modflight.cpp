@@ -113,6 +113,8 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
             QSqlQuery query;
             QString sql1;
             QString sql2;
+            QString sql3;
+            QString sql4;
             sql1 = QString("UPDATE flight SET schedule='%1',plane_type='%2',company_id='%3' WHERE flight_id='%3'")
                     .arg(schedule).arg(plane_type).arg(company_id).arg(flight_id);
             if(type == true)
@@ -123,6 +125,20 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
                     .arg(0).arg(business).arg(economy).arg(flight_id);
             query.exec(sql1);
             query.exec(sql2);
+            sql3 = QString("DELETE FROM price WHERE flight_id='%1'").arg(flight_id);
+            for(int i=0;i<price.size();i++){
+                if(price[i][2]=="business"){//if business, set class=0
+                       sql1 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
+                                          "VALUES('%1',%2,%3,%4,%5)")
+                                    .arg(flight_id).arg(price[i][4]).arg(price[i][5]).arg(0).arg(price[i][3]);
+                }
+                else{
+                       sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
+                                          "VALUES('%1',%2,%3,%4,%5)")
+                                    .arg(flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
+                 }
+                query.exec(sql4);
+            }
             stop_over->submitAll();
 #ifdef Q_OS_ANDROID
             if(!transaction.exec("commit")){
@@ -164,4 +180,88 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
         dialog.setValue(3000);
         this->close();
        }
+}
+void modflight::my_price_get(std::vector<std::vector<QString>> whole_price){
+   for(int i=0;i<price.size();i++){
+       price[i][3]=whole_price[i][3];
+   }
+}
+
+void modflight::on_price_clicked()
+{
+    price.clear();
+    int count=ui->tableView_airport->model()->rowCount();
+    for(int i=1;i<count;i++){
+                for(int j=i+1;j<count;j++){
+                    std::vector<QString> row1;
+                    std::vector<QString> row2;
+                    QModelIndex index = ui->tableView_airport->model()->index(i,1);
+                    QString temp=ui->tableView_airport->model()->data(index).toString();
+                    row1.push_back(temp);
+                    row2.push_back(temp);
+                    index = ui->tableView_airport->model()->index(j,1);
+                    temp=ui->tableView_airport->model()->data(index).toString();
+                    row1.push_back(temp);
+                    row2.push_back(temp);
+                    row1.push_back("business");
+                    row1.push_back("NULL");
+                    row2.push_back("economy");
+                    row2.push_back("NULL");
+                    if(i==count-1){
+                        row1.push_back(QString::number(-1));
+                        row2.push_back(QString::number(-1));
+                    }
+                    else{
+                        row1.push_back(QString::number(i));
+                        row2.push_back(QString::number(i));
+                    }
+                    if(j==count-1){
+                        row1.push_back(QString::number(-1));
+                        row2.push_back(QString::number(-1));
+                    }
+                    else{
+                        row1.push_back(QString::number(j));
+                        row2.push_back(QString::number(j));
+                    }
+
+
+                    price.push_back(row1);
+                    price.push_back(row2);
+                }
+            }
+       for(int i =1;i<count;i++){
+           int j = 0;
+           std::vector<QString> row1;
+           std::vector<QString> row2;
+           QModelIndex index = ui->tableView_airport->model()->index(i,1);
+           QString temp=ui->tableView_airport->model()->data(index).toString();
+           row1.push_back(temp);
+           row2.push_back(temp);
+           index = ui->tableView_airport->model()->index(j,1);
+           temp=ui->tableView_airport->model()->data(index).toString();
+           row1.push_back(temp);
+           row2.push_back(temp);
+           row1.push_back("business");
+           row1.push_back("NULL");
+           row2.push_back("economy");
+           row2.push_back("NULL");
+           if(i==count-1){
+               row1.push_back(QString::number(-1));
+               row2.push_back(QString::number(-1));
+           }
+           else{
+               row1.push_back(QString::number(i));
+               row2.push_back(QString::number(i));
+           }
+           row1.push_back(QString::number(-1));
+           row2.push_back(QString::number(-1));
+           price.push_back(row1);
+           price.push_back(row2);
+
+       }
+
+
+        add_price* a = new add_price(price);
+        a-> show();
+        connect(a,SIGNAL(sendprice(std::vector<std::vector<QString>>)),this,SLOT(my_price_get(std::vector<std::vector<QString>>)));
 }
