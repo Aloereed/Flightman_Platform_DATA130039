@@ -18,6 +18,9 @@
 #include "modfliarrange.h"
 #include "show_seat_a.h"
 #include "addticket.h"
+#include "addannouncement.h"
+#include "modifyann.h"
+#include "showmessage.h"
 #ifdef WIN32
 #include "QRibbon/QRibbon.h"
 #endif
@@ -43,6 +46,7 @@ addfliarrange *add_fliarrange;
 addadmin *add_admin;
 show_seat_a *show_seat;
 addticket *add_ticket;
+addannouncement *add_ann;
 
 modfliarrange *modification_fliarrange;
 modadmin *modification_admin;
@@ -50,11 +54,17 @@ moduser *modification_user;
 modcom *modification_comp;
 modflight *modification_flight;
 modairport *ma;
+modifyann *mod_ann;
+
+showMessage * show_message;
+
 addcom *add_comp;
 QTableView *usertable;
 QTableView *flighttable;
 QTableView *comptable;
 QTableView *tickettable;
+QTableView *announcementtable;
+
 QTimer *localtimer;
 QTimer *localtimer2;
 QSignalMapper *usermapper;
@@ -110,12 +120,19 @@ void mainplatformwindow::_init() {
     QApplication::processEvents();
     tickettable = ui->tableView_8;
     QApplication::processEvents();
+
+    announcementtable=ui->tableView_9;
+
     userRefresh();
     QApplication::processEvents();
     flightRefresh();
     QApplication::processEvents();
     ticketRefresh();
     QApplication::processEvents();
+
+    annoucementRefresh();
+
+
 
     //compRefresh();
 
@@ -271,6 +288,26 @@ void mainplatformwindow::airportRefresh(int page) {
     apmodel->setHeaderData(1, Qt::Horizontal, QString::fromUtf8(tr("Airport Name").toUtf8()));
     apmodel->setHeaderData(2, Qt::Horizontal, QString::fromUtf8(tr("Airport City").toUtf8()));
     ui->tableView_5->resizeColumnsToContents();
+}
+void mainplatformwindow::annoucementRefresh(int page){
+    QSqlQuery query = QSqlQuery("select count(1) from announcement_show");
+    ui->statusBar->showMessage(tr("Querying..."));
+    int itemsperpage = settings.value("Platform/itemsperpage", 20).toInt();
+    query.next();
+    ui->horizontalSlider_5->setMaximum(query.value(0).toInt() / itemsperpage + 1);
+    int item2 = itemsperpage * (page - 1);
+    myannouncementmodel *anmodel = new myannouncementmodel;
+    anmodel->setQuery("select * from announcement_show limit " + QString::number(item2) + "," + QString::number(itemsperpage));
+    ui->tableView_9->setModel(anmodel);
+    anmodel->insertColumn(3);
+    anmodel->setHeaderData(3, Qt::Horizontal, QString::fromUtf8(tr("Modify").toUtf8()));
+    anmodel->insertColumn(4);
+    anmodel->setHeaderData(4, Qt::Horizontal, QString::fromUtf8(tr("Delete").toUtf8()));
+    anmodel->setHeaderData(0, Qt::Horizontal, QString::fromUtf8(tr("User ID").toUtf8()));
+    anmodel->setHeaderData(1, Qt::Horizontal, QString::fromUtf8(tr("Delivery Time").toUtf8()));
+    anmodel->setHeaderData(2, Qt::Horizontal, QString::fromUtf8(tr("Message").toUtf8()));
+    ui->tableView_9->resizeColumnsToContents();
+
 }
 void mainplatformwindow::adminRefresh() {
     if(tranadmin.satype) {
@@ -682,6 +719,28 @@ QVariant myticketmodel::data(const QModelIndex &item, int role) const {
             return QVariant::fromValue(tr("Check In"));
 
     }
+    return value;
+}
+
+QVariant myannouncementmodel::data(const QModelIndex &item, int role) const{
+    QVariant value = QSqlQueryModel::data(item, role);
+
+    if(role == Qt::BackgroundColorRole) {
+        if(item.column() == 3) {
+            return QVariant::fromValue(QColor(225, 225, 225));
+        } else if(item.column() == 4) {
+            return QVariant::fromValue(QColor(225, 225, 225));    //第一个属性的字体颜色为红色
+        }
+    }
+
+    if(role == Qt::DisplayRole) {
+        if(item.column() == 3) {
+            return QVariant::fromValue(tr("Modify"));
+        } else if(item.column() == 4) {
+            return QVariant::fromValue(tr("Delete"));
+        }
+    }
+
     return value;
 }
 
@@ -1139,7 +1198,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
         if(status)
             ticketRefresh();
         else
-            QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
+            QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
     }
 }
 
@@ -1167,5 +1226,65 @@ void mainplatformwindow::on_deliver_clicked()
         else{
             QMessageBox::information(this,tr("hint:"),tr("delivery failure"));
         }
+    }
+}
+
+void mainplatformwindow::on_listWidget_9_itemClicked(QListWidgetItem *item)
+{
+    if(item->text() == tr("Add") && tranadmin.satype) {
+        add_ann = new addannouncement;
+        add_ann->show();
+    }
+}
+
+void mainplatformwindow::on_tableView_9_clicked(const QModelIndex &index)
+{
+    if(index.isValid()&&index.column()==3){
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_9->model();
+        QString userID = model->data(model->index(row,0)).toString();
+        QString time = model->data(model->index(row,1)).toString();
+        QStringList list = time.split("T");
+        QString datetime = list[0] + QString(" ")+list[1];
+        if(userID=="ALL users"){
+            userID=QString("000000000000000000");
+        }
+        mod_ann = new modifyann(userID,datetime);
+        mod_ann->show();
+
+    }
+    else if(index.isValid()&&index.column()==2){
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_9->model();
+        QString userID = model->data(model->index(row,0)).toString();
+        QString time = model->data(model->index(row,1)).toString();
+        QStringList list = time.split("T");
+        QString datetime = list[0] + QString(" ")+list[1];
+        if(userID=="ALL users"){
+            userID=QString("000000000000000000");
+        }
+        show_message = new showMessage(userID,datetime);
+        show_message->show();
+    }
+    else if(index.isValid()&&index.column()==4){
+        int row = index.row();
+        QAbstractItemModel* model = ui->tableView_9->model();
+        QString userID = model->data(model->index(row,0)).toString();
+        QString time = model->data(model->index(row,1)).toString();
+        QStringList list = time.split("T");
+        QString datetime = list[0] + QString(" ")+list[1];
+        if(userID=="ALL users"){
+            userID=QString("000000000000000000");
+        }
+        QString sql = QString("DELETE FROM announcement WHERE userID='%1' AND time='%2'").arg(userID).arg(datetime);
+        QSqlQuery query;
+        bool status = query.exec(sql);
+        if(status){
+            QMessageBox::information(this,tr("Success"),tr("Delete successfully"));
+            annoucementRefresh();
+        }
+        else
+            QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
+
     }
 }

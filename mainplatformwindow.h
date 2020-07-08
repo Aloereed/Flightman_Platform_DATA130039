@@ -51,6 +51,7 @@ class mainplatformwindow : public QMainWindow {
     void airportRefresh(int page =1);
     void compRefresh(int page=1);
     void adminRefresh();
+    void annoucementRefresh(int page=1);
     ~mainplatformwindow();
 
   public slots:
@@ -149,6 +150,10 @@ class mainplatformwindow : public QMainWindow {
 
     void on_deliver_clicked();
 
+    void on_listWidget_9_itemClicked(QListWidgetItem *item);
+
+    void on_tableView_9_clicked(const QModelIndex &index);
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
@@ -167,6 +172,10 @@ class myusermodel:public QSqlQueryModel {
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myflightmodel:public QSqlQueryModel {
+  public:
+    QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
+};
+class myannouncementmodel:public QSqlQueryModel {
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };

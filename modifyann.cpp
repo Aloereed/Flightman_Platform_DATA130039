@@ -1,29 +1,31 @@
-#include "addairport.h"
-#include "ui_addairport.h"
+#include "modifyann.h"
+#include "ui_modifyann.h"
 extern QSqlDatabase db;
 extern mainplatformwindow *w;
-addairport::addairport(QWidget *parent) :
+
+modifyann::modifyann(QString userID_input,QString datetime_input,QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::addairport)
+    ui(new Ui::modifyann)
 {
     ui->setupUi(this);
+    userID=userID_input;
+    datetime=datetime_input;
+
 }
 
-addairport::~addairport()
+modifyann::~modifyann()
 {
     delete ui;
 }
 
-void addairport::on_buttonBox_airport_clicked(QAbstractButton *button)
+void modifyann::on_buttonBox_clicked(QAbstractButton *button)
 {
-    if(ui->buttonBox_airport->button(QDialogButtonBox::Ok) == button)
+    if(ui->buttonBox->button(QDialogButtonBox::Ok) == button)
     {
-        my_airp tran;
-        tran.airport_id = ui->airport_id->text();
-        tran.airport_name = ui->airport_name->text();
-        tran.city = ui->city->text();
 
-        QProgressDialog dialog(tr("Adding"),tr("cancel"), 0, 30000, this);
+        QString message = ui->textEdit->toPlainText();
+
+        QProgressDialog dialog(tr("Modifying"),tr("cancel"), 0, 30000, this);
         dialog.setWindowTitle(tr("process"));
         dialog.setWindowModality(Qt::WindowModal);
         dialog.show();
@@ -39,14 +41,13 @@ void addairport::on_buttonBox_airport_clicked(QAbstractButton *button)
         dialog.setValue(30000);
 
         QString sql;
-        sql = QString("INSERT INTO airport (airport_id,airport_name,city)"
-                      "VALUES('%1','%2','%3')")
-                .arg(tran.airport_id).arg(tran.airport_name).arg(tran.city);
+        sql = QString("UPDATE announcement SET text = '%1' WHERE userID='%2' AND time='%3'")
+                .arg(message).arg(userID).arg(datetime);
         QSqlQuery query;
         bool ok = query.exec(sql);
         if(ok){
-            QMessageBox::information(this,tr("hint:"),tr("add successfully"));
-            w->on_horizontalSlider_2_valueChanged(1);
+            QMessageBox::information(this,tr("hint:"),tr("modify successfully"));
+            w->annoucementRefresh();
             this->close();
         }
         else{
@@ -54,7 +55,7 @@ void addairport::on_buttonBox_airport_clicked(QAbstractButton *button)
             this->close();
         }
     }
-    else if(ui->buttonBox_airport->button(QDialogButtonBox::Cancel) == button)
+    else if(ui->buttonBox->button(QDialogButtonBox::Cancel) == button)
     {
 
         QProgressDialog dialog(tr("Returning to the mainwindow"),tr("cancel"), 0, 3000, this);

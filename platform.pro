@@ -25,6 +25,7 @@ SOURCES += \
     add_price.cpp \
     addadmin.cpp \
     addairport.cpp \
+    addannouncement.cpp \
     addcom.cpp \
     addfliarrange.cpp \
     addflight.cpp \
@@ -41,11 +42,13 @@ SOURCES += \
     modcom.cpp \
     modfliarrange.cpp \
     modflight.cpp \
+    modifyann.cpp \
     moduser.cpp \
     querydialog.cpp \
     queryplugin.cpp \
     search_result.cpp \
     show_seat_a.cpp \
+    showmessage.cpp \
     sqlquery.cpp \
     stopover.cpp \
     usercheck.cpp
@@ -55,6 +58,7 @@ HEADERS += \
     add_price.h \
     addadmin.h \
     addairport.h \
+    addannouncement.h \
     addcom.h \
     addfliarrange.h \
     addflight.h \
@@ -70,11 +74,13 @@ HEADERS += \
     modcom.h \
     modfliarrange.h \
     modflight.h \
+    modifyann.h \
     moduser.h \
     querydialog.h \
     queryplugin.h \
     search_result.h \
     show_seat_a.h \
+    showmessage.h \
     sqlquery.h \
     stopover.h \
     usercheck.h
@@ -84,6 +90,7 @@ FORMS += \
     add_price.ui \
     addadmin.ui \
     addairport.ui \
+    addannouncement.ui \
     addcom.ui \
     addfliarrange.ui \
     addflight.ui \
@@ -98,11 +105,13 @@ FORMS += \
     modcom.ui \
     modfliarrange.ui \
     modflight.ui \
+    modifyann.ui \
     moduser.ui \
     querydialog.ui \
     queryplugin.ui \
     search_result.ui \
     show_seat_a.ui \
+    showmessage.ui \
     sqlquery.ui \
     stopover.ui \
     usercheck.ui
