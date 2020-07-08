@@ -53,7 +53,7 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
         for(int i=0;i<count;i++){
             queryplugin* ptr_temp= ptr[i];
             if(i==0){
-                QString index = sqllist[ptr_temp->index()];
+                QString index = QString("`")+sqllist[ptr_temp->index()]+QString("`");
 
                 QString sign_2 = ptr_temp->sign_2();
                 if(sign_2==tr("Contain")){
@@ -69,7 +69,7 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
             }
             else{
                 QString sign_1 = ptr_temp->sign_1();
-                QString index = sqllist[ptr_temp->index()];
+                QString index = QString("`")+sqllist[ptr_temp->index()]+QString("`");
                 QString sign_2 = ptr_temp->sign_2();
                 if(sign_2==tr("Contain")){
                     QString text = ptr_temp->text();

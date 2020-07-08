@@ -33,6 +33,7 @@ SOURCES += \
     addseat.cpp \
     addticket.cpp \
     adduser.cpp \
+    deletedialog.cpp \
     genarran.cpp \
     main.cpp \
     loginwindow.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     addseat.h \
     addticket.h \
     adduser.h \
+    deletedialog.h \
     genarran.h \
     loginwindow.h \
     mainplatformwindow.h \
@@ -108,6 +110,7 @@ FORMS += \
     addseat.ui \
     addticket.ui \
     adduser.ui \
+    deletedialog.ui \
     loginwindow.ui \
     mainplatformwindow.ui \
     modadmin.ui \
