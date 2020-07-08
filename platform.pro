@@ -47,6 +47,7 @@ SOURCES += \
     querydialog.cpp \
     queryplugin.cpp \
     search_result.cpp \
+    seat_selection.cpp \
     show_seat_a.cpp \
     showmessage.cpp \
     sqlquery.cpp \
@@ -79,6 +80,7 @@ HEADERS += \
     querydialog.h \
     queryplugin.h \
     search_result.h \
+    seat_selection.h \
     show_seat_a.h \
     showmessage.h \
     sqlquery.h \
@@ -110,6 +112,7 @@ FORMS += \
     querydialog.ui \
     queryplugin.ui \
     search_result.ui \
+    seat_selection.ui \
     show_seat_a.ui \
     showmessage.ui \
     sqlquery.ui \

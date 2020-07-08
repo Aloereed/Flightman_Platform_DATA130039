@@ -21,6 +21,7 @@
 #include "addannouncement.h"
 #include "modifyann.h"
 #include "showmessage.h"
+#include "seat_selection.h"
 #ifdef WIN32
 #include "QRibbon/QRibbon.h"
 #endif
@@ -127,10 +128,10 @@ void mainplatformwindow::_init() {
     QApplication::processEvents();
     flightRefresh();
     QApplication::processEvents();
-    ticketRefresh();
+
     QApplication::processEvents();
 
-    annoucementRefresh();
+
 
 
 
@@ -146,11 +147,13 @@ void mainplatformwindow::_init() {
     QApplication::processEvents();
     adminRefresh();
     QApplication::processEvents();
-    on_horizontalSlider_3_valueChanged(1);
+    on_horizontalSlider_3_valueChanged(1);//Flight Arrangement Refresh
     QApplication::processEvents();
-    on_horizontalSlider_2_valueChanged(1);
+    on_horizontalSlider_2_valueChanged(1);//Airport Refresh
     QApplication::processEvents();
-    on_horizontalSlider_valueChanged(1);
+    on_horizontalSlider_valueChanged(1);//Airline Refresh
+    on_horizontalSlider_4_valueChanged(1); //Ticket Refresh
+    ui->horizontalSlider_5->setValue(1); //Annoucement Refresh
     QApplication::processEvents();
 
     ui->spinBox->setValue(settings.value("Platform/itemsperpage", 20).toInt());
@@ -353,7 +356,7 @@ void mainplatformwindow::ticketRefresh(int page) {
     ui->statusBar->showMessage(tr("Querying..."));
     int itemsperpage=settings.value("Platform/itemsperpage",20).toInt();
     query.next();
-    ui->horizontalSlider->setMaximum(query.value(0).toInt()/itemsperpage+1);
+    ui->horizontalSlider_4->setMaximum(query.value(0).toInt()/itemsperpage+1);
 
     myticketmodel *ticketmodel = new myticketmodel;
     int item2 = itemsperpage*(page-1);
@@ -1198,14 +1201,86 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
         if(status)
             ticketRefresh();
         else
-            QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
+            QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
+    } else if(index.isValid()&&index.column()==14) { //Checkin
+        int row = index.row();
+        //
+        qDebug()<<"你刚刚点击了值机按钮"<<endl; //选择座位等()
+
+        QAbstractItemModel* model = ui->tableView_8->model();
+        //        QString seatID =  model->data(model->index(row,7)).toString();
+        QString dep_datetime = model->data(model->index(row,3)).toString();
+        QString flightID = model->data(model->index(row,2)).toString();
+        dep_datetime = dep_datetime.mid(0,10)+" "+dep_datetime.mid(11,8);
+        QString classType = model->data(model->index(row,4)).toString();
+        QString ticketID = model->data(model->index(row,0)).toString();
+        QString order_start = this->ticketOrderStartQuery(ticketID);
+        QString order_end = this->ticketOrderEndQuery(ticketID);
+
+        QString seatID = "";
+        QString sql_pre = QString("SELECT seat_id FROM ticketVSseatid_view WHERE ticket_id='%1'").arg(ticketID);
+        QSqlQuery *query_pre = new QSqlQuery();
+        query_pre->exec(sql_pre);
+        if(query_pre->next()){
+            seatID = query_pre->value(0).toString();
+        }
+
+        ticketRefresh();
+        if(seatID != "") { //如果完成了值机，则不允许退票
+            QMessageBox::information(this,tr("Hint:"),tr("You have checked in. So you cannot Check In AGAIN."));
+            return;
+        }
+        int TimeDistance = 0;
+        QString sql = QString("SELECT UNIX_TIMESTAMP(CAST('%1' AS DATETIME)) - UNIX_TIMESTAMP(NOW())").arg(dep_datetime);
+        qDebug()<<sql<<endl;
+        QSqlQuery *query = new QSqlQuery();
+        query->exec(sql);
+        query->first();
+        TimeDistance = query->value(0).toInt();
+        if(TimeDistance <= 900) { //起飞时间距离起飞还有15分钟
+            QMessageBox::information(this,tr("Hint:"),tr("The flight is going to take off soon. Check In service have been closed."));
+            return;
+        }
+        //满足值机条件，进入值机界面
+        qDebug()<<"满足条件，您即将进入值机页面"<<endl;
+
+
+
+
+        seat_selection *checkIn_interface = new seat_selection(nullptr,model->data(model->index(row,2)).toString(),classType
+                                                               ,dep_datetime.mid(0,10)
+                                                               ,model->data(model->index(row,1)).toString(),order_start,order_end);
+        checkIn_interface->show();
     }
+}
+QString mainplatformwindow::ticketOrderStartQuery(QString ticketID) {
+    QString depID = "0";
+    QString sql = QString("SELECT departure_id FROM ticket WHERE ticket_id='%1'").arg(ticketID);
+    QSqlQuery *query = new QSqlQuery();
+    query->exec(sql);
+    if(query->next()) {
+        depID = query->value(0).toString();
+    }
+    return depID;
+}
+
+QString mainplatformwindow::ticketOrderEndQuery(QString ticketID) {
+    QString arvID = "-1";
+    QString sql = QString("SELECT arrival_id FROM ticket WHERE ticket_id='%1'").arg(ticketID);
+    QSqlQuery *query = new QSqlQuery();
+    query->exec(sql);
+    if(query->next()) {
+        arvID = query->value(0).toString();
+    }
+    return arvID;
 }
 
 void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item) {
-    if(item->text() == tr("Add") && tranadmin.satype) {
+    if(item->text() == tr("Add") ) {
         add_ticket = new addticket;
         add_ticket->show();
+    }if(item->text() == tr("Refresh")) {
+       ui->horizontalSlider->setValue(1);
     }
 }
 
@@ -1287,4 +1362,47 @@ void mainplatformwindow::on_tableView_9_clicked(const QModelIndex &index)
             QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
 
     }
+}
+void mainplatformwindow::on_pushButton_9_clicked()
+{
+    ui->horizontalSlider_4->setValue(ui->horizontalSlider_4->value() - 1);
+}
+
+void mainplatformwindow::on_pushButton_10_clicked()
+{
+    ui->horizontalSlider_4->setValue(ui->horizontalSlider_4->value() + 1);
+}
+
+void mainplatformwindow::on_plainTextEdit_4_returnPressed()
+{
+    ui->horizontalSlider_4->setValue(ui->plainTextEdit_4->text().toInt());
+}
+
+void mainplatformwindow::on_horizontalSlider_4_valueChanged(int value)
+{
+    ui->statusBar->showMessage(tr("Querying..."));
+    ui->plainTextEdit_4->setText(QString::number(value));
+    ticketRefresh(value);
+}
+
+void mainplatformwindow::on_horizontalSlider_5_valueChanged(int value)
+{
+    ui->statusBar->showMessage(tr("Querying..."));
+    ui->plainTextEdit_5->setText(QString::number(value));
+    annoucementRefresh(value);
+}
+
+void mainplatformwindow::on_pushButton_11_clicked()
+{
+    ui->horizontalSlider_5->setValue(ui->horizontalSlider_5->value() - 1);
+}
+
+void mainplatformwindow::on_plainTextEdit_5_returnPressed()
+{
+     ui->horizontalSlider_5->setValue(ui->plainTextEdit_5->text().toInt());
+}
+
+void mainplatformwindow::on_pushButton_12_clicked()
+{
+    ui->horizontalSlider_5->setValue(ui->horizontalSlider_5->value() + 1);
 }

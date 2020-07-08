@@ -51,7 +51,12 @@ class mainplatformwindow : public QMainWindow {
     void airportRefresh(int page =1);
     void compRefresh(int page=1);
     void adminRefresh();
+
     void annoucementRefresh(int page=1);
+
+    QString ticketOrderStartQuery(QString ticketID);
+    QString ticketOrderEndQuery(QString ticketID);
+
     ~mainplatformwindow();
 
   public slots:
@@ -153,6 +158,23 @@ class mainplatformwindow : public QMainWindow {
     void on_listWidget_9_itemClicked(QListWidgetItem *item);
 
     void on_tableView_9_clicked(const QModelIndex &index);
+
+    void on_pushButton_9_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_plainTextEdit_4_returnPressed();
+
+    void on_horizontalSlider_4_valueChanged(int value);
+
+
+    void on_horizontalSlider_5_valueChanged(int value);
+
+    void on_pushButton_11_clicked();
+
+    void on_plainTextEdit_5_returnPressed();
+
+    void on_pushButton_12_clicked();
 
 private:
     Ui::mainplatformwindow *ui;
