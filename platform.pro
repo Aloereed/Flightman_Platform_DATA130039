@@ -189,12 +189,14 @@ DISTFILES += \
     QRibbon/Resource/icon/vline.png \
     android_sources/AndroidManifest.xml \
     android_sources/png/icon.png \
+    icon.ico \
     png/about.png \
     png/exit.png \
     png/logout.png \
     png/qt.png
 
 
-
+RC_ICONS = icon.ico
+VERSION = 1.0.0.0
 
 
