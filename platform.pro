@@ -189,6 +189,7 @@ DISTFILES += \
     QRibbon/Resource/icon/vline.png \
     android_sources/AndroidManifest.xml \
     android_sources/png/icon.png \
+    icon.icns \
     icon.ico \
     png/about.png \
     png/exit.png \
