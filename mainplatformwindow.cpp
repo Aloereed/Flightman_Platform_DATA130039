@@ -1212,7 +1212,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
 
         bool status = query.exec(sql);
         if(status)
-            QMessageBox::information(this,tr("Refund successfully."),tr("Refund successfully."));
+            ticketRefresh();
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Refund failed."));
     } else if(index.isValid()&&index.column()==13) { //Delete
@@ -1228,7 +1228,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
         QSqlQuery query;
         bool status = query.exec(sql);
         if(status)
-            QMessageBox::information(this,tr("Delete successfully."),tr("Delete successfully."));
+            ticketRefresh();
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
     } else if(index.isValid()&&index.column()==14) { //Checkin
