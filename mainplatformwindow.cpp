@@ -45,7 +45,6 @@ loginwindow *l;
 extern QTranslator translator;
 extern my_admin tranadmin;
 extern QSettings settings;
-extern QFont uifont;
 
 stopover *stop_over;
 adduser *a;
@@ -94,7 +93,7 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
 
     qApp->setStyleSheet(readTextFile(settings.value("Platform/theme", ":/qss/Aqua.qss").toString()));
     ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno", 1).toInt());
-    ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont", uifont).value<QFont>()));
+    ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont",this->font()).value<QFont>()));
     ui->comboBox->setCurrentIndex(settings.value("Platform/Langcase", 2).toInt());
     QScroller::grabGesture(ui->tableView_2, QScroller::TouchGesture);
     QScroller::grabGesture(ui->tableView_3, QScroller::TouchGesture);
@@ -352,10 +351,12 @@ void mainplatformwindow::flightRefresh() {
     flighttable->setModel(flightmodel);
     flightmodel->insertColumn(8);
     flightmodel->setHeaderData(8, Qt::Horizontal, QString::fromUtf8(tr("Stopover").toUtf8()));
-    flightmodel->insertColumn(9);//这里是在模型的第4列后面插入一列
-    flightmodel->setHeaderData(9, Qt::Horizontal, QString::fromUtf8(tr("Modify").toUtf8()));
-    flightmodel->insertColumn(10);
-    flightmodel->setHeaderData(10, Qt::Horizontal, QString::fromUtf8(tr("Delete").toUtf8()));
+    flightmodel->insertColumn(9);
+    flightmodel->setHeaderData(9, Qt::Horizontal, QString::fromUtf8(tr("Price").toUtf8()));
+    flightmodel->insertColumn(10);//这里是在模型的第4列后面插入一列
+    flightmodel->setHeaderData(10, Qt::Horizontal, QString::fromUtf8(tr("Modify").toUtf8()));
+    flightmodel->insertColumn(11);
+    flightmodel->setHeaderData(11, Qt::Horizontal, QString::fromUtf8(tr("Delete").toUtf8()));
     flightmodel->setHeaderData(0, Qt::Horizontal, QString::fromUtf8(tr("Flight ID").toUtf8()));
     flightmodel->setHeaderData(1, Qt::Horizontal, QString::fromUtf8(tr("Schedule").toUtf8()));
     flightmodel->setHeaderData(2, Qt::Horizontal, QString::fromUtf8(tr("Plane Type").toUtf8()));
@@ -536,7 +537,12 @@ void mainplatformwindow::on_listWidget_user_itemClicked(QListWidgetItem *item) {
     }
 
 }
-
+QString getAirportName(QString apcode){
+    QSqlQuery query;
+    query.exec("select airport_name from airport where airport_id=\'"+apcode+"\'");
+    query.next();
+    return query.value(0).toString();
+}
 void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
     if(index.isValid() && index.column() == 8) {
         int row = index.row();
@@ -544,7 +550,7 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
         QString flight_id = model->data(model->index(row, 0)).toString();
         stop_over = new stopover(nullptr, flight_id);
         stop_over->show();
-    } else if(index.isValid() && index.column() == 10) {
+    } else if(index.isValid() && index.column() == 11) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_3->model();
         QString flight_id = model->data(model->index(row, 0)).toString();
@@ -579,7 +585,7 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
             }
         }
 
-    } else if(index.isValid() && index.column() == 9) {
+    } else if(index.isValid() && index.column() == 10) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_3->model();
         QString flight_id = model->data(model->index(row, 0)).toString();
@@ -588,6 +594,21 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
         QString company_id = model->data(model->index(row, 7)).toString();
         modification_flight = new modflight(nullptr, flight_id, schedule, plane_type, company_id);
         modification_flight->show();
+    } else if(index.isValid() && index.column() == 9){
+        int row=index.row();
+        QAbstractItemModel* model=ui->tableView_3->model();
+        QString flightid=model->data(model->index(row,0)).toString();
+        QSqlQuery query;
+        query.exec("select * from mod_price where flight_id=\'"+flightid+"\'");
+        QString result;
+        while(query.next()){
+            result+=tr("From %1(%2) to %3(%4), Class %6,Original Price is ￥%5\n")
+                          .arg(getAirportName(query.value(1).toString()))
+                          .arg(query.value(1).toString()).arg(getAirportName(query.value(2).toString()))
+                          .arg(query.value(2).toString()).arg(query.value(3).toString()).arg(query.value(4).toInt()?tr("Economy"):tr("Business"));
+
+        }
+        QMessageBox::information(NULL,tr("Price of %1").arg(flightid),result==""?tr("There is no price information yet."):result);
     }
 
 }
@@ -840,18 +861,23 @@ QVariant myflightmodel::data(const QModelIndex &item, int role) const {
     QVariant value = QSqlQueryModel::data(item, role);
 
     if(role == Qt::BackgroundColorRole) {
-        if(item.column() == 8 || item.column() == 9 || item.column() == 10) {
+        if(item.column() == 8 || item.column() == 9 || item.column() == 10|| item.column() == 11) {
             return QVariant::fromValue(QColor(225, 225, 225));
         }
     }
-
+    if (Qt::TextAlignmentRole == role && item.column() == 9 ) {
+        value = Qt::AlignCenter;
+    }
     if(role == Qt::DisplayRole) {
-        if(item.column() == 9) {
+        if(item.column() == 10) {
             return QVariant::fromValue(tr("Modify"));
-        } else if(item.column() == 10) {
+        } else if(item.column() == 11) {
             return QVariant::fromValue(tr("Delete"));
         } else if(item.column() == 8) {
             return QVariant::fromValue(tr("Stopover"));
+        }else if(item.column()==9){
+            return QVariant::fromValue(tr("Price"));
+
         }
     }
 
@@ -1615,4 +1641,12 @@ void mainplatformwindow::on_pushButton_13_clicked()
 
     sqlmain->show();
 
+}
+void mainplatformwindow::on_actionA_bout_clicked(){
+    QMessageBox::information(this,tr("About"),tr("This is our project work of Database by 4021,SDS,FDU."));
+}
+
+void mainplatformwindow::on_pushButton_14_clicked()
+{
+    settings.clear();
 }

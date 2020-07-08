@@ -230,28 +230,41 @@ void DropArran::run(){
     QSqlQuery query1;
     QSqlQuery starttran;
     //starttran.exec("SET AUTOCOMMIT=0");
+#ifdef Q_OS_ANDROID
+    QSqlQuery transaction;
+    if(transaction.exec("start transaction")){
+#else
     if(QSqlDatabase::database().transaction()){
+#endif
         QString sql1,sql2;
         QSqlQuery query2;
-;
+
         QProgressDialog progress;
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowTitle(QObject::tr("Deleting Realtime Flight Info..."));
         progress.setLabelText(QObject::tr("Preparing database..."));
         progress.setMinimum(0);
         progress.setMaximum(0);
-        sql1=QString("truncate table seat_arrangment");
+        sql1=QString("truncate table seat_arrangement");
         query1.exec(sql1);
         sql2=QString("truncate table seat_amount");
         query2.exec(sql2);
-        sql2=QString("truncate table flight_arrangment");
+        sql2=QString("truncate table flight_arrangement");
         query2.exec(sql2);
         progress.setLabelText(QObject::tr("Writing database..."));
         qApp->processEvents();
         progress.setCancelButton(NULL);
+#ifdef Q_OS_ANDROID
+        if(!transaction.exec("commit")){
+#else
         if(!QSqlDatabase::database().commit()){
+#endif
             qDebug()<<QSqlDatabase::database().lastError();
+#ifdef Q_OS_ANDROID
+            if(!transaction.exec("rollback")){
+#else
             if(!QSqlDatabase::database().rollback()){
+#endif
                 QMessageBox::warning(form,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
             }
             progress.close();

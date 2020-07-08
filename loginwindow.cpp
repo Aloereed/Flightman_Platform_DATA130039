@@ -13,7 +13,7 @@
 #include<QFileInfo>
 #include <QFontDatabase>
 #include "mainplatformwindow.h"
-QFont uifont;
+
 QSqlDatabase db;
 QTranslator translator;
 mainplatformwindow *w;

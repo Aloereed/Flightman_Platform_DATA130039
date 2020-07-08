@@ -242,8 +242,8 @@
     <message>
         <location filename="modflight.cpp" line="25"/>
         <location filename="stopover.cpp" line="14"/>
-        <source>flight_id='%1'</source>
-        <translation>flight_id='%1'</translation>
+        <source>flight_id=&apos;%1&apos;</source>
+        <translation>flight_id=&apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="genarran.cpp" line="26"/>
@@ -273,32 +273,32 @@
         <translation>正在准备数据库...</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1477"/>
+        <location filename="mainplatformwindow.cpp" line="1600"/>
         <source>Advanced SQL Management Tool</source>
         <translation>高级 SQL 管理工具</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1482"/>
+        <location filename="mainplatformwindow.cpp" line="1605"/>
         <source>&amp;File</source>
         <translation>文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1483"/>
+        <location filename="mainplatformwindow.cpp" line="1606"/>
         <source>&amp;Quit</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1484"/>
+        <location filename="mainplatformwindow.cpp" line="1607"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1485"/>
+        <location filename="mainplatformwindow.cpp" line="1608"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1486"/>
+        <location filename="mainplatformwindow.cpp" line="1609"/>
         <source>About Qt</source>
         <translation>关于 Qt</translation>
     </message>
@@ -490,7 +490,7 @@
     <message>
         <location filename="add_price.cpp" line="109"/>
         <location filename="add_price.cpp" line="130"/>
-        <source>The price hasn't be set up properly</source>
+        <source>The price hasn&apos;t be set up properly</source>
         <translation>价格设置不正确</translation>
     </message>
     <message>
@@ -711,7 +711,7 @@
     <name>addcom</name>
     <message>
         <source>Form</source>
-        <translation>窗体</translation>
+        <translation type="vanished">窗体</translation>
     </message>
     <message>
         <location filename="addcom.ui" line="14"/>
@@ -1128,8 +1128,8 @@
     </message>
     <message>
         <location filename="addseat.cpp" line="17"/>
-        <source>SELECT * FROM seat WHERE flight_id = '%1'</source>
-        <translation>SELECT * FROM seat WHERE flight_id = '%1'</translation>
+        <source>SELECT * FROM seat WHERE flight_id = &apos;%1&apos;</source>
+        <translation>SELECT * FROM seat WHERE flight_id = &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1280,7 +1280,7 @@
     <name>adduser</name>
     <message>
         <source>Form</source>
-        <translation>窗体</translation>
+        <translation type="vanished">窗体</translation>
     </message>
     <message>
         <location filename="adduser.ui" line="101"/>
@@ -1354,6 +1354,56 @@
         <location filename="adduser.cpp" line="67"/>
         <source>Returning to the mainwindow</source>
         <translation>返回主窗口</translation>
+    </message>
+</context>
+<context>
+    <name>deletedialog</name>
+    <message>
+        <location filename="deletedialog.ui" line="14"/>
+        <source>Form</source>
+        <translation>窗体</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.ui" line="23"/>
+        <source>Add Condition</source>
+        <translation>添加条件</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="56"/>
+        <location filename="deletedialog.cpp" line="71"/>
+        <source>Contain</source>
+        <translation>包含</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="91"/>
+        <location filename="deletedialog.cpp" line="94"/>
+        <source>hint:</source>
+        <translation>提示:</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="91"/>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="94"/>
+        <source>failure</source>
+        <translation>失败</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="99"/>
+        <source>Returning to the mainwindow</source>
+        <translation>返回主窗口</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="99"/>
+        <source>cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="deletedialog.cpp" line="100"/>
+        <source>process</source>
+        <translation>处理中</translation>
     </message>
 </context>
 <context>
@@ -1435,7 +1485,7 @@
     <name>mainplatformwindow</name>
     <message>
         <source>MainWindow</source>
-        <translation>主窗口</translation>
+        <translation type="vanished">主窗口</translation>
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="14"/>
@@ -1444,7 +1494,7 @@
     </message>
     <message>
         <source>Home </source>
-        <translation>主页 </translation>
+        <translation type="vanished">主页 </translation>
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="29"/>
@@ -1458,7 +1508,7 @@
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="57"/>
-        <location filename="mainplatformwindow.cpp" line="106"/>
+        <location filename="mainplatformwindow.cpp" line="112"/>
         <source>System Version:</source>
         <translation>系统版本:</translation>
     </message>
@@ -1556,37 +1606,43 @@
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="947"/>
-        <source>Advanced SQL Management Tool</source>
+        <source>Advanced SQL Mangement Tool</source>
+        <oldsource>Advanced SQL Management Tool</oldsource>
         <translation>高级 SQL 管理工具</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1020"/>
+        <location filename="mainplatformwindow.ui" line="980"/>
         <source>Dark</source>
         <translation>暗</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1025"/>
+        <location filename="mainplatformwindow.ui" line="985"/>
         <source>Light</source>
         <translation>亮</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1036"/>
+        <location filename="mainplatformwindow.ui" line="1007"/>
         <source>UI Font:</source>
         <translation>UI 字体:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1062"/>
+        <location filename="mainplatformwindow.ui" line="1043"/>
+        <source>Restore to Default</source>
+        <translation type="unfinished">恢复默认值</translation>
+    </message>
+    <message>
+        <location filename="mainplatformwindow.ui" line="1069"/>
         <source>&amp;Account</source>
         <translation>帐户(&amp;A)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1112"/>
+        <location filename="mainplatformwindow.ui" line="1119"/>
         <source>E&amp;xit</source>
         <translation>退出(&amp;X)</translation>
     </message>
     <message>
         <source>flight</source>
-        <translation>航班</translation>
+        <translation type="vanished">航班</translation>
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="200"/>
@@ -1596,7 +1652,22 @@
         <location filename="mainplatformwindow.ui" line="538"/>
         <location filename="mainplatformwindow.ui" line="651"/>
         <location filename="mainplatformwindow.ui" line="764"/>
-        <source>Modification</source>
+        <location filename="mainplatformwindow.cpp" line="280"/>
+        <location filename="mainplatformwindow.cpp" line="301"/>
+        <location filename="mainplatformwindow.cpp" line="320"/>
+        <location filename="mainplatformwindow.cpp" line="335"/>
+        <location filename="mainplatformwindow.cpp" line="355"/>
+        <location filename="mainplatformwindow.cpp" line="426"/>
+        <location filename="mainplatformwindow.cpp" line="460"/>
+        <location filename="mainplatformwindow.cpp" line="528"/>
+        <location filename="mainplatformwindow.cpp" line="621"/>
+        <location filename="mainplatformwindow.cpp" line="709"/>
+        <location filename="mainplatformwindow.cpp" line="1011"/>
+        <location filename="mainplatformwindow.cpp" line="1114"/>
+        <location filename="mainplatformwindow.cpp" line="1427"/>
+        <location filename="mainplatformwindow.cpp" line="1488"/>
+        <source>Modify</source>
+        <oldsource>Modification</oldsource>
         <translation>修改</translation>
     </message>
     <message>
@@ -1607,13 +1678,13 @@
         <location filename="mainplatformwindow.ui" line="543"/>
         <location filename="mainplatformwindow.ui" line="656"/>
         <location filename="mainplatformwindow.ui" line="769"/>
-        <location filename="mainplatformwindow.cpp" line="509"/>
-        <location filename="mainplatformwindow.cpp" line="581"/>
-        <location filename="mainplatformwindow.cpp" line="655"/>
-        <location filename="mainplatformwindow.cpp" line="943"/>
-        <location filename="mainplatformwindow.cpp" line="1030"/>
-        <location filename="mainplatformwindow.cpp" line="1322"/>
-        <location filename="mainplatformwindow.cpp" line="1367"/>
+        <location filename="mainplatformwindow.cpp" line="515"/>
+        <location filename="mainplatformwindow.cpp" line="600"/>
+        <location filename="mainplatformwindow.cpp" line="697"/>
+        <location filename="mainplatformwindow.cpp" line="999"/>
+        <location filename="mainplatformwindow.cpp" line="1101"/>
+        <location filename="mainplatformwindow.cpp" line="1408"/>
+        <location filename="mainplatformwindow.cpp" line="1474"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
@@ -1626,14 +1697,14 @@
         <location filename="mainplatformwindow.ui" line="661"/>
         <location filename="mainplatformwindow.ui" line="774"/>
         <location filename="mainplatformwindow.ui" line="928"/>
-        <location filename="mainplatformwindow.cpp" line="504"/>
-        <location filename="mainplatformwindow.cpp" line="576"/>
-        <location filename="mainplatformwindow.cpp" line="650"/>
-        <location filename="mainplatformwindow.cpp" line="938"/>
-        <location filename="mainplatformwindow.cpp" line="1025"/>
-        <location filename="mainplatformwindow.cpp" line="1052"/>
-        <location filename="mainplatformwindow.cpp" line="1316"/>
-        <location filename="mainplatformwindow.cpp" line="1358"/>
+        <location filename="mainplatformwindow.cpp" line="510"/>
+        <location filename="mainplatformwindow.cpp" line="595"/>
+        <location filename="mainplatformwindow.cpp" line="692"/>
+        <location filename="mainplatformwindow.cpp" line="994"/>
+        <location filename="mainplatformwindow.cpp" line="1096"/>
+        <location filename="mainplatformwindow.cpp" line="1138"/>
+        <location filename="mainplatformwindow.cpp" line="1402"/>
+        <location filename="mainplatformwindow.cpp" line="1465"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
@@ -1645,14 +1716,21 @@
         <location filename="mainplatformwindow.ui" line="553"/>
         <location filename="mainplatformwindow.ui" line="666"/>
         <location filename="mainplatformwindow.ui" line="779"/>
-        <location filename="mainplatformwindow.cpp" line="276"/>
-        <location filename="mainplatformwindow.cpp" line="297"/>
-        <location filename="mainplatformwindow.cpp" line="316"/>
-        <location filename="mainplatformwindow.cpp" line="331"/>
-        <location filename="mainplatformwindow.cpp" line="351"/>
-        <location filename="mainplatformwindow.cpp" line="378"/>
-        <location filename="mainplatformwindow.cpp" line="422"/>
-        <location filename="mainplatformwindow.cpp" line="456"/>
+        <location filename="mainplatformwindow.cpp" line="282"/>
+        <location filename="mainplatformwindow.cpp" line="303"/>
+        <location filename="mainplatformwindow.cpp" line="322"/>
+        <location filename="mainplatformwindow.cpp" line="337"/>
+        <location filename="mainplatformwindow.cpp" line="357"/>
+        <location filename="mainplatformwindow.cpp" line="384"/>
+        <location filename="mainplatformwindow.cpp" line="428"/>
+        <location filename="mainplatformwindow.cpp" line="462"/>
+        <location filename="mainplatformwindow.cpp" line="522"/>
+        <location filename="mainplatformwindow.cpp" line="610"/>
+        <location filename="mainplatformwindow.cpp" line="703"/>
+        <location filename="mainplatformwindow.cpp" line="1005"/>
+        <location filename="mainplatformwindow.cpp" line="1108"/>
+        <location filename="mainplatformwindow.cpp" line="1418"/>
+        <location filename="mainplatformwindow.cpp" line="1481"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -1665,25 +1743,25 @@
         <location filename="mainplatformwindow.ui" line="671"/>
         <location filename="mainplatformwindow.ui" line="784"/>
         <location filename="mainplatformwindow.ui" line="933"/>
-        <location filename="mainplatformwindow.cpp" line="507"/>
-        <location filename="mainplatformwindow.cpp" line="579"/>
-        <location filename="mainplatformwindow.cpp" line="653"/>
-        <location filename="mainplatformwindow.cpp" line="941"/>
-        <location filename="mainplatformwindow.cpp" line="1028"/>
-        <location filename="mainplatformwindow.cpp" line="1055"/>
-        <location filename="mainplatformwindow.cpp" line="1319"/>
-        <location filename="mainplatformwindow.cpp" line="1361"/>
-        <location filename="mainplatformwindow.cpp" line="1364"/>
+        <location filename="mainplatformwindow.cpp" line="513"/>
+        <location filename="mainplatformwindow.cpp" line="598"/>
+        <location filename="mainplatformwindow.cpp" line="695"/>
+        <location filename="mainplatformwindow.cpp" line="997"/>
+        <location filename="mainplatformwindow.cpp" line="1099"/>
+        <location filename="mainplatformwindow.cpp" line="1141"/>
+        <location filename="mainplatformwindow.cpp" line="1405"/>
+        <location filename="mainplatformwindow.cpp" line="1468"/>
+        <location filename="mainplatformwindow.cpp" line="1471"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
         <source>user</source>
-        <translation>用户</translation>
+        <translation type="vanished">用户</translation>
     </message>
     <message>
         <source>flight company</source>
-        <translation>航空公司</translation>
+        <translation type="vanished">航空公司</translation>
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="367"/>
@@ -1705,11 +1783,11 @@
     </message>
     <message>
         <source>airport</source>
-        <translation>机场</translation>
+        <translation type="vanished">机场</translation>
     </message>
     <message>
         <source>system</source>
-        <translation>系统</translation>
+        <translation type="vanished">系统</translation>
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="893"/>
@@ -1718,7 +1796,7 @@
     </message>
     <message>
         <source>Only For Super Administrator:</source>
-        <translation>仅适用于超级管理员:</translation>
+        <translation type="vanished">仅适用于超级管理员:</translation>
     </message>
     <message>
         <location filename="mainplatformwindow.ui" line="963"/>
@@ -1726,503 +1804,502 @@
         <translation>显示设置</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="969"/>
+        <location filename="mainplatformwindow.ui" line="993"/>
         <source>Theme:</source>
         <translation>主题:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="976"/>
+        <location filename="mainplatformwindow.ui" line="1000"/>
         <source>Items per page:</source>
         <translation>每页项目数:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="983"/>
+        <location filename="mainplatformwindow.ui" line="1036"/>
         <source>Language:</source>
         <translation>语言:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="994"/>
+        <location filename="mainplatformwindow.ui" line="1018"/>
         <source>🇺🇸English(United States)</source>
         <translation>🇺🇸English(United States)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="999"/>
+        <location filename="mainplatformwindow.ui" line="1023"/>
         <source>🇨🇳中文(简体，中华人民共和国）</source>
         <translation>🇨🇳中文(简体,中华人民共和国)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1004"/>
+        <location filename="mainplatformwindow.ui" line="1028"/>
         <source>Follow the system settings</source>
         <translation>按照系统设置操作</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>文件(&amp;F)</translation>
+        <translation type="vanished">文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1070"/>
+        <location filename="mainplatformwindow.ui" line="1077"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1085"/>
+        <location filename="mainplatformwindow.ui" line="1092"/>
         <source>A&amp;bout</source>
         <translation>关于(&amp;B)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1094"/>
+        <location filename="mainplatformwindow.ui" line="1101"/>
         <source>About &amp;QT</source>
         <translation>关于 Qt(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.ui" line="1103"/>
+        <location filename="mainplatformwindow.ui" line="1110"/>
         <source>Log&amp;out</source>
         <translation>注销(&amp;O)</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="112"/>
+        <location filename="mainplatformwindow.cpp" line="118"/>
         <source>Server Version:
  </source>
         <translation>服务器版本:
  </translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="118"/>
+        <location filename="mainplatformwindow.cpp" line="124"/>
         <source>Login system user: </source>
         <translation>登录系统用户: </translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="120"/>
+        <location filename="mainplatformwindow.cpp" line="126"/>
         <source>Language: </source>
         <translation>语言: </translation>
     </message>
     <message>
-        <source>select                               @@CPU_BUSY 'CPU',                               @@IO_BUSY 'IO',                                @@IDLE 'Idle',                               @@error 'Error',                               @@PACKET_ERRORS 'Packet Errors',                               @@PACK_RECEIVED 'Received Pack',                               @@PACK_SENT 'Sent Pack',                               @@TOTAL_ERRORS 'Total Errors',                               @@TOTAL_READ 'Total Read',                               @@TOTAL_WRITE 'Total Write',                               @@CURSOR_ROWS 'Cursor Rows',                               @@FETCH_STATUS 'Fetch Status',                               @@IDENTITY 'Identity',                               @@OPTIONS 'Options',                               @@CONNECTIONS 'Connections',                               @@MAX_CONNECTIONS 'Max Connections',                               @@MAX_PRECISION 'Max Precision',                                @@MICROSOFTVERSION 'Microsoft Version',                               @@PROCID 'Process ID',                               @@REMSERVER 'Rem Server',                               @@TEXTSIZE 'Text Size',                               @@TIMETICKS 'Time Ticks',                               @@DBTS 'DBTs',                               @@DEFAULT_LANGID 'Default Language ID',                               @@DEF_SORTORDER_ID 'Def Sortorder ID'</source>
-        <translation>select                               @@CPU_BUSY 'CPU',                               @@IO_BUSY 'IO',                                @@IDLE 'Idle',                               @@error 'Error',                               @@PACKET_ERRORS 'Packet Errors',                               @@PACK_RECEIVED 'Received Pack',                               @@PACK_SENT 'Sent Pack',                               @@TOTAL_ERRORS 'Total Errors',                               @@TOTAL_READ 'Total Read',                               @@TOTAL_WRITE 'Total Write',                               @@CURSOR_ROWS 'Cursor Rows',                               @@FETCH_STATUS 'Fetch Status',                               @@IDENTITY 'Identity',                               @@OPTIONS 'Options',                               @@CONNECTIONS 'Connections',                               @@MAX_CONNECTIONS 'Max Connections',                               @@MAX_PRECISION 'Max Precision',                                @@MICROSOFTVERSION 'Microsoft Version',                               @@PROCID 'Process ID',                               @@REMSERVER 'Rem Server',                               @@TEXTSIZE 'Text Size',                               @@TIMETICKS 'Time Ticks',                               @@DBTS 'DBTs',                               @@DEFAULT_LANGID 'Default Language ID',                               @@DEF_SORTORDER_ID 'Def Sortorder ID'</translation>
+        <source>select                               @@CPU_BUSY &apos;CPU&apos;,                               @@IO_BUSY &apos;IO&apos;,                                @@IDLE &apos;Idle&apos;,                               @@error &apos;Error&apos;,                               @@PACKET_ERRORS &apos;Packet Errors&apos;,                               @@PACK_RECEIVED &apos;Received Pack&apos;,                               @@PACK_SENT &apos;Sent Pack&apos;,                               @@TOTAL_ERRORS &apos;Total Errors&apos;,                               @@TOTAL_READ &apos;Total Read&apos;,                               @@TOTAL_WRITE &apos;Total Write&apos;,                               @@CURSOR_ROWS &apos;Cursor Rows&apos;,                               @@FETCH_STATUS &apos;Fetch Status&apos;,                               @@IDENTITY &apos;Identity&apos;,                               @@OPTIONS &apos;Options&apos;,                               @@CONNECTIONS &apos;Connections&apos;,                               @@MAX_CONNECTIONS &apos;Max Connections&apos;,                               @@MAX_PRECISION &apos;Max Precision&apos;,                                @@MICROSOFTVERSION &apos;Microsoft Version&apos;,                               @@PROCID &apos;Process ID&apos;,                               @@REMSERVER &apos;Rem Server&apos;,                               @@TEXTSIZE &apos;Text Size&apos;,                               @@TIMETICKS &apos;Time Ticks&apos;,                               @@DBTS &apos;DBTs&apos;,                               @@DEFAULT_LANGID &apos;Default Language ID&apos;,                               @@DEF_SORTORDER_ID &apos;Def Sortorder ID&apos;</source>
+        <translation type="vanished">select                               @@CPU_BUSY &apos;CPU&apos;,                               @@IO_BUSY &apos;IO&apos;,                                @@IDLE &apos;Idle&apos;,                               @@error &apos;Error&apos;,                               @@PACKET_ERRORS &apos;Packet Errors&apos;,                               @@PACK_RECEIVED &apos;Received Pack&apos;,                               @@PACK_SENT &apos;Sent Pack&apos;,                               @@TOTAL_ERRORS &apos;Total Errors&apos;,                               @@TOTAL_READ &apos;Total Read&apos;,                               @@TOTAL_WRITE &apos;Total Write&apos;,                               @@CURSOR_ROWS &apos;Cursor Rows&apos;,                               @@FETCH_STATUS &apos;Fetch Status&apos;,                               @@IDENTITY &apos;Identity&apos;,                               @@OPTIONS &apos;Options&apos;,                               @@CONNECTIONS &apos;Connections&apos;,                               @@MAX_CONNECTIONS &apos;Max Connections&apos;,                               @@MAX_PRECISION &apos;Max Precision&apos;,                                @@MICROSOFTVERSION &apos;Microsoft Version&apos;,                               @@PROCID &apos;Process ID&apos;,                               @@REMSERVER &apos;Rem Server&apos;,                               @@TEXTSIZE &apos;Text Size&apos;,                               @@TIMETICKS &apos;Time Ticks&apos;,                               @@DBTS &apos;DBTs&apos;,                               @@DEFAULT_LANGID &apos;Default Language ID&apos;,                               @@DEF_SORTORDER_ID &apos;Def Sortorder ID&apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="278"/>
-        <location filename="mainplatformwindow.cpp" line="352"/>
-        <location filename="mainplatformwindow.cpp" line="385"/>
+        <location filename="mainplatformwindow.cpp" line="284"/>
+        <location filename="mainplatformwindow.cpp" line="358"/>
+        <location filename="mainplatformwindow.cpp" line="391"/>
         <source>Flight ID</source>
         <translation>航班 ID</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="353"/>
+        <location filename="mainplatformwindow.cpp" line="359"/>
         <source>Schedule</source>
         <translation>时间表</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="354"/>
+        <location filename="mainplatformwindow.cpp" line="360"/>
         <source>Plane Type</source>
         <translation>飞机类型</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="355"/>
+        <location filename="mainplatformwindow.cpp" line="361"/>
         <source>Depature Airport ID</source>
         <translation>机场代码</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="356"/>
+        <location filename="mainplatformwindow.cpp" line="362"/>
         <source>Depature Time</source>
-        <translation>触发时间</translation>
+        <translation>出发时间</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="357"/>
+        <location filename="mainplatformwindow.cpp" line="363"/>
         <source>Arrival Airport ID</source>
         <translation>抵达机场代码</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="358"/>
+        <location filename="mainplatformwindow.cpp" line="364"/>
         <source>Arrival Time</source>
         <translation>到达时间</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="359"/>
+        <location filename="mainplatformwindow.cpp" line="365"/>
         <source>Airline Company ID</source>
         <translation>航空公司 ID</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="274"/>
-        <location filename="mainplatformwindow.cpp" line="295"/>
-        <location filename="mainplatformwindow.cpp" line="314"/>
-        <location filename="mainplatformwindow.cpp" line="329"/>
-        <location filename="mainplatformwindow.cpp" line="349"/>
-        <location filename="mainplatformwindow.cpp" line="420"/>
-        <location filename="mainplatformwindow.cpp" line="454"/>
-        <source>Modify</source>
-        <translation>修改</translation>
-    </message>
-    <message>
         <source>show status</source>
-        <translation>显示状态</translation>
+        <translation type="vanished">显示状态</translation>
     </message>
     <message>
         <source>select name as Name,language as Language,createdate as [Create Date], updatedate as [Update Date] FROM master.dbo.syslogins where sysadmin=1 and isntname=0</source>
-        <translation>select name as Name,language as Language,createdate as [Create Date], updatedate as [Update Date] FROM master.dbo.syslogins where sysadmin=1 and isntname=0</translation>
+        <translation type="vanished">select name as Name,language as Language,createdate as [Create Date], updatedate as [Update Date] FROM master.dbo.syslogins where sysadmin=1 and isntname=0</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="260"/>
-        <location filename="mainplatformwindow.cpp" line="286"/>
-        <location filename="mainplatformwindow.cpp" line="305"/>
-        <location filename="mainplatformwindow.cpp" line="364"/>
-        <location filename="mainplatformwindow.cpp" line="408"/>
-        <location filename="mainplatformwindow.cpp" line="480"/>
-        <location filename="mainplatformwindow.cpp" line="666"/>
-        <location filename="mainplatformwindow.cpp" line="920"/>
-        <location filename="mainplatformwindow.cpp" line="1162"/>
-        <location filename="mainplatformwindow.cpp" line="1445"/>
-        <location filename="mainplatformwindow.cpp" line="1452"/>
+        <location filename="mainplatformwindow.cpp" line="266"/>
+        <location filename="mainplatformwindow.cpp" line="292"/>
+        <location filename="mainplatformwindow.cpp" line="311"/>
+        <location filename="mainplatformwindow.cpp" line="370"/>
+        <location filename="mainplatformwindow.cpp" line="414"/>
+        <location filename="mainplatformwindow.cpp" line="486"/>
+        <location filename="mainplatformwindow.cpp" line="722"/>
+        <location filename="mainplatformwindow.cpp" line="976"/>
+        <location filename="mainplatformwindow.cpp" line="1248"/>
+        <location filename="mainplatformwindow.cpp" line="1568"/>
+        <location filename="mainplatformwindow.cpp" line="1575"/>
         <source>Querying...</source>
         <translation>查询中...</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="298"/>
+        <location filename="mainplatformwindow.cpp" line="304"/>
         <source>Airport IATA Code</source>
         <translation>机场IATA代码</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="299"/>
+        <location filename="mainplatformwindow.cpp" line="305"/>
         <source>Airport Name</source>
         <translation>机场名称</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="300"/>
+        <location filename="mainplatformwindow.cpp" line="306"/>
         <source>Airport City</source>
         <translation>机场城市</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="347"/>
+        <location filename="mainplatformwindow.cpp" line="353"/>
         <source>Stopover</source>
         <translation>经停</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="423"/>
+        <location filename="mainplatformwindow.cpp" line="429"/>
         <source>Airline Company Code</source>
         <translation>航空公司代码</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="424"/>
+        <location filename="mainplatformwindow.cpp" line="430"/>
         <source>Airline Company Name</source>
         <translation>航空公司名称</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="401"/>
-        <location filename="mainplatformwindow.cpp" line="429"/>
+        <location filename="mainplatformwindow.cpp" line="407"/>
+        <location filename="mainplatformwindow.cpp" line="435"/>
         <source>Completing...</source>
         <translation>完成中...</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="177"/>
+        <location filename="mainplatformwindow.cpp" line="183"/>
         <source>Welcome, </source>
         <translation>欢迎， </translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="183"/>
+        <location filename="mainplatformwindow.cpp" line="189"/>
         <source>Variables</source>
         <translation>变量</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="184"/>
+        <location filename="mainplatformwindow.cpp" line="190"/>
         <source>Value</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="270"/>
+        <location filename="mainplatformwindow.cpp" line="276"/>
         <source>Seat amount</source>
         <translation>座位数量</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="272"/>
+        <location filename="mainplatformwindow.cpp" line="278"/>
         <source>Seat arrangement</source>
         <translation>座位安排</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="277"/>
+        <location filename="mainplatformwindow.cpp" line="283"/>
         <source>Departure Date</source>
         <translation>出发日期</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="279"/>
+        <location filename="mainplatformwindow.cpp" line="285"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="280"/>
+        <location filename="mainplatformwindow.cpp" line="286"/>
         <source>Discount</source>
         <translation>折扣</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="317"/>
-        <location filename="mainplatformwindow.cpp" line="384"/>
+        <location filename="mainplatformwindow.cpp" line="323"/>
+        <location filename="mainplatformwindow.cpp" line="390"/>
         <source>User ID</source>
         <translation>用户身份证号</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="318"/>
+        <location filename="mainplatformwindow.cpp" line="324"/>
         <source>Delivery Time</source>
-        <translation>交货时间</translation>
+        <translation>传递时间</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="319"/>
+        <location filename="mainplatformwindow.cpp" line="325"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="332"/>
+        <location filename="mainplatformwindow.cpp" line="338"/>
         <source>Admin ID</source>
         <translation>管理员 ID</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="333"/>
+        <location filename="mainplatformwindow.cpp" line="339"/>
         <source>Admin Name</source>
         <translation>管理员名称</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="334"/>
+        <location filename="mainplatformwindow.cpp" line="340"/>
         <source>SA Type</source>
         <translation>SA 类型</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="376"/>
+        <location filename="mainplatformwindow.cpp" line="382"/>
         <source>Refund</source>
         <translation>退款</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="380"/>
+        <location filename="mainplatformwindow.cpp" line="386"/>
         <source>Check In</source>
-        <translation>登记</translation>
+        <translation>值机</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="383"/>
+        <location filename="mainplatformwindow.cpp" line="389"/>
         <source>Ticket ID</source>
         <translation>票证 ID</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="386"/>
+        <location filename="mainplatformwindow.cpp" line="392"/>
         <source>Departure Datetime</source>
         <translation>出发日期</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="387"/>
+        <location filename="mainplatformwindow.cpp" line="393"/>
         <source>Class</source>
-        <translation>类</translation>
+        <translation>舱位</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="388"/>
+        <location filename="mainplatformwindow.cpp" line="394"/>
         <source>Purchase Date</source>
         <translation>购买日期</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="389"/>
+        <location filename="mainplatformwindow.cpp" line="395"/>
         <source>Actual Payment</source>
         <translation>实际付款</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="390"/>
+        <location filename="mainplatformwindow.cpp" line="396"/>
         <source>Departure Airport</source>
         <translation>出发机场</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="391"/>
+        <location filename="mainplatformwindow.cpp" line="397"/>
         <source>Arrival Airport</source>
         <translation>抵达机场</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="392"/>
+        <location filename="mainplatformwindow.cpp" line="398"/>
         <source>Refund Date</source>
         <translation>退款日期</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="393"/>
+        <location filename="mainplatformwindow.cpp" line="399"/>
         <source>Actual Refund</source>
         <translation>实际退款</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="394"/>
+        <location filename="mainplatformwindow.cpp" line="400"/>
         <source>Seat ID</source>
         <translation>座位 ID</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="402"/>
-        <location filename="mainplatformwindow.cpp" line="445"/>
-        <location filename="mainplatformwindow.cpp" line="501"/>
+        <location filename="mainplatformwindow.cpp" line="408"/>
+        <location filename="mainplatformwindow.cpp" line="451"/>
+        <location filename="mainplatformwindow.cpp" line="507"/>
         <source>Completed!</source>
         <translation>完成！!</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="457"/>
+        <location filename="mainplatformwindow.cpp" line="463"/>
         <source>ID</source>
         <translation>身份证号</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="458"/>
+        <location filename="mainplatformwindow.cpp" line="464"/>
         <source>Name</source>
         <translation>名字</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="459"/>
+        <location filename="mainplatformwindow.cpp" line="465"/>
         <source>Membership</source>
         <translation>会员</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="540"/>
-        <source>delete from flight where flight_id = '</source>
-        <translation>delete from flight where flight_id = '</translation>
+        <location filename="mainplatformwindow.cpp" line="559"/>
+        <source>delete from flight where flight_id = &apos;</source>
+        <translation>delete from flight where flight_id = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="541"/>
-        <source>delete from seat where flight_id = '</source>
-        <translation>delete from seat where flight_id = '</translation>
+        <location filename="mainplatformwindow.cpp" line="560"/>
+        <source>delete from seat where flight_id = &apos;</source>
+        <translation>delete from seat where flight_id = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="687"/>
-        <source>delete from user where ID = '</source>
-        <translation>delete from user where ID = '</translation>
+        <location filename="mainplatformwindow.cpp" line="743"/>
+        <source>delete from user where ID = &apos;</source>
+        <translation>delete from user where ID = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="711"/>
-        <source>delete from company where company_id = '</source>
-        <translation>delete from company where company_id = '</translation>
+        <location filename="mainplatformwindow.cpp" line="767"/>
+        <source>delete from company where company_id = &apos;</source>
+        <translation>delete from company where company_id = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="966"/>
-        <source>delete from airport where airport_id = '</source>
-        <translation>delete from airport where airport_id = '</translation>
+        <location filename="mainplatformwindow.cpp" line="1037"/>
+        <source>delete from airport where airport_id = &apos;</source>
+        <translation>delete from airport where airport_id = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1074"/>
-        <source>delete from admin where adminID = '</source>
-        <translation>delete from admin where adminID = '</translation>
+        <location filename="mainplatformwindow.cpp" line="1160"/>
+        <source>delete from admin where adminID = &apos;</source>
+        <translation>delete from admin where adminID = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1184"/>
-        <location filename="mainplatformwindow.cpp" line="1188"/>
-        <location filename="mainplatformwindow.cpp" line="1231"/>
+        <location filename="mainplatformwindow.cpp" line="1270"/>
+        <location filename="mainplatformwindow.cpp" line="1274"/>
+        <location filename="mainplatformwindow.cpp" line="1317"/>
         <source>Error:</source>
         <translation>错误:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1184"/>
+        <location filename="mainplatformwindow.cpp" line="1270"/>
         <source>The ticket has already been refunded</source>
         <translation>机票已退款</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1188"/>
+        <location filename="mainplatformwindow.cpp" line="1274"/>
         <source>The ticket has already been checked in</source>
         <translation>机票已签入</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1225"/>
-        <location filename="mainplatformwindow.cpp" line="1241"/>
+        <location filename="mainplatformwindow.cpp" line="1311"/>
+        <location filename="mainplatformwindow.cpp" line="1327"/>
         <source>Refund failed.</source>
         <translation>退款失败.</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1231"/>
+        <location filename="mainplatformwindow.cpp" line="1317"/>
         <source>The ticket has not been refunded</source>
         <translation>机票尚未退款</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1267"/>
-        <location filename="mainplatformwindow.cpp" line="1278"/>
+        <location filename="mainplatformwindow.cpp" line="1353"/>
+        <location filename="mainplatformwindow.cpp" line="1364"/>
         <source>Hint:</source>
         <translation>提示:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1267"/>
+        <location filename="mainplatformwindow.cpp" line="1353"/>
         <source>You have checked in. So you cannot Check In AGAIN.</source>
         <translation>您已办理值机手续。因此，您无法再次值机.</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1278"/>
+        <location filename="mainplatformwindow.cpp" line="1364"/>
         <source>The flight is going to take off soon. Check In service have been closed.</source>
         <translation>飞机很快就要起飞了。值机服务已关闭.</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1340"/>
+        <location filename="mainplatformwindow.cpp" line="1447"/>
         <source>Delivery failed.</source>
         <translation>传递失败.</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1340"/>
+        <location filename="mainplatformwindow.cpp" line="1447"/>
         <source>No input</source>
         <translation>无输入</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1348"/>
-        <location filename="mainplatformwindow.cpp" line="1351"/>
+        <location filename="mainplatformwindow.cpp" line="1455"/>
+        <location filename="mainplatformwindow.cpp" line="1458"/>
         <source>hint:</source>
         <translation>提示:</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1348"/>
+        <location filename="mainplatformwindow.cpp" line="1455"/>
         <source>delivery succeed</source>
         <translation>传输成功</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1351"/>
+        <location filename="mainplatformwindow.cpp" line="1458"/>
         <source>delivery failure</source>
         <translation>传输失败</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1420"/>
+        <location filename="mainplatformwindow.cpp" line="1543"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="1420"/>
+        <location filename="mainplatformwindow.cpp" line="1543"/>
         <source>Delete successfully</source>
         <translation>成功删除</translation>
     </message>
     <message>
-        <source>SELECT * FROM [user] WHERE ID = '</source>
-        <translation>SELECT * FROM [user] WHERE ID = '</translation>
+        <location filename="mainplatformwindow.cpp" line="1619"/>
+        <source>About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="mainplatformwindow.cpp" line="1619"/>
+        <source>This is our project work of Database by 4021,SDS,FDU.</source>
+        <translation>这是我们的数据库PJ，由 4021 ， SDS ， FDU.</translation>
+    </message>
+    <message>
+        <source>SELECT * FROM [user] WHERE ID = &apos;</source>
+        <translation type="vanished">SELECT * FROM [user] WHERE ID = &apos;</translation>
     </message>
     <message>
         <source>modification failed.</source>
-        <translation>修改失败.</translation>
+        <translation type="vanished">修改失败.</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="539"/>
-        <source>delete from airline where flight_id = '</source>
-        <oldsource>delete from [company] where company_id = '</oldsource>
-        <translation>delete from airline where flight_id = '</translation>
+        <location filename="mainplatformwindow.cpp" line="558"/>
+        <source>delete from airline where flight_id = &apos;</source>
+        <oldsource>delete from [company] where company_id = &apos;</oldsource>
+        <translation>delete from airline where flight_id = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="425"/>
-        <location filename="mainplatformwindow.cpp" line="460"/>
+        <location filename="mainplatformwindow.cpp" line="431"/>
+        <location filename="mainplatformwindow.cpp" line="466"/>
         <source>Account</source>
         <translation>帐户</translation>
     </message>
     <message>
         <source>Modify %1-th.</source>
-        <translation>修改 %1.</translation>
+        <translation type="vanished">修改 %1-th.</translation>
     </message>
     <message>
         <source>Delete %1-th.</source>
-        <translation>删除 %1-th.</translation>
+        <translation type="vanished">删除 %1-th.</translation>
     </message>
     <message>
-        <source>select airport_name from airport where airport_id='</source>
-        <translation>select airport_name from airport where airport_id='</translation>
+        <source>select airport_name from airport where airport_id=&apos;</source>
+        <translation type="vanished">select airport_name from airport where airport_id=&apos;</translation>
     </message>
     <message>
-        <source>select company_name from company where company_id='</source>
-        <translation>select company_name from company where company_id='</translation>
+        <source>select company_name from company where company_id=&apos;</source>
+        <translation type="vanished">select company_name from company where company_id=&apos;</translation>
     </message>
     <message>
-        <source>delete from [user] where ID = '</source>
-        <translation>delete from [user] where ID = '</translation>
+        <source>delete from [user] where ID = &apos;</source>
+        <translation type="vanished">delete from [user] where ID = &apos;</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="692"/>
-        <location filename="mainplatformwindow.cpp" line="716"/>
-        <location filename="mainplatformwindow.cpp" line="971"/>
-        <location filename="mainplatformwindow.cpp" line="1079"/>
-        <location filename="mainplatformwindow.cpp" line="1144"/>
-        <location filename="mainplatformwindow.cpp" line="1241"/>
-        <location filename="mainplatformwindow.cpp" line="1424"/>
+        <location filename="mainplatformwindow.cpp" line="748"/>
+        <location filename="mainplatformwindow.cpp" line="772"/>
+        <location filename="mainplatformwindow.cpp" line="1042"/>
+        <location filename="mainplatformwindow.cpp" line="1165"/>
+        <location filename="mainplatformwindow.cpp" line="1230"/>
+        <location filename="mainplatformwindow.cpp" line="1327"/>
+        <location filename="mainplatformwindow.cpp" line="1547"/>
         <source>Delete failed.</source>
         <translation>删除失败.</translation>
     </message>
@@ -2363,7 +2440,7 @@
     <name>modcom</name>
     <message>
         <source>Form</source>
-        <translation>窗体</translation>
+        <translation type="vanished">窗体</translation>
     </message>
     <message>
         <location filename="modcom.ui" line="14"/>
@@ -2590,7 +2667,7 @@
     </message>
     <message>
         <source>Adding</source>
-        <translation>添加</translation>
+        <translation type="vanished">添加</translation>
     </message>
     <message>
         <location filename="modflight.cpp" line="92"/>
@@ -2672,14 +2749,82 @@
     </message>
 </context>
 <context>
-    <name>moduser</name>
+    <name>modifydialog</name>
     <message>
+        <location filename="modifydialog.ui" line="14"/>
         <source>Form</source>
         <translation>窗体</translation>
     </message>
     <message>
+        <location filename="modifydialog.ui" line="23"/>
+        <source>Add Item to be Modified</source>
+        <translation>添加要修改的项目</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.ui" line="40"/>
+        <source>Add Condition</source>
+        <translation>添加条件</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="79"/>
+        <location filename="modifydialog.cpp" line="94"/>
+        <source>Contain</source>
+        <translation>包含</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="115"/>
+        <location filename="modifydialog.cpp" line="118"/>
+        <source>hint:</source>
+        <translation>提示:</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="115"/>
+        <source>Success!</source>
+        <translation>成功！!</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="118"/>
+        <source>failure</source>
+        <translation>失败</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="123"/>
+        <source>Returning to the mainwindow</source>
+        <translation>返回主窗口</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="123"/>
+        <source>cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="modifydialog.cpp" line="124"/>
+        <source>process</source>
+        <translation>处理中</translation>
+    </message>
+</context>
+<context>
+    <name>modifyplugin</name>
+    <message>
+        <location filename="modifyplugin.ui" line="14"/>
+        <source>Form</source>
+        <translation>窗体</translation>
+    </message>
+    <message>
+        <location filename="modifyplugin.ui" line="29"/>
+        <source>Select your coulmn.</source>
+        <translation>选择您的列.</translation>
+    </message>
+</context>
+<context>
+    <name>moduser</name>
+    <message>
+        <source>Form</source>
+        <translation type="vanished">窗体</translation>
+    </message>
+    <message>
         <location filename="moduser.ui" line="14"/>
-        <source>Modify User's Information</source>
+        <source>Modify User&apos;s Information</source>
         <translation>修改用户信息</translation>
     </message>
     <message>
@@ -2754,12 +2899,12 @@
 <context>
     <name>myadminmodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="894"/>
+        <location filename="mainplatformwindow.cpp" line="950"/>
         <source>Modify</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="896"/>
+        <location filename="mainplatformwindow.cpp" line="952"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -2767,12 +2912,12 @@
 <context>
     <name>myannouncementmodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="773"/>
+        <location filename="mainplatformwindow.cpp" line="829"/>
         <source>Modify</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="775"/>
+        <location filename="mainplatformwindow.cpp" line="831"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -2780,12 +2925,12 @@
 <context>
     <name>mycompmodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="734"/>
+        <location filename="mainplatformwindow.cpp" line="790"/>
         <source>Modify</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="736"/>
+        <location filename="mainplatformwindow.cpp" line="792"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -2793,18 +2938,18 @@
 <context>
     <name>myfliarrangemodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="855"/>
-        <location filename="mainplatformwindow.cpp" line="857"/>
+        <location filename="mainplatformwindow.cpp" line="911"/>
+        <location filename="mainplatformwindow.cpp" line="913"/>
         <source>Click to View</source>
         <translation>点击查看</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="859"/>
+        <location filename="mainplatformwindow.cpp" line="915"/>
         <source>Modify</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="861"/>
+        <location filename="mainplatformwindow.cpp" line="917"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
@@ -2812,43 +2957,43 @@
 <context>
     <name>myflightmodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="793"/>
+        <location filename="mainplatformwindow.cpp" line="849"/>
         <source>Modify</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="795"/>
+        <location filename="mainplatformwindow.cpp" line="851"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="797"/>
+        <location filename="mainplatformwindow.cpp" line="853"/>
         <source>Stopover</source>
         <translation>停留</translation>
     </message>
     <message>
-        <source>select airport_name from airport where airport_id='</source>
-        <translation>select airport_name from airport where airport_id='</translation>
+        <source>select airport_name from airport where airport_id=&apos;</source>
+        <translation type="vanished">select airport_name from airport where airport_id=&apos;</translation>
     </message>
     <message>
-        <source>select company_name from company where company_id='</source>
-        <translation>select company_name from company where company_id='</translation>
+        <source>select company_name from company where company_id=&apos;</source>
+        <translation type="vanished">select company_name from company where company_id=&apos;</translation>
     </message>
 </context>
 <context>
     <name>myticketmodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="750"/>
+        <location filename="mainplatformwindow.cpp" line="806"/>
         <source>Refund</source>
         <translation>退款</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="752"/>
+        <location filename="mainplatformwindow.cpp" line="808"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="754"/>
+        <location filename="mainplatformwindow.cpp" line="810"/>
         <source>Check In</source>
         <translation>值机</translation>
     </message>
@@ -2856,12 +3001,12 @@
 <context>
     <name>myusermodel</name>
     <message>
-        <location filename="mainplatformwindow.cpp" line="836"/>
+        <location filename="mainplatformwindow.cpp" line="892"/>
         <source>Modify</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="mainplatformwindow.cpp" line="838"/>
+        <location filename="mainplatformwindow.cpp" line="894"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>

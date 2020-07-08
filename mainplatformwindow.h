@@ -163,6 +163,7 @@ class mainplatformwindow : public QMainWindow {
     void on_pushButton_9_clicked();
 
     void on_pushButton_10_clicked();
+    void on_actionA_bout_clicked();
 
     void on_plainTextEdit_4_returnPressed();
 
@@ -180,6 +181,8 @@ class mainplatformwindow : public QMainWindow {
 
 
     void on_pushButton_13_clicked();
+
+    void on_pushButton_14_clicked();
 
 private:
     Ui::mainplatformwindow *ui;
