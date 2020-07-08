@@ -114,10 +114,10 @@
                 <item>
                  <layout class="QVBoxLayout" name="verticalLayout_7">
                   <item>
-                   <widget class="QTextEdit" name="textEdit"/>
+                   <widget class="QTextEdit" name="delivery"/>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="pushButton_11">
+                   <widget class="QPushButton" name="deliver">
                     <property name="text">
                      <string>Deliver Messages to users</string>
                     </property>
@@ -764,8 +764,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>228</width>
-              <height>134</height>
+              <width>212</width>
+              <height>156</height>
              </rect>
             </property>
             <attribute name="label">
@@ -827,8 +827,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>713</width>
-              <height>433</height>
+              <width>683</width>
+              <height>398</height>
              </rect>
             </property>
             <attribute name="label">
@@ -937,7 +937,7 @@
      <x>0</x>
      <y>0</y>
      <width>753</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">

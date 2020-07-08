@@ -1149,3 +1149,23 @@ void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item) {
         add_ticket->show();
     }
 }
+
+void mainplatformwindow::on_deliver_clicked()
+{
+    QString input_data = ui->delivery->toPlainText();
+    if(input_data==""){
+        QMessageBox::critical(this,tr("Delivery failed."),tr("No input"));
+    }
+    else{
+        QString sql;
+        sql = QString("INSERT INTO announcement VALUES('000000000000000000',NOW(),'%1')").arg(input_data);
+        QSqlQuery query;
+        bool ok = query.exec(sql);
+        if(ok){
+            QMessageBox::information(this,tr("hint:"),tr("delivery succeed"));
+        }
+        else{
+            QMessageBox::information(this,tr("hint:"),tr("delivery failure"));
+        }
+    }
+}

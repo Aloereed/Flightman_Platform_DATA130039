@@ -147,7 +147,9 @@ class mainplatformwindow : public QMainWindow {
 
     void on_listWidget_8_itemClicked(QListWidgetItem *item);
 
-  private:
+    void on_deliver_clicked();
+
+private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)
 };
