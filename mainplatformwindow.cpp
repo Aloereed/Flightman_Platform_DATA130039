@@ -22,6 +22,7 @@
 #include "modifyann.h"
 #include "showmessage.h"
 #include "seat_selection.h"
+#include "modifydialog.h"
 
 #include "sqlbrowser/browser.h"
 
@@ -39,6 +40,7 @@ extern QByteArray readTextFile(const QString&);
 extern mainplatformwindow *w;
 QueryDialog *q;
 deletedialog *d;
+modifydialog *m;
 loginwindow *l;
 extern QTranslator translator;
 extern my_admin tranadmin;
@@ -524,7 +526,15 @@ void mainplatformwindow::on_listWidget_user_itemClicked(QListWidgetItem *item) {
         QString table = "user";
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
+    }else if(item->text()==tr("Modify")){
+        QStringList sqllist = {"ID", "name", "membership","account"};
+        QStringList indexlist = {"User ID", "Name", "Membership","Account"};
+        QString table = "user";
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 }
 
 void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
@@ -609,7 +619,19 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item) {
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
 
+    }else if(item->text()==tr("Modify")){
+        QStringList indexlist = {"Flight Id", "Schedule", "Plane Type","Departure Airport ID","Departure Time","ArrivalAirport ID","Arrival Time","Company Id"};
+        QStringList sqllist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
+        QString table = QString("flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
+                        "dep.departure_time,arr.airport_id arrap_id,arr.arrival_time "
+                        "From (select * from airline where arrival_time is null)  dep,"
+                        "(select * from airline where departure_time is null) arr where dep.flight_id=arr.flight_id) "
+                        "b using (flight_id)");
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 }
 
 /*
@@ -685,7 +707,15 @@ void mainplatformwindow::on_listWidget_5_itemClicked(QListWidgetItem *item) {
         QString table = "company";
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
+    }else if(item->text()==tr("Modify")){
+        QStringList sqllist = {"company_id", "company_name", "company_account"};
+        QStringList indexlist = {"Code", "Name", "Account"};
+        QString table = "company";
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 }
 
 
@@ -979,7 +1009,15 @@ void mainplatformwindow::on_listWidget_6_itemClicked(QListWidgetItem *item) {
         QString table = "airport";
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
+    }else if(item->text()==tr("Modify")){
+        QStringList sqllist = {"airport_id", "airport_name", "city"};
+        QStringList indexlist = {"ID", "Name", "City"};
+        QString table = "airport";
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 
 }
 
@@ -1074,7 +1112,15 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item) {
         QString table = "flight_arrangement";
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
+    }else if(item->text()==tr("Modify")){
+        QStringList sqllist = {"departure_date", "flight_id", "status","discount"};
+        QStringList indexlist = {"Departure Date", "Flight ID", "Status","Discount"};
+        QString table = "flight_arrangement";
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 
 
 }
@@ -1379,7 +1425,18 @@ void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item) {
         QString table = "ticket_all_view";
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
+    }else if(item->text()==tr("Modify")){
+        QStringList sqllist = {"ticket_id", "user_id", "flight_id","departure_datetime","class","purchase_date","actual_payment",
+                              "departure_airport","arrival_airport","refund_date","actual refund","seat_id"};
+        QStringList indexlist = {"Ticket ID", "User ID", "Flight ID","Departure Datetime","Class","Purchase Date",
+                                 "Actual Payment","Departure Airport","Arrival Airport","Refund Date","Actual Refund",
+                                "Seat ID"};
+        QString table = "ticket_all_view";
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 
 
 }
@@ -1429,7 +1486,15 @@ void mainplatformwindow::on_listWidget_9_itemClicked(QListWidgetItem *item)
 
         d = new deletedialog(table, sqllist, indexlist);
         d->show();
+    }else if(item->text()==tr("Modify")){
+        QStringList sqllist = {"userID", "time", "text"};
+        QStringList indexlist = {"User ID", "Delivery Time", "Message"};
+        QString table = "announcement";
+
+        m = new modifydialog(table, sqllist, indexlist);
+        m->show();
     }
+
 
 }
 
