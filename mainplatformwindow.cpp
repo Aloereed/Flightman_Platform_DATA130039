@@ -499,8 +499,13 @@ void mainplatformwindow::on_listWidget_user_itemClicked(QListWidgetItem *item) {
     } else if(item->text() == tr("Refresh")) {
         userRefresh();
     } else if(item->text() == tr("Search")) {
-        q = new QueryDialog;
-        q->show();
+
+      QStringList sqllist = {"ID", "name", "membership","account"};
+      QStringList indexlist = {"User ID", "Name", "Membership","Account"};
+      QString table = "user";
+      q = new QueryDialog(table, sqllist, indexlist);
+      q->show();
+
     }
 }
 
@@ -566,7 +571,14 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item) {
     } else if(item->text() == tr("Refresh")) {
         flightRefresh();
     } else if(item->text() == tr("Search")) {
-        q = new QueryDialog;
+        QStringList sqllist = {"Flight Id", "Schedule", "Plane Type","depap_id","Departure Time","arrap_id","Arrival Time","Company Id"};
+        QStringList indexlist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
+        QString table = "flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
+                        "dep.departure_time,arr.airport_id arrap_id,arr.arrival_time "
+                        "From (select * from airline where arrival_time is null)  dep,"
+                        "(select * from airline where departure_time is null) arr where dep.flight_id=arr.flight_id) "
+                        "b using (flight_id)";
+        q = new QueryDialog(table, sqllist, indexlist);
         q->show();
     }
 }
