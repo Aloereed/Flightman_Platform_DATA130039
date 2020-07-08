@@ -80,7 +80,7 @@ void loginwindow::on_commandLinkButton_clicked()
         ui->editHostname->setText("cdb-aaxnskss.cd.tencentcdb.com");         //主机名
         ui->portSpinBox->setValue(10095);                    //端口
         ui->editDatabase->setText("flight");          //数据库名
-        ui->editUsername->setText("root");              //用户名
+        ui->editUsername->setText("platform");              //用户名
         ui->editPassword->setText("sqlfd4021");
     }
     QString serverIp=ui->editHostname->text();

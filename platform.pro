@@ -43,6 +43,8 @@ SOURCES += \
     modfliarrange.cpp \
     modflight.cpp \
     modifyann.cpp \
+    modifydialog.cpp \
+    modifyplugin.cpp \
     moduser.cpp \
     querydialog.cpp \
     queryplugin.cpp \
@@ -50,6 +52,8 @@ SOURCES += \
     seat_selection.cpp \
     show_seat_a.cpp \
     showmessage.cpp \
+    sqlbrowser/browser.cpp \
+    sqlbrowser/connectionwidget.cpp \
     sqlquery.cpp \
     stopover.cpp \
     usercheck.cpp
@@ -76,6 +80,8 @@ HEADERS += \
     modfliarrange.h \
     modflight.h \
     modifyann.h \
+    modifydialog.h \
+    modifyplugin.h \
     moduser.h \
     querydialog.h \
     queryplugin.h \
@@ -83,6 +89,8 @@ HEADERS += \
     seat_selection.h \
     show_seat_a.h \
     showmessage.h \
+    sqlbrowser/browser.h \
+    sqlbrowser/connectionwidget.h \
     sqlquery.h \
     stopover.h \
     usercheck.h
@@ -108,6 +116,8 @@ FORMS += \
     modfliarrange.ui \
     modflight.ui \
     modifyann.ui \
+    modifydialog.ui \
+    modifyplugin.ui \
     moduser.ui \
     querydialog.ui \
     queryplugin.ui \
@@ -115,6 +125,7 @@ FORMS += \
     seat_selection.ui \
     show_seat_a.ui \
     showmessage.ui \
+    sqlbrowser/browserwidget.ui \
     sqlquery.ui \
     stopover.ui \
     usercheck.ui

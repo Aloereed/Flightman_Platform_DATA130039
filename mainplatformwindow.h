@@ -179,6 +179,8 @@ class mainplatformwindow : public QMainWindow {
 
 
 
+    void on_pushButton_13_clicked();
+
 private:
     Ui::mainplatformwindow *ui;
     //void mainplatformwindow::ExecAdd(QVariantMap userinfo)

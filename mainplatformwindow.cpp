@@ -22,6 +22,7 @@
 #include "modifyann.h"
 #include "showmessage.h"
 #include "seat_selection.h"
+#include "sqlbrowser/browser.h"
 #ifdef WIN32
 #include "QRibbon/QRibbon.h"
 #endif
@@ -139,7 +140,7 @@ void mainplatformwindow::_init() {
     QApplication::processEvents();
 
 
-
+    ui->pushButton_13->setEnabled(tranadmin.satype);
 
 
     //compRefresh();
@@ -1466,4 +1467,28 @@ void mainplatformwindow::on_plainTextEdit_5_returnPressed()
 void mainplatformwindow::on_pushButton_12_clicked()
 {
     ui->horizontalSlider_5->setValue(ui->horizontalSlider_5->value() + 1);
+}
+QMainWindow *sqlmain;
+Browser *browser;
+void mainplatformwindow::on_pushButton_13_clicked()
+{
+
+    sqlmain=new QMainWindow();
+    sqlmain->setWindowTitle(QObject::tr("Advanced SQL Management Tool"));
+
+    browser=new Browser(sqlmain);
+    sqlmain->setCentralWidget(browser);
+
+    QMenu *fileMenu = sqlmain->menuBar()->addMenu(QObject::tr("&File"));
+    fileMenu->addAction(QObject::tr("&Quit"), []() { qApp->quit(); });
+    QMenu *helpMenu = sqlmain->menuBar()->addMenu(QObject::tr("&Help"));
+    helpMenu->addAction(QObject::tr("About"), [&]() { browser->about(); });
+    helpMenu->addAction(QObject::tr("About Qt"), []() { qApp->aboutQt(); });
+
+    QObject::connect(browser, &Browser::statusMessage, [this](const QString &text) {
+        sqlmain->statusBar()->showMessage(text);
+    });
+
+    sqlmain->show();
+
 }
