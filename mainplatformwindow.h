@@ -33,6 +33,7 @@
 #include <QStandardItemModel>
 #include <QDateTime>
 #include <QDate>
+#include <QScroller>
 
 namespace Ui {
 class mainplatformwindow;

@@ -88,7 +88,14 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno", 1).toInt());
     ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont", uifont).value<QFont>()));
     ui->comboBox->setCurrentIndex(settings.value("Platform/Langcase", 2).toInt());
-
+    QScroller::grabGesture(ui->tableView_2, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_3, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_4, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_5, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_6, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_7, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_8, QScroller::TouchGesture);
+    QScroller::grabGesture(ui->tableView_9, QScroller::TouchGesture);
     _init();
 }
 
@@ -1347,9 +1354,11 @@ void mainplatformwindow::on_deliver_clicked()
 
 void mainplatformwindow::on_listWidget_9_itemClicked(QListWidgetItem *item)
 {
-    if(item->text() == tr("Add") && tranadmin.satype) {
+    if(item->text() == tr("Add") ) {
         add_ann = new addannouncement;
         add_ann->show();
+    }else if(item->text() == tr("Refresh")) {
+        on_horizontalSlider_5_valueChanged(1);
     }
     else if(item->text()==tr("Refresh")){
         annoucementRefresh();

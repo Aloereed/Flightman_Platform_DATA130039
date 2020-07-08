@@ -3,7 +3,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QMessageBox>
-
+#include <QScroller>
 
 
 seat_selection::seat_selection(QWidget *parent,QString flightID,QString classType,QString dep_date
@@ -12,6 +12,7 @@ seat_selection::seat_selection(QWidget *parent,QString flightID,QString classTyp
     ui(new Ui::seat_selection)
 {
     ui->setupUi(this);
+    QScroller::grabGesture(ui->tableWidget_seats, QScroller::TouchGesture);
     ui->label_hint->setText(tr("Please click on the cell to select your seat."));
     ui->label_colorhint1->setText(tr("white : available"));
     ui->label_colorhint2->setText(tr("gray : NOT available"));
