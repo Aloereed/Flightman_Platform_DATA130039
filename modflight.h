@@ -15,6 +15,7 @@
 #include "mainplatformwindow.h"
 #include "addflight_passingairport.h"
 #include "addseat.h"
+#include "add_price.h"
 namespace Ui {
 class modflight;
 }
@@ -31,6 +32,7 @@ public:
 private slots:
     void my_seat_get(my_seat tran);
     void my_pass_get(my_pass tran);
+    void my_price_get(std::vector<std::vector<QString>>);
     void on_ADD_clicked();
 
     void on_pushButton_2_clicked();
@@ -39,6 +41,10 @@ private slots:
 
     void on_buttonBox_clicked(QAbstractButton *button);
 
+
+
+    void on_price_clicked();
+
 private:
     Ui::modflight *ui;
     QSqlTableModel *stop_over;
@@ -46,6 +52,7 @@ private:
     QString schedule;
     QString company_id;
     QString plane_type;
+    std::vector<std::vector<QString>> price;
     bool type;
     int business;
     int economy;
