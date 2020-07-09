@@ -45,6 +45,7 @@ VIPDiscount *vipd;
 modifydialog *m;
 loginwindow *l;
 extern QTranslator translator;
+extern QTranslator translatorqt;
 extern my_admin tranadmin;
 extern QSettings settings;
 
@@ -89,14 +90,9 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::mainplatformwindow) {
     ui->setupUi(this);
-#ifdef WIN32
-    QRibbon::install(this);
-#endif
-
-    qApp->setStyleSheet(readTextFile(settings.value("Platform/theme", ":/qss/Aqua.qss").toString()));
-    ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno", 1).toInt());
     ui->fontComboBox->setCurrentFont((settings.value("Platform/UIFont",this->font()).value<QFont>()));
     ui->comboBox->setCurrentIndex(settings.value("Platform/Langcase", 2).toInt());
+    on_comboBox_activated(settings.value("Platform/Langcase", 2).toInt());
     QScroller::grabGesture(ui->tableView_2, QScroller::TouchGesture);
     QScroller::grabGesture(ui->tableView_3, QScroller::TouchGesture);
     QScroller::grabGesture(ui->tableView_4, QScroller::TouchGesture);
@@ -110,6 +106,12 @@ mainplatformwindow::mainplatformwindow(QWidget *parent) :
 
 void mainplatformwindow::_init() {
     //settings.sync();
+#ifdef WIN32
+    QRibbon::install(this);
+#endif
+    qApp->setStyleSheet(readTextFile(settings.value("Platform/theme", ":/qss/Aqua.qss").toString()));
+    ui->comboBox_2->setCurrentIndex(settings.value("Platform/themeno", 1).toInt());
+
     qDebug()<<db.driver()->hasFeature(QSqlDriver::Transactions);
     ui->label->setText(tr("System Version:") + osVersion());
     QApplication::processEvents();
@@ -1091,7 +1093,7 @@ void mainplatformwindow::on_comboBox_activated(int index) {
     switch(index) {
     case 0: {
         qApp->removeTranslator(&translator);
-
+        qApp->removeTranslator(&translatorqt);
         ui->retranslateUi(this);
         settings.setValue("Platform/Langcase", 0);
         break;
@@ -1099,8 +1101,11 @@ void mainplatformwindow::on_comboBox_activated(int index) {
 
     case 1: {
         qApp->removeTranslator(&translator);
+        qApp->removeTranslator(&translatorqt);
         QString langdir = ":/platform_zh_CN.qm";
         translator.load(langdir);
+        translatorqt.load("./translations/qt_zh_CN.qm");
+        qApp->installTranslator(&translatorqt);
         qApp->installTranslator(&translator);
 
         ui->retranslateUi(this);
@@ -1110,9 +1115,12 @@ void mainplatformwindow::on_comboBox_activated(int index) {
 
     default : {
         qApp->removeTranslator(&translator);
+        qApp->removeTranslator(&translatorqt);
         QString langdir = ":/platform_" + QLocale::system().name() + ".qm";
         translator.load(langdir);
+        translatorqt.load("./translations/qt_"+ QLocale::system().name() + ".qm");
         qApp->installTranslator(&translator);
+        qApp->installTranslator(&translatorqt);
 
         ui->retranslateUi(this);
         settings.setValue("Platform/Langcase", 2);

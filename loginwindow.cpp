@@ -16,6 +16,7 @@
 
 QSqlDatabase db;
 QTranslator translator;
+QTranslator translatorqt;
 mainplatformwindow *w;
 my_admin tranadmin;
 #ifdef Q_OS_ANDROID
@@ -35,6 +36,8 @@ loginwindow::loginwindow(QWidget *parent)
     QString langdir=":/platform_"+QLocale::system().name()+".qm";
     translator.load(langdir);
     qApp->installTranslator(&translator);
+    translatorqt.load("./translations/qt_"+ QLocale::system().name() + ".qm");
+    qApp->installTranslator(&translatorqt);
     ui->retranslateUi(this);
     if(settings.value("Platform/AdminisSaved").toBool()){
         ui->lineEdit->setText(settings.value("Platform/AdminID").toString());
