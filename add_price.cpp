@@ -102,11 +102,11 @@ void add_price::on_buttonBox_clicked(QAbstractButton *button)
                     if(k == 3)
                     {
                         bool ok;
-                        temp.toInt(&ok);
+                        temp.toFloat(&ok);
 
                         if(!ok)
                         {
-                            QMessageBox::information(this, tr("Failure"), tr("The price hasn't be set up properly"));
+                            QMessageBox::information(this, tr("Failure"), tr("The price hasn't be set up properly OR the input of price hasn't benn confirmed"));
                             return;
                         }
                     }
@@ -123,11 +123,11 @@ void add_price::on_buttonBox_clicked(QAbstractButton *button)
                     if(k == 3)
                     {
                         bool ok;
-                        temp.toInt(&ok);
+                        temp.toFloat(&ok);
 
                         if(!ok)
                         {
-                            QMessageBox::information(this, tr("Failure"), tr("The price hasn't be set up properly"));
+                            QMessageBox::information(this, tr("Failure"), tr("The price hasn't be set up properly OR the input of price hasn't benn confirmed"));
                             return;
                         }
                     }

@@ -565,6 +565,8 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
             query.exec(tr("delete from airline where flight_id = \'") + flight_id + "\'");
             query.exec(tr("delete from flight where flight_id = \'") + flight_id + "\'");
             query.exec(tr("delete from seat where flight_id = \'") + flight_id + "\'");
+            query.exec(tr("delete from price where flight_id = \'") + flight_id + "\'");
+
 
 #ifdef Q_OS_ANDROID
             if(!transaction.exec("commit")){
@@ -592,7 +594,7 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
         QString schedule = model->data(model->index(row, 1)).toString();
         QString plane_type = model->data(model->index(row, 2)).toString();
         QString company_id = model->data(model->index(row, 7)).toString();
-        modification_flight = new modflight(nullptr, flight_id, schedule, plane_type, company_id);
+        modification_flight = new modflight(nullptr, flight_id, schedule, company_id, plane_type);
         modification_flight->show();
     } else if(index.isValid() && index.column() == 9){
         int row=index.row();

@@ -99,6 +99,7 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
         if(QSqlDatabase::database().transaction()){
 #endif
             QSqlQuery query;
+            bool status = true;
             QString sql1;
             QString sql2;
             QString sql3;
@@ -118,8 +119,8 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             }
             qDebug()<<sql1;
             qDebug()<<sql2;
-            query.exec(sql1);
-            query.exec(sql2);
+            status &= query.exec(sql1);
+            status &= query.exec(sql2);
             for(int i=0;i<price.size();i++){
                 if(price[i][2]=="business"){//if business, set class=0
                     sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
@@ -131,7 +132,7 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
                               "VALUES('%1',%2,%3,%4,%5)")
                         .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
                 }
-                query.exec(sql4);
+                status &= query.exec(sql4);
             }
 
 
@@ -165,13 +166,14 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,departure_time,`order`)"
                               "VALUES('%1','%2','%3',%4)")
                         .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(departure_time).arg(i);
-                query.exec(sql3);
+                status &=query.exec(sql3);
+
             }
 
 #ifdef Q_OS_ANDROID
-            if(!transaction.exec("commit")){
+            if(!status||!transaction.exec("commit")){
 #else
-            if(!QSqlDatabase::database().commit()){
+            if(!status || !QSqlDatabase::database().commit()){
 #endif
                 qDebug()<<QSqlDatabase::database().lastError();
 #ifdef Q_OS_ANDROID
@@ -184,6 +186,7 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
              }
             else{
                 QMessageBox::information(this,tr("hint:"),tr("add successfully"));
+                w->flightRefresh();
                 this->close();
             }
         }
