@@ -89,10 +89,13 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
         search->setFilter(sql2);
         qDebug()<<search->lastError();
         search->select();
+
         qDebug()<<search->lastError();
         qDebug()<<sql1;
+
         QSqlQuery query;
         bool ok = query.exec(sql1);
+
         if(ok){
             search_result* search_res = new search_result(search);
             search_res->show();

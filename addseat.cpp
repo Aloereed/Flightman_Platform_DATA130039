@@ -14,7 +14,7 @@ addseat::addseat(QString flight_id,QWidget *parent) :
 {
     ui->setupUi(this);
     QSqlQuery query;
-    query.exec(tr("SELECT * FROM seat WHERE flight_id = '%1'").arg(flight_id));
+    query.exec(QString("SELECT * FROM seat WHERE flight_id = '%1'").arg(flight_id));
     query.next();
     if(query.value(1)==1)
         ui->radioButton->setChecked(1);

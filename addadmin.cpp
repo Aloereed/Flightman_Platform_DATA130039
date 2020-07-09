@@ -1,3 +1,4 @@
+
 #include "addadmin.h"
 #include "ui_addadmin.h"
 extern QSqlDatabase db;

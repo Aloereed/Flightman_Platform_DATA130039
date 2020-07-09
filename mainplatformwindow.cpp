@@ -628,7 +628,7 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item) {
     } else if(item->text() == tr("Refresh")) {
         flightRefresh();
     } else if(item->text() == tr("Search")) {
-        QStringList indexlist = {"Flight Id", "Schedule", "Plane Type","Departure Airport ID","Departure Time","ArrivalAirport ID","Arrival Time","Company Id"};
+        QStringList indexlist = {"Flight Id", "Schedule", "Plane Type","Departure Airport ID","Departure Time","Arrival Airport ID","Arrival Time","Company Id"};
         QStringList sqllist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
         QString table = QString("flight_for_query");
         q = new QueryDialog(table, sqllist, indexlist);
@@ -647,11 +647,11 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item) {
     }else if(item->text()==tr("Modify")){
         QStringList indexlist = {"Flight Id", "Schedule", "Plane Type","Departure Airport ID","Departure Time","ArrivalAirport ID","Arrival Time","Company Id"};
         QStringList sqllist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
-        QString table = QString("flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
+        QString table = QString("(flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
                         "dep.departure_time,arr.airport_id arrap_id,arr.arrival_time "
                         "From (select * from airline where arrival_time is null)  dep,"
                         "(select * from airline where departure_time is null) arr where dep.flight_id=arr.flight_id) "
-                        "b using (flight_id)");
+                        "b using (flight_id))");
 
         m = new modifydialog(table, sqllist, indexlist);
         m->show();
@@ -766,7 +766,7 @@ void mainplatformwindow::on_tableView_clicked(const QModelIndex &index) {
         QAbstractItemModel* model = ui->tableView->model();
         QString ID = model->data(model->index(row, 0)).toString();
         QSqlQuery query;
-        bool status = query.exec(tr("delete from user where ID = \'") + ID + "\'");
+        bool status = query.exec(QString("delete from user where ID = \'") + ID + "\'");
 
         if(status) {
             userRefresh();
