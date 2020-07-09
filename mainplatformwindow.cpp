@@ -1267,7 +1267,7 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index) {
         QAbstractItemModel* model = ui->tableView_7->model();
         QString ID = model->data(model->index(row, 1)).toString();
         QString departure_date = model->data(model->index(row, 0)).toString();
-        QString sql = QString("CALL cancel_fliarrangement('%1','%2')").arg(ID).arg(departure_date);
+        QString sql = QString("CALL del_fliarrangement('%1','%2')").arg(ID).arg(departure_date);
         QSqlQuery query;
         bool status = query.exec(sql);
 
