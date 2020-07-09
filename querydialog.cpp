@@ -45,6 +45,7 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
         QSqlTableModel *search;
         search = new QSqlTableModel(this);
         search->setTable(table);
+        qDebug()<<search->lastError();
         search->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
 
@@ -86,8 +87,10 @@ void QueryDialog::on_buttonBox_clicked(QAbstractButton *button)
         }
         sql1 += sql2;
         search->setFilter(sql2);
+        qDebug()<<search->lastError();
         search->select();
-
+        qDebug()<<search->lastError();
+        qDebug()<<sql1;
         QSqlQuery query;
         bool ok = query.exec(sql1);
         if(ok){

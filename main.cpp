@@ -43,8 +43,9 @@ QByteArray readTextFile(const QString &file_path) {
 }
 
 int main(int argc, char *argv[]) {
+        QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication a(argc, argv);
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
 #ifdef Q_OS_ANDROID
     a.setOrganizationDomain("FDU/BigData");
     a.setOrganizationName("FD4021");

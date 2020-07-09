@@ -2238,7 +2238,7 @@
     <message>
         <location filename="mainplatformwindow.cpp" line="771"/>
         <source>delete from user where ID = '</source>
-        <translation>从 ID =' 的用户中删除</translation>
+        <translation>delete from user where ID = '</translation>
     </message>
     <message>
         <location filename="mainplatformwindow.cpp" line="795"/>
