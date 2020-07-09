@@ -200,9 +200,9 @@ win32{
 RC_ICONS = icon.ico
 VERSION = 1.0.0.0
 }
-mac{
-ICON = icon.ics
-}
+#mac{
+#ICON = icon.ics
+#}
 
 
 

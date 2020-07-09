@@ -115,13 +115,13 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
             QString sql2;
             QString sql3;
             QString sql4;
-            sql1 = QString("UPDATE flight SET schedule='%1',plane_type='%2',company_id='%3' WHERE flight_id='%3'")
+            sql1 = QString("UPDATE flight SET schedule='%1',plane_type='%2',company_id='%3' WHERE flight_id='%4'")
                     .arg(schedule).arg(plane_type).arg(company_id).arg(flight_id);
             if(type == true)
-                sql2 = QString("UPDATE seat SET type='%1',`business_No.`='%2',`economy_No.`='%3' WHERE flight_id='%3'")
+                sql2 = QString("UPDATE seat SET type='%1',`business_No.`='%2',`economy_No.`='%3' WHERE flight_id='%4'")
                     .arg(1).arg(business).arg(economy).arg(flight_id);
             else
-                sql2 = QString("UPDATE seat SET type='%1',`business_No.`='%2',`economy_No.`='%3' WHERE flight_id='%3'")
+                sql2 = QString("UPDATE seat SET type='%1',`business_No.`='%2',`economy_No.`='%3' WHERE flight_id='%4'")
                     .arg(0).arg(business).arg(economy).arg(flight_id);
             query.exec(sql1);
             query.exec(sql2);
@@ -245,14 +245,10 @@ void modflight::on_price_clicked()
            row1.push_back("NULL");
            row2.push_back("economy");
            row2.push_back("NULL");
-           if(i==count-1){
-               row1.push_back(QString::number(-1));
-               row2.push_back(QString::number(-1));
-           }
-           else{
-               row1.push_back(QString::number(i));
-               row2.push_back(QString::number(i));
-           }
+
+           row1.push_back(QString::number(i-1));
+           row2.push_back(QString::number(i-1));
+
            row1.push_back(QString::number(-1));
            row2.push_back(QString::number(-1));
            price.push_back(row1);

@@ -85,6 +85,13 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             }
         }
         dialog.setValue(30000);
+//        if(tran.company_id.length()>2){
+//            QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(tr("Too long for the company id")));
+//            return;
+//        }
+
+
+
 #ifdef Q_OS_ANDROID
         QSqlQuery transaction;
         if(transaction.exec("start transaction")){
@@ -109,6 +116,8 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
                               "VALUES('%1',%2,%3,%4)")//SET TYPE = 1 IF DOUBLE AISLE
                         .arg(tran.flight_id).arg(0).arg(business).arg(economy);
             }
+            qDebug()<<sql1;
+            qDebug()<<sql2;
             query.exec(sql1);
             query.exec(sql2);
             for(int i=0;i<price.size();i++){
@@ -144,17 +153,17 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
 
                 if(arrival_time==""){
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,departure_time,`order`)"
-                                  "VALUES('%1','%2','%3')")
+                                  "VALUES('%1','%2','%3',%4)")
                             .arg(tran.flight_id).arg(airport_id).arg(departure_time).arg(i);
                 }
                 else if(departure_time==""){
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,`order`)"
-                                  "VALUES('%1','%2','%3')")
+                                  "VALUES('%1','%2','%3',%4)")
                             .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(-1);
                 }
                 else
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,departure_time,`order`)"
-                              "VALUES('%1','%2','%3','%4')")
+                              "VALUES('%1','%2','%3',%4)")
                         .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(departure_time).arg(i);
                 query.exec(sql3);
             }
