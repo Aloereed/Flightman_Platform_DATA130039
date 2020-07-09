@@ -800,7 +800,9 @@ void mainplatformwindow::on_tableView_4_clicked(const QModelIndex &index) {
 
 QVariant mycompmodel::data(const QModelIndex &item, int role) const {
     QVariant value = QSqlQueryModel::data(item, role);
-
+    if (Qt::TextAlignmentRole == role ) {
+        value = Qt::AlignCenter;
+    }
     if(role == Qt::BackgroundColorRole) {
         if(item.column() == 3) {
             return QVariant::fromValue(QColor(225, 225, 225));
@@ -824,6 +826,9 @@ QVariant myticketmodel::data(const QModelIndex &item, int role) const {
     if (role == Qt::BackgroundColorRole) {
         if(item.column()==13||item.column()==12||item.column()==14)
             return QVariant::fromValue(QColor(225,225,225));
+    }
+    if (Qt::TextAlignmentRole == role ) {
+        value = Qt::AlignCenter;
     }
     if (role == Qt::DisplayRole) {
         if(item.column()==12)
@@ -855,7 +860,9 @@ QVariant myannouncementmodel::data(const QModelIndex &item, int role) const{
             return QVariant::fromValue(tr("Delete"));
         }
     }
-
+    if (Qt::TextAlignmentRole == role ) {
+        value = Qt::AlignCenter;
+    }
     return value;
 }
 
@@ -867,7 +874,7 @@ QVariant myflightmodel::data(const QModelIndex &item, int role) const {
             return QVariant::fromValue(QColor(225, 225, 225));
         }
     }
-    if (Qt::TextAlignmentRole == role && item.column() == 9 ) {
+    if (Qt::TextAlignmentRole == role ) {
         value = Qt::AlignCenter;
     }
     if(role == Qt::DisplayRole) {
@@ -907,6 +914,9 @@ QVariant myusermodel::data(const QModelIndex &item, int role) const {
             return QVariant::fromValue(QColor(225, 225, 225));    //第一个属性的字体颜色为灰色
         }
     }
+    if (Qt::TextAlignmentRole == role ) {
+        value = Qt::AlignCenter;
+    }
 
     if(role == Qt::DisplayRole) {
         if(item.column() == 2) {
@@ -934,7 +944,9 @@ QVariant myfliarrangemodel::data(const QModelIndex &item, int role) const {
             return QVariant::fromValue(QColor(225, 225, 225));    //第一个属性的字体颜色为灰色
         }
     }
-
+    if (Qt::TextAlignmentRole == role ) {
+        value = Qt::AlignCenter;
+    }
     if(role == Qt::DisplayRole) {
         if(item.column() == 4) {
             return QVariant::fromValue(tr("Click to View"));
@@ -947,11 +959,7 @@ QVariant myfliarrangemodel::data(const QModelIndex &item, int role) const {
         }
     }
 
-    if(role == Qt::TextAlignmentRole) {
-        if(item.column() == 4 || item.column() == 5) {
-            return Qt::AlignCenter;
-        }
-    }
+
 
     return value;
 }
@@ -981,7 +989,9 @@ QVariant myadminmodel::data(const QModelIndex &item, int role) const {
             return QVariant::fromValue(tr("Delete"));
         }
     }
-
+    if (Qt::TextAlignmentRole == role ) {
+        value = Qt::AlignCenter;
+    }
     return value;
 }
 

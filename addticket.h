@@ -18,6 +18,7 @@ namespace Ui {
 class addticket;
 }
 class addticketmodel:public QSqlQueryModel{
+    Q_OBJECT
 public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };

@@ -190,30 +190,37 @@ private:
 };
 
 class mycompmodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myticketmodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myusermodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myflightmodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myannouncementmodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myadminmodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
 class myfliarrangemodel:public QSqlQueryModel {
+        Q_OBJECT
   public:
     QVariant data(const QModelIndex &item, int role=Qt::DisplayRole) const;
 };
