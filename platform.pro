@@ -57,7 +57,8 @@ SOURCES += \
     sqlbrowser/connectionwidget.cpp \
     sqlquery.cpp \
     stopover.cpp \
-    usercheck.cpp
+    usercheck.cpp \
+    vipdiscount.cpp
 
 HEADERS += \
     QRibbon/QRibbon.h \
@@ -95,7 +96,8 @@ HEADERS += \
     sqlbrowser/connectionwidget.h \
     sqlquery.h \
     stopover.h \
-    usercheck.h
+    usercheck.h \
+    vipdiscount.h
 
 FORMS += \
     QRibbon/qribbon.ui \
@@ -131,7 +133,8 @@ FORMS += \
     sqlbrowser/browserwidget.ui \
     sqlquery.ui \
     stopover.ui \
-    usercheck.ui
+    usercheck.ui \
+    vipdiscount.ui
 
 TRANSLATIONS += \
     platform_zh_CN.ts

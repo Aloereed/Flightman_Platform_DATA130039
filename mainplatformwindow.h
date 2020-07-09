@@ -67,6 +67,7 @@ class mainplatformwindow : public QMainWindow {
     void on_actionAbout_Qt_triggered();
     void on_actionLog_out_triggered();
     void on_actionE_xit_triggered();
+    void on_actionA_bout_triggered();
     //void on_listWidget_4_clicked(const QModelIndex &index);
 
 
@@ -163,7 +164,7 @@ class mainplatformwindow : public QMainWindow {
     void on_pushButton_9_clicked();
 
     void on_pushButton_10_clicked();
-    void on_actionA_bout_clicked();
+
 
     void on_plainTextEdit_4_returnPressed();
 

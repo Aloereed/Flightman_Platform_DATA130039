@@ -15,6 +15,7 @@
 #include "addfliarrange.h"
 #include "addadmin.h"
 #include "modadmin.h"
+#include "vipdiscount.h"
 #include "modfliarrange.h"
 #include "show_seat_a.h"
 #include "addticket.h"
@@ -40,6 +41,7 @@ extern QByteArray readTextFile(const QString&);
 extern mainplatformwindow *w;
 QueryDialog *q;
 deletedialog *d;
+VIPDiscount *vipd;
 modifydialog *m;
 loginwindow *l;
 extern QTranslator translator;
@@ -534,8 +536,10 @@ void mainplatformwindow::on_listWidget_user_itemClicked(QListWidgetItem *item) {
 
         m = new modifydialog(table, sqllist, indexlist);
         m->show();
+    }else if(item->text() == tr("VIP Discount")){
+        vipd = new VIPDiscount();
+        vipd->show();
     }
-
 }
 QString getAirportName(QString apcode){
     QSqlQuery query;
@@ -1654,7 +1658,7 @@ void mainplatformwindow::on_pushButton_13_clicked()
     sqlmain->show();
 
 }
-void mainplatformwindow::on_actionA_bout_clicked(){
+void mainplatformwindow::on_actionA_bout_triggered(){
     QMessageBox::information(this,tr("About"),tr("This is our project work of Database by 4021,SDS,FDU."));
 }
 
