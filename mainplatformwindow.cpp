@@ -720,6 +720,7 @@ void mainplatformwindow::on_listWidget_5_itemClicked(QListWidgetItem *item) {
         add_comp->show();
     } else if(item->text() == tr("Refresh")) {
         ui->horizontalSlider->setValue(1);
+        on_horizontalSlider_valueChanged(1);
     } else if(item->text() == tr("Search")) {
         QStringList sqllist = {"company_id", "company_name", "company_account"};
         QStringList indexlist = {"Code", "Name", "Account"};
@@ -1036,7 +1037,8 @@ void mainplatformwindow::on_listWidget_6_itemClicked(QListWidgetItem *item) {
         add_airport = new addairport;
         add_airport->show();
     } else if(item->text() == tr("Refresh")) {
-        ui->horizontalSlider->setValue(1);
+        ui->horizontalSlider_2->setValue(1);
+        on_horizontalSlider_2_valueChanged(1);
     } else if(item->text() == tr("Search")) {
         QStringList sqllist = {"airport_id", "airport_name", "city"};
         QStringList indexlist = {"ID", "Name", "City"};
@@ -1145,6 +1147,7 @@ void mainplatformwindow::on_listWidget_7_itemClicked(QListWidgetItem *item) {
         add_fliarrange->show();
     } else if(item->text() == tr("Refresh")) {
         ui->horizontalSlider_3->setValue(1);
+        on_horizontalSlider_3_valueChanged(1);
     } else if(item->text() == tr("Search")) {
         QStringList sqllist = {"departure_date", "flight_id", "status","discount"};
         QStringList indexlist = {"Departure Date", "Flight ID", "Status","Discount"};
@@ -1450,8 +1453,8 @@ void mainplatformwindow::on_listWidget_8_itemClicked(QListWidgetItem *item) {
         add_ticket = new addticket;
         add_ticket->show();
     }else if(item->text() == tr("Refresh")) {
-       ui->horizontalSlider->setValue(1);
-       ticketRefresh();
+       ui->horizontalSlider_4->setValue(1);
+       on_horizontalSlider_4_valueChanged(1);
     }else if(item->text()==tr("Search")){
         QStringList sqllist = {"ticket_id", "user_id", "flight_id","departure_datetime","class","purchase_date","actual_payment",
                               "departure_airport","arrival_airport","refund_date","actual refund","seat_id"};
@@ -1513,10 +1516,8 @@ void mainplatformwindow::on_listWidget_9_itemClicked(QListWidgetItem *item)
         add_ann = new addannouncement;
         add_ann->show();
     }else if(item->text() == tr("Refresh")) {
+        ui->horizontalSlider_5->setValue(1);
         on_horizontalSlider_5_valueChanged(1);
-    }
-    else if(item->text()==tr("Refresh")){
-        annoucementRefresh();
     }
     else if(item->text()==tr("Search")){
         QStringList sqllist = {"userID", "time", "text"};
