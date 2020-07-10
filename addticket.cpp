@@ -54,7 +54,7 @@ void addticket::on_pushButton_clicked()
         }
 
         if(flight_id!=""){
-            sql += QString ("AND `flight_id` = '%1' ").arg(flight_id);
+            sql += QString ("AND `flight_id` LIKE '%%1%' ").arg(flight_id);
         }
         if(departure_airport!=""){
             sql += QString ("AND `departure_city` = '%1' ").arg(departure_airport);

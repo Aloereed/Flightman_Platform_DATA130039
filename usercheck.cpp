@@ -9,6 +9,7 @@ usercheck::usercheck(QString flightID_input,QString departure_air_input,QString 
     ui(new Ui::usercheck)
 {
     ui->setupUi(this);
+    ui->password->setEchoMode(QLineEdit::Password);
     flightID=flightID_input;
     departure_air=departure_air_input;
     arrival_air=arrival_air_input;
@@ -80,7 +81,7 @@ void usercheck::on_buttonBox_clicked(QAbstractButton *button)
     }
     else if(ui->buttonBox->button(QDialogButtonBox::Cancel) == button)
     {
-        this->close();
+
         QProgressDialog dialog(tr("Returning to the former window"),tr("cancel"), 0, 3000, this);
         dialog.setWindowTitle(tr("process"));
         dialog.setWindowModality(Qt::WindowModal);
@@ -95,6 +96,7 @@ void usercheck::on_buttonBox_clicked(QAbstractButton *button)
             }
         }
         dialog.setValue(3000);
+        this->close();
        }
 
 }

@@ -6,6 +6,9 @@ add_price::add_price(QWidget *parent) :
     ui(new Ui::add_price)
 {
     ui->setupUi(this);
+
+
+
 }
 
 add_price::add_price(std::vector<std::vector<QString>> whole_price, QWidget *parent) :
