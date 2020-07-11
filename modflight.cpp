@@ -26,6 +26,15 @@ modflight::modflight(QWidget *parent,QString flight_id_input,QString schedule_in
     stop_over->setSort(4,Qt::AscendingOrder);
     stop_over->select();
     ui->tableView_airport->setModel(stop_over);
+
+    QSqlQuery query;
+    query.exec(QString("SELECT * FROM seat WHERE flight_id = '%1'").arg(flight_id));
+    query.next();
+    type = query.value(1).toInt();
+    business = query.value(2).toInt();
+    economy=query.value(3).toInt();
+
+
 }
 
 modflight::~modflight()

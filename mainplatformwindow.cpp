@@ -1402,7 +1402,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
         if(status)
             ticketRefresh();
         else
-            QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
+            QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
         }
     } else if(index.isValid()&&index.column()==14) { //Checkin
         int row = index.row();
