@@ -128,6 +128,7 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
             qDebug()<<sql2;
             status &=query.exec(sql1);
             status &=query.exec(sql2);
+            status &=stop_over->submitAll();
             sql3 = QString("DELETE FROM price WHERE flight_id='%1'").arg(flight_id);
             status &=query.exec(sql3);
             for(int i=0;i<price.size();i++){
@@ -143,7 +144,7 @@ void modflight::on_buttonBox_clicked(QAbstractButton *button)
                  }
                 status &=query.exec(sql4);
             }
-            status &=stop_over->submitAll();
+
 #ifdef Q_OS_ANDROID
             if(!status||!transaction.exec("commit")){
 #else

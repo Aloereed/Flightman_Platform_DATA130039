@@ -121,21 +121,7 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
             qDebug()<<sql2;
             status &= query.exec(sql1);
             status &= query.exec(sql2);
-            for(int i=0;i<price.size();i++){
-                if(price[i][2]=="business"){//if business, set class=0
-                    sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
-                              "VALUES('%1',%2,%3,%4,%5)")
-                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(0).arg(price[i][3]);
-                }
-                else{
-                    sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
-                              "VALUES('%1',%2,%3,%4,%5)")
-                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
-                }
-                status &= query.exec(sql4);
-            }
-
-
+            //Insert into airline
             int count = ui->tableView_airport->model()->rowCount();
             if(!(departure&&arrival)){
                 if(!QSqlDatabase::database().rollback()){
@@ -154,34 +140,53 @@ void addflight::on_buttonBox_clicked(QAbstractButton *button)
 
                 if(arrival_time==""){
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,departure_time,`order`)"
-                                  "VALUES('%1','%2','%3',%4)")
-                            .arg(tran.flight_id).arg(airport_id).arg(departure_time).arg(i);
+                                   "VALUES('%1','%2','%3',%4)")
+                               .arg(tran.flight_id).arg(airport_id).arg(departure_time).arg(i);
                 }
                 else if(departure_time==""){
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,`order`)"
-                                  "VALUES('%1','%2','%3',%4)")
-                            .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(-1);
+                                   "VALUES('%1','%2','%3',%4)")
+                               .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(-1);
                 }
                 else
                     sql3 = QString("INSERT INTO airline (flight_id,airport_id,arrival_time,departure_time,`order`)"
-                              "VALUES('%1','%2','%3',%4)")
-                        .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(departure_time).arg(i);
+                                   "VALUES('%1','%2','%3','%4',%5)")
+                               .arg(tran.flight_id).arg(airport_id).arg(arrival_time).arg(departure_time).arg(i);
                 status &=query.exec(sql3);
 
             }
+            qDebug()<<status;
+            //Insert into price
+
+            for(int i=0;i<price.size();i++){
+                if(price[i][2]=="business"){//if business, set class=0
+                    sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
+                              "VALUES('%1',%2,%3,%4,%5)")
+                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(0).arg(price[i][3]);
+                }
+                else{
+                    sql4 = QString("INSERT INTO price (flight_id,start_id,end_id,class,price)"
+                              "VALUES('%1',%2,%3,%4,%5)")
+                        .arg(tran.flight_id).arg(price[i][4]).arg(price[i][5]).arg(1).arg(price[i][3]);
+                }
+                status &= query.exec(sql4);
+            }
+
+
+
 
 #ifdef Q_OS_ANDROID
             if(!status||!transaction.exec("commit")){
 #else
             if(!status || !QSqlDatabase::database().commit()){
 #endif
-                qDebug()<<QSqlDatabase::database().lastError();
+                QMessageBox::warning(this,tr("Failure to commit or query met troubles."),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
 #ifdef Q_OS_ANDROID
                 if(!transaction.exec("rollback")){
 #else
                 if(!QSqlDatabase::database().rollback()){
 #endif
-                    QMessageBox::warning(this,tr("Failure"),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
+                    QMessageBox::warning(this,tr("Failure to rollback."),tr("error:%1").arg(QSqlDatabase::database().lastError().text()));
                 }
              }
             else{
