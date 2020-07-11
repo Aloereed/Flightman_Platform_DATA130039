@@ -557,39 +557,43 @@ void mainplatformwindow::on_tableView_3_clicked(const QModelIndex &index) {
         stop_over = new stopover(nullptr, flight_id);
         stop_over->show();
     } else if(index.isValid() && index.column() == 11) {
-        int row = index.row();
-        QAbstractItemModel* model = ui->tableView_3->model();
-        QString flight_id = model->data(model->index(row, 0)).toString();
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
+            int row = index.row();
+            QAbstractItemModel* model = ui->tableView_3->model();
+            QString flight_id = model->data(model->index(row, 0)).toString();
 
-#ifdef Q_OS_ANDROID
-        QSqlQuery transaction;
-        if(transaction.exec("start transaction")){
-#else
-        if(QSqlDatabase::database().transaction()){
-#endif
-            QSqlQuery query;
-            query.exec(tr("delete from airline where flight_id = \'") + flight_id + "\'");
-            query.exec(tr("delete from flight where flight_id = \'") + flight_id + "\'");
-            query.exec(tr("delete from seat where flight_id = \'") + flight_id + "\'");
-            query.exec(tr("delete from price where flight_id = \'") + flight_id + "\'");
+    #ifdef Q_OS_ANDROID
+            QSqlQuery transaction;
+            if(transaction.exec("start transaction")){
+    #else
+            if(QSqlDatabase::database().transaction()){
+    #endif
+                QSqlQuery query;
+                query.exec(tr("delete from airline where flight_id = \'") + flight_id + "\'");
+                query.exec(tr("delete from flight where flight_id = \'") + flight_id + "\'");
+                query.exec(tr("delete from seat where flight_id = \'") + flight_id + "\'");
+                query.exec(tr("delete from price where flight_id = \'") + flight_id + "\'");
 
 
-#ifdef Q_OS_ANDROID
-            if(!transaction.exec("commit")){
-#else
-            if(!QSqlDatabase::database().commit()){
-#endif
-                qDebug()<<QSqlDatabase::database().lastError();
-#ifdef Q_OS_ANDROID
-                if(!transaction.exec("rollback")){
-#else
-                if(!QSqlDatabase::database().rollback()){
-#endif
-                    qDebug() << QSqlDatabase::database().lastError();
+    #ifdef Q_OS_ANDROID
+                if(!transaction.exec("commit")){
+    #else
+                if(!QSqlDatabase::database().commit()){
+    #endif
+                    qDebug()<<QSqlDatabase::database().lastError();
+    #ifdef Q_OS_ANDROID
+                    if(!transaction.exec("rollback")){
+    #else
+                    if(!QSqlDatabase::database().rollback()){
+    #endif
+                        qDebug() << QSqlDatabase::database().lastError();
+                    }
+
+                } else {
+                    flightRefresh();
                 }
-
-            } else {
-                flightRefresh();
             }
         }
 
@@ -634,6 +638,7 @@ void mainplatformwindow::on_listWidget_3_itemClicked(QListWidgetItem *item) {
         q = new QueryDialog(table, sqllist, indexlist);
         q->show();
     }else if(item->text()==tr("Delete")){
+
         QStringList indexlist = {"Flight Id", "Schedule", "Plane Type","Departure Airport ID","Departure Time","ArrivalAirport ID","Arrival Time","Company Id"};
         QStringList sqllist = {"flight_id", "schedule", "plane_type","depap_id","departure_time","arrap_id","arrival_time","company_id"};
         QString table = QString("flight a inner join (select dep.flight_id flight_id,dep.airport_id depap_id,"
@@ -763,6 +768,9 @@ void mainplatformwindow::on_tableView_clicked(const QModelIndex &index) {
         modification_user = new moduser(nullptr, ID, name, membership, account);
         modification_user->show();
     } else if(index.isValid() && index.column() == 5) { //user_delete
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView->model();
         QString ID = model->data(model->index(row, 0)).toString();
@@ -773,6 +781,7 @@ void mainplatformwindow::on_tableView_clicked(const QModelIndex &index) {
             userRefresh();
         } else {
             QMessageBox::critical(this, tr("Delete failed."), tr("Delete failed."));
+        }
         }
     }
 }
@@ -787,6 +796,9 @@ void mainplatformwindow::on_tableView_4_clicked(const QModelIndex &index) {
         modification_comp = new modcom(nullptr, ID, name, account);
         modification_comp->show();
     } else if(index.isValid() && index.column() == 4) { //company_delete
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_4->model();
         QString ID = model->data(model->index(row, 0)).toString();
@@ -797,6 +809,7 @@ void mainplatformwindow::on_tableView_4_clicked(const QModelIndex &index) {
             compRefresh();
         } else {
             QMessageBox::critical(this, tr("Delete failed."), tr("Delete failed."));
+        }
         }
     }
 }
@@ -1073,6 +1086,9 @@ void mainplatformwindow::on_tableView_5_clicked(const QModelIndex &index) {
         ma = new modairport(nullptr, ID, name, account);
         ma->show();
     } else if(index.isValid() && index.column() == 4) { //company_delete
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_5->model();
         QString ID = model->data(model->index(row, 0)).toString();
@@ -1083,6 +1099,7 @@ void mainplatformwindow::on_tableView_5_clicked(const QModelIndex &index) {
             on_horizontalSlider_2_valueChanged(1);
         } else {
             QMessageBox::critical(this, tr("Delete failed."), tr("Delete failed."));
+        }
         }
     }
 }
@@ -1203,6 +1220,9 @@ void mainplatformwindow::on_tableView_6_clicked(const QModelIndex &index) {
         modification_admin = new modadmin(nullptr, ID, name, type);
         modification_admin->show();
     } else if(index.isValid() && index.column() == 4) { //admin delete
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_6->model();
         QString ID = model->data(model->index(row, 0)).toString();
@@ -1213,6 +1233,7 @@ void mainplatformwindow::on_tableView_6_clicked(const QModelIndex &index) {
             adminRefresh();
         } else {
             QMessageBox::critical(this, tr("Delete failed."), tr("Delete failed."));
+        }
         }
     }
 }
@@ -1266,6 +1287,9 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index) {
         modification_fliarrange = new modfliarrange(departure_date, ID, status, discount);
         modification_fliarrange->show();
     } else if(index.isValid() && index.column() == 7) { //cancel
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_7->model();
         QString ID = model->data(model->index(row, 1)).toString();
@@ -1278,6 +1302,7 @@ void mainplatformwindow::on_tableView_7_clicked(const QModelIndex &index) {
             fliarrangeRefresh();
         } else {
             QMessageBox::critical(this, tr("Delete failed."), tr("Delete failed."));
+        }
         }
 
     }
@@ -1360,6 +1385,9 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Refund failed."));
     } else if(index.isValid()&&index.column()==13) { //Delete
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_8->model();
         QString refund_date = model->data(model->index(row,9)).toString();
@@ -1375,6 +1403,7 @@ void mainplatformwindow::on_tableView_8_clicked(const QModelIndex &index) {
             ticketRefresh();
         else
             QMessageBox::critical(this,tr("Refund failed."),tr("Delete failed."));
+        }
     } else if(index.isValid()&&index.column()==14) { //Checkin
         int row = index.row();
         //
@@ -1575,6 +1604,9 @@ void mainplatformwindow::on_tableView_9_clicked(const QModelIndex &index)
         show_message->show();
     }
     else if(index.isValid()&&index.column()==4){
+        QMessageBox::StandardButton btn;
+        btn = QMessageBox::question(this, tr("himt:"), tr("Are you sure to delete?"), QMessageBox::Yes|QMessageBox::No);
+        if (btn == QMessageBox::Yes) {
         int row = index.row();
         QAbstractItemModel* model = ui->tableView_9->model();
         QString userID = model->data(model->index(row,0)).toString();
@@ -1593,6 +1625,7 @@ void mainplatformwindow::on_tableView_9_clicked(const QModelIndex &index)
         }
         else
             QMessageBox::critical(this,tr("Delete failed."),tr("Delete failed."));
+        }
 
     }
 }
