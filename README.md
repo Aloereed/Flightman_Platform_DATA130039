@@ -10,4 +10,6 @@
 开源代码引用说明：  
 [qt/qtbase](https://github.com/qt/qtbase)  
 [gnibuoz/QRibbon](https://github.com/gnibuoz/QRibbon)(just for Windows)  
-![平台端](https://images.gitee.com/uploads/images/2020/0712/164312_4f2a9c45_7598170.png "截图")
+![平台端](https://images.gitee.com/uploads/images/2020/0712/164312_4f2a9c45_7598170.png "截图")  
+[![aloereed/flightman](https://gitee.com/aloereed/flightman/widgets/widget_card.svg?colors=4183c4,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/aloereed/flightman)  
+[![aloereed/Flightman-Client](https://gitee.com/aloereed/Flightman-Client/widgets/widget_card.svg?colors=4183c4,ffffff,ffffff,e3e9ed,666666,9b9b9b)](https://gitee.com/aloereed/Flightman-Client)
