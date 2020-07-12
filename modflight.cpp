@@ -34,6 +34,83 @@ modflight::modflight(QWidget *parent,QString flight_id_input,QString schedule_in
     business = query.value(2).toInt();
     economy=query.value(3).toInt();
 
+    int count=ui->tableView_airport->model()->rowCount();
+    for(int i=1;i<count;i++){
+        for(int j=i+1;j<count;j++){
+            std::vector<QString> row1;
+            std::vector<QString> row2;
+            QModelIndex index = ui->tableView_airport->model()->index(i,1);
+            QString temp=ui->tableView_airport->model()->data(index).toString();
+            row1.push_back(temp);
+            row2.push_back(temp);
+            index = ui->tableView_airport->model()->index(j,1);
+            temp=ui->tableView_airport->model()->data(index).toString();
+            row1.push_back(temp);
+            row2.push_back(temp);
+            row1.push_back("business");
+            query.exec(QString("SELECT `price` FROM `mod_price` WHERE `flight_id` = '%1' AND `start_id`='%2' "
+                               "AND `end_id`='%3' AND class=0").arg(flight_id).arg(row1[0]).arg(row1[1]));
+            query.next();
+            row1.push_back(query.value(0).toString());
+            row2.push_back("economy");
+            query.exec(QString("SELECT `price` FROM `mod_price` WHERE `flight_id` = '%1' AND `start_id`='%2' "
+                               "AND `end_id`='%3' AND class=1").arg(flight_id).arg(row1[0]).arg(row1[1]));
+            query.next();
+            row2.push_back(query.value(0).toString());
+            if(i==count-1){
+                row1.push_back(QString::number(-1));
+                row2.push_back(QString::number(-1));
+            }
+            else{
+                row1.push_back(QString::number(i));
+                row2.push_back(QString::number(i));
+            }
+            if(j==count-1){
+                row1.push_back(QString::number(-1));
+                row2.push_back(QString::number(-1));
+            }
+            else{
+                row1.push_back(QString::number(j));
+                row2.push_back(QString::number(j));
+            }
+
+
+            price.push_back(row1);
+            price.push_back(row2);
+        }
+    }
+    for(int i =1;i<count;i++){
+        int j = 0;
+        std::vector<QString> row1;
+        std::vector<QString> row2;
+        QModelIndex index = ui->tableView_airport->model()->index(i,1);
+        QString temp=ui->tableView_airport->model()->data(index).toString();
+        row1.push_back(temp);
+        row2.push_back(temp);
+        index = ui->tableView_airport->model()->index(j,1);
+        temp=ui->tableView_airport->model()->data(index).toString();
+        row1.push_back(temp);
+        row2.push_back(temp);
+        row1.push_back("business");
+        query.exec(QString("SELECT `price` FROM `mod_price` WHERE `flight_id` = '%1' AND `start_id`='%2' "
+                           "AND `end_id`='%3' AND class=0").arg(flight_id).arg(row1[0]).arg(row1[1]));
+        query.next();
+        row1.push_back(query.value(0).toString());
+        row2.push_back("economy");
+        query.exec(QString("SELECT `price` FROM `mod_price` WHERE `flight_id` = '%1' AND `start_id`='%2' "
+                           "AND `end_id`='%3' AND class=1").arg(flight_id).arg(row1[0]).arg(row1[1]));
+        query.next();
+        row2.push_back(query.value(0).toString());
+
+        row1.push_back(QString::number(i-1));
+        row2.push_back(QString::number(i-1));
+
+        row1.push_back(QString::number(-1));
+        row2.push_back(QString::number(-1));
+        price.push_back(row1);
+        price.push_back(row2);
+
+    }
 
 }
 
