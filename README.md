@@ -1,4 +1,4 @@
-本项目为数据库与实现课程的航班管理系统的平台端。  
+本项目为数据库与实现课程(DATA130039.01, SDS, Fudan University) 的航班管理系统的平台端。  
 编程语言：C++（with Qt 5.14.2）  
 兼容的数据库环境:MySQL 5.7  
 兼容的操作系统：Windows（x64）、Android（ARM、ARM64）、macOS  
